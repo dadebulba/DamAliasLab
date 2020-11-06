@@ -1,0 +1,160 @@
+swagger: "2.0"
+info:
+  description: "Documentazione della WEB API per gestire il gioco della Dama."
+  version: "1.0.0"
+  title: "Viva la Dama"
+host: "localhost"
+basePath: "/"
+tags:
+- name: "game"
+  description: "Tutti i metodi che servono per interagire con una sessione di gioco"
+schemes:
+- "http"
+paths:
+  /game:
+    post:
+      tags:
+      - "game"
+      summary: "Crea una nuova sessione di gioco"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Le informazioni che riguardano ad una sessione di gioco"
+        required: true
+        schema:
+          $ref: "#/definitions/Game"
+      responses:
+        "400":
+          description: "Input non valido"
+    get:
+      tags:
+      - "game"
+      summary: "Ottieni una lista di tutte le sessioni di gioco"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Operazione avventua con successo"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Game"
+  /game/{id}:
+    get:
+      tags:
+      - "game"
+      summary: "Ottieni la sessione di gioco con questo id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id del gioco che si vuole ottenere"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Operazione avvenuta con successo"
+          schema:
+            $ref: "#/definitions/Game"
+        "404":
+          description: "Id non corrisponde a nessuna sessione di gioco attiva"
+    put:
+      tags:
+      - "game"
+      summary: "Cerca di eseguire una mossa su una determinata sessione di gioco"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id della sessione di gioco"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "mossa"
+        in: "body"
+        description: "Descrizione della mossa che vuole effettuare l'utente"
+        required: true
+        schema:
+          $ref: "#/definitions/Mossa"
+      responses:
+        "200":
+          description: "Operazione avvenuta con successo"
+          schema:
+            $ref: "#/definitions/Game"
+        "400":
+          description: "Se l'id del gioco è diverso da quello della struttura dati"
+        "401":
+          description: "Se la mossa non è valida"
+    delete:
+      tags:
+      - "game"
+      summary: "Distrugge una sessione di gioco"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id della sessione di gioco"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Operazione avvenuta con successo"
+          schema:
+            $ref: "#/definitions/Game"
+definitions:
+  Mossa:
+    type: "object"
+    properties:
+      idPedina:
+        type: "integer"
+        format: "int64"
+      iFrom:
+        type: "integer"
+        format: "int64"
+      jFrom:
+        type: "integer"
+        format: "int64"
+      iTo:
+        type: "integer"
+        format: "int64"
+      jTo:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "Tag"
+  Game:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nomePlayer1:
+        type: "string"
+        example: "nomePlayer1"
+      nomePlayer2:
+        type: "string"
+        example: "nomePlayer2"
+      cronologiaMosse:
+        type: "array"
+        items:
+          $ref: "#/definitions/Mossa"
+      campoDiGioco:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "integer"
+            format: "int64"
