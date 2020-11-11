@@ -11,6 +11,6 @@ namespace VivaLaDama.Models
         public string NomePlayer1 { get; set; }
         public string NomePlayer2 { get; set; }
         public CampoDiGioco Scacchiera { get; set; }
-        public Mossa[] CronologiaMosseValide { get; set;  }
+        public List<Mossa> CronologiaMosseValide { get; set;  }
     }
 }
