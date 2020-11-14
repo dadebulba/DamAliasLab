@@ -16,10 +16,6 @@ namespace VivaLaDama.Models
         }
         public ColorPawn GetOpponentColor()
         {
-            if(this.Color!=ColorPawn.WHITE && this.Color !=ColorPawn.BLACK)
-            {
-                return this.Color;
-            }
             return (this.Color == ColorPawn.WHITE ? ColorPawn.BLACK : ColorPawn.WHITE);
         }
         public bool IsColorValid()
@@ -28,12 +24,19 @@ namespace VivaLaDama.Models
         }
         public override bool Equals(Object obj)
         {
+            bool ret;
+
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
             {
-                return false;
+                ret = false;
             }
-            Pawn pawn = (Pawn)obj;
-            return this.Id==pawn.Id && this.Color==pawn.Color;
+            else
+            {
+                Pawn pawn = (Pawn)obj;
+                ret = this.Id==pawn.Id && this.Color==pawn.Color;
+            }
+
+            return ret;
         }
     }
 }
