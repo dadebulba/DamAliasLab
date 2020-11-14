@@ -14,13 +14,17 @@ namespace VivaLaDama.Models
             this.Id = id;
             this.Upgraded = false;
         }
-        public ColorPawn GetColoreOpponente()
+        public ColorPawn GetOpponentColor()
         {
             if(this.Color!=ColorPawn.WHITE && this.Color !=ColorPawn.BLACK)
             {
                 return this.Color;
             }
             return (this.Color == ColorPawn.WHITE ? ColorPawn.BLACK : ColorPawn.WHITE);
+        }
+        public bool IsColorValid()
+        {
+            return this.Color == ColorPawn.WHITE || this.Color == ColorPawn.BLACK;
         }
         public override bool Equals(Object obj)
         {
