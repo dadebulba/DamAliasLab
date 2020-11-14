@@ -2,12 +2,16 @@
 {
     public class Coordinate
     {
-        public int Riga { get; set; }
-        public int Colonna { get; set; }
-        public Coordinate(int riga, int colonna)
+        public int Row { get; set; }
+        public int Column { get; set; }
+        public Coordinate(int row, int column)
         {
-            this.Riga = riga;
-            this.Colonna = colonna;
+            this.Row = row;
+            this.Column = column;
+        }
+        public static Coordinate operator -(Coordinate coord1, Coordinate coord2)
+        {
+            return new Coordinate(coord1.Row - coord2.Row, coord1.Column - coord2.Column);
         }
         public override bool Equals(object obj)
         {
@@ -15,28 +19,28 @@
             {
                 return false;
             }
-            Coordinate c = (Coordinate)obj;
-            return this.Riga == c.Riga && this.Colonna == c.Colonna;
+            Coordinate coordinate = (Coordinate)obj;
+            return this.Row == coordinate.Row && this.Column == coordinate.Column;
         }
         public Coordinate GetDownLeft()
         {
-            return new Coordinate(Riga + 1, Colonna - 1);
+            return new Coordinate(this.Row + 1, this.Column - 1);
         }
         public Coordinate GetDownRight()
         {
-            return new Coordinate(Riga + 1, Colonna + 1);
+            return new Coordinate(this.Row + 1, this.Column + 1);
         }
         public Coordinate GetUpLeft()
         {
-            return new Coordinate(Riga - 1, Colonna - 1);
+            return new Coordinate(this.Row - 1, this.Column - 1);
         }
         public Coordinate GetUpRight()
         {
-            return new Coordinate(Riga - 1, Colonna + 1);
+            return new Coordinate(this.Row - 1, this.Column + 1);
         }
         public bool IsValid(long maxValue)
         {
-            return Riga >= 0 && Colonna >= 0 && Riga < maxValue && Colonna < maxValue;
+            return this.Row >= 0 && this.Column >= 0 && this.Row < maxValue && this.Column < maxValue;
         }
     }
 }
