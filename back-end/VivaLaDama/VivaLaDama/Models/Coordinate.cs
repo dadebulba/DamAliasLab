@@ -15,12 +15,19 @@
         }
         public override bool Equals(object obj)
         {
+            bool ret;
+
             if(obj==null || !this.GetType().Equals(obj.GetType()))
             {
-                return false;
+                ret = false;
             }
-            Coordinate coordinate = (Coordinate)obj;
-            return this.Row == coordinate.Row && this.Column == coordinate.Column;
+            else
+            {
+                Coordinate coordinate = (Coordinate)obj;
+                ret = this.Row==coordinate.Row && this.Column==coordinate.Column;
+            }
+
+            return ret;
         }
         public Coordinate GetDownLeft()
         {

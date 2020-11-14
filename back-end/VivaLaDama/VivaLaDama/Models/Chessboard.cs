@@ -7,23 +7,27 @@
         public bool Turn { get; set; }//'false' when is the turn of the black pawns, 'true' otherwise
         public Chessboard()
         {
-            int numWhitePawns=0, numBlackPawns=0;
-
+            this.Turn = false;
             this.Grid = new Pawn[DEFAULT_LENGTH, DEFAULT_LENGTH];
+            this.ResetGrid();
+        }
+        private void ResetGrid()
+        {
+            int numWhitePawns = 0, numBlackPawns = 0;
 
-            for(var i=0; i<DEFAULT_LENGTH ;i++)
+            for (int i=0; i<DEFAULT_LENGTH; i++)
             {
-                for(var j=0; j<DEFAULT_LENGTH ;j++)
+                for (int j=0; j<DEFAULT_LENGTH; j++)
                 {
                     this.Grid[i, j] = null;//Empty box
 
-                    if((i+j)%2!=0)
+                    if ((i+j)%2 != 0)
                     {
-                        if(j<=2)//Putting in the first 3 rows black pawns
+                        if (j<=2)//Putting in the first 3 rows black pawns
                         {
                             this.Grid[i, j] = new Pawn(Pawn.ColorPawn.BLACK, numWhitePawns++);
                         }
-                        else if(j>=DEFAULT_LENGTH-3)//Putting in the last three rows white pawns
+                        else if (j>=DEFAULT_LENGTH-3)//Putting in the last three rows white pawns
                         {
                             this.Grid[i, j] = new Pawn(Pawn.ColorPawn.WHITE, numBlackPawns++);
                         }
@@ -83,13 +87,13 @@
                move.Target.IsColorValid() &&
                start.Equals(move.From) && //Checking if the position of the pawn on the grid is the same as the one defined in the object 'move'
                ((this.Turn==false && move.Target.Color==Pawn.ColorPawn.BLACK) || 
-                (this.Turn==true && move.Target.Color==Pawn.ColorPawn.WHITE))) 
+                (this.Turn==true && move.Target.Color==Pawn.ColorPawn.WHITE))) //Checking if the turn is respected
             {
                 this.FindPossibleDestination(move.From, move.To, out dest1, out dest2);
 
                 if(dest1!=null && dest2!=null)
                 {
-                    ret = ret || this.CheckMove(move.Target, dest1, dest2, move.To);
+                    ret = this.CheckMove(move.Target, dest1, dest2, move.To);
                 }
             }
 
@@ -97,34 +101,43 @@
         }
         private Coordinate GetCoordinateFromPawn(Pawn pawn)
         {
-            for (var i=0; i<DEFAULT_LENGTH; i++)
+            Coordinate ret = null;
+
+            if(pawn!=null)
             {
-                for (var j=0; j<DEFAULT_LENGTH; j++)
+                for (var i=0; i<DEFAULT_LENGTH && ret==null; i++)
                 {
-                    if(this.Grid[i, j].Equals(pawn))
+                    for (var j=0; j<DEFAULT_LENGTH && ret==null; j++)
                     {
-                        return new Coordinate(i, j);
+                        if (this.Grid[i, j].Equals(pawn))
+                        {
+                            ret = new Coordinate(i, j);
+                        }
                     }
                 }
             }
 
-            return null;
+            return ret;
         }
         private bool IsBoxEmpty(Coordinate coordinate)
         {
+            bool ret = false;
+
             if(coordinate.IsValid(DEFAULT_LENGTH))
             {
-                return this.Grid[coordinate.Row, coordinate.Column] == null;
+                ret = this.Grid[coordinate.Row, coordinate.Column] == null;
             }
-            return false;
+            return ret;
         }
         private bool IsBoxNotEmpty(Coordinate coordinate)
         {
+            bool ret = false;
+
             if(coordinate.IsValid(DEFAULT_LENGTH))
             {
-                return !this.IsBoxEmpty(coordinate);
+                ret = !this.IsBoxEmpty(coordinate);
             }
-            return false;
+            return ret;
         }
         private bool CheckMove(Pawn pawn, Coordinate dest1, Coordinate dest2, Coordinate finalDest)
         {
@@ -173,8 +186,8 @@
                 this.Grid[dest2.Row, dest2.Column] = this.Grid[move.From.Row, move.From.Column];
             }
 
-            if ((move.To.Row == 0 && move.Target.Color == Pawn.ColorPawn.WHITE) ||
-                (move.To.Column == DEFAULT_LENGTH - 1 && move.Target.Color == Pawn.ColorPawn.BLACK))//Upgrading the pawn
+            if ((move.To.Row==0 && move.Target.Color==Pawn.ColorPawn.WHITE) ||
+                (move.To.Row==DEFAULT_LENGTH-1 && move.Target.Color==Pawn.ColorPawn.BLACK))//Upgrading the pawn
             {
                 this.Grid[move.To.Row, move.To.Column].Upgraded = true;
             }
