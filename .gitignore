@@ -6,4 +6,5 @@
 *.pdb
 *.cache
 *.txt
-*.xml
+*.testlog
+*.manifest

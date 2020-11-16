@@ -160,6 +160,7 @@
             else if(move.Target==null && move.From.Equals(move.To)) //Skip
             {
                 this.Turn = !this.Turn;
+                ret = true;
             }
 
             return ret;
@@ -188,6 +189,27 @@
             }
 
             this.Grid[move.From.Row, move.From.Column] = null;
+        }
+        public int GetNumberOfPawnsOfColor(Pawn.ColorPawn color)
+        {
+            Coordinate coordinate = new Coordinate(-1,-1);
+            int numPawns = 0;
+
+            for(int i=0; i<DEFAULT_LENGTH; i++)
+            {
+                for(int j=0; j<DEFAULT_LENGTH; j++)
+                {
+                    coordinate.Row = i;
+                    coordinate.Column = j;
+
+                    if(this.IsBoxNotEmpty(coordinate) && this.Grid[i, j].Color==color)
+                    {
+                        numPawns++;
+                    }
+                }
+            }
+
+            return numPawns;
         }
     }
 }
