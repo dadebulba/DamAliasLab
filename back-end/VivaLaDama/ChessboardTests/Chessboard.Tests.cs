@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using VivaLaDama.Models;
 
 namespace VivaLaDama.UnitTests.Models
@@ -38,6 +39,31 @@ namespace VivaLaDama.UnitTests.Models
             result = (turnBeforeMove != turnAfterMove);
 
             Assert.IsTrue(result, "If a player skipped, the turn should go to the other player!");
+        }
+        [TestMethod]
+        public void ChessboardExecuteMove_CheckingMovementWhiteLeft_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn pawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
+            Coordinate from = chessboard.GetCoordinateFromPawn(pawn);
+            Coordinate to, dest1, dest2;
+            Move move;
+            bool result;
+
+            chessboard.SetTurnForWhite();
+            to = from.GetUpLeft();
+            move = new Move(pawn, from, to);
+
+            Assert.IsTrue(chessboard.IsTurnRespected(pawn), "Should be the turn of white!");
+            Assert.IsTrue(chessboard.IsPawnPositionedAsDeclared(pawn, move.From), "Should be positioned as declared!");
+            Assert.IsTrue(chessboard.AreCoordinatesInRange(move.From, move.To), "Coordinates should be in range!");
+            Assert.IsTrue(chessboard.IsMovementValid(move.From, move.To), "Should be a valid movement!");
+            chessboard.FindPossibleDestination(move, out dest1, out dest2);
+
+            Assert.IsTrue(chessboard.CheckMove(pawn, dest1, dest2, move.To), "Should be valid!");
+
+            result = chessboard.ExecuteMove(move);
+            Assert.IsTrue(result, "A white pawn should have the possibility to move up-left");
         }
     }
 }

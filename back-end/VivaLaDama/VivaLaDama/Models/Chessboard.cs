@@ -1,8 +1,11 @@
-﻿namespace VivaLaDama.Models
+﻿using System;
+
+namespace VivaLaDama.Models
 {
     public class Chessboard
     {
         private const int DEFAULT_LENGTH = 8;
+        private const int ROWS_FILLED_OF_PAWNS = 3;
         private const int MAX_MOVE_DISTANCE = 2;
         public Pawn[,] Grid { get; }
         public bool Turn { get; set; }//'false' when is the turn of the black pawns, 'true' otherwise
@@ -16,36 +19,51 @@
         {
             int numWhitePawns = 0, numBlackPawns = 0;
 
-            for (int i=0; i<DEFAULT_LENGTH; i++)
+            for(int i=0; i<DEFAULT_LENGTH; i++)
             {
-                for (int j=0; j<DEFAULT_LENGTH; j++)
+                for(int j=0; j<DEFAULT_LENGTH; j++)
                 {
                     this.Grid[i, j] = null;//Empty box
 
-                    if ((i+j)%2 != 0)
+                    if((i+j)%2 != 0)
                     {
-                        if (j<=2)//Putting in the first 3 rows black pawns
+                        if(i<ROWS_FILLED_OF_PAWNS)//Putting in the first 3 rows black pawns
                         {
-                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.BLACK, numWhitePawns++);
+                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.BLACK, numBlackPawns++);
                         }
-                        else if (j>=DEFAULT_LENGTH-3)//Putting in the last three rows white pawns
+                        else if(i>=DEFAULT_LENGTH-ROWS_FILLED_OF_PAWNS)//Putting in the last three rows white pawns
                         {
-                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.WHITE, numBlackPawns++);
+                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.WHITE, numWhitePawns++);
                         }
                     }
                 }
             }
         }
-        private void FindPossibleDestination(Move move, out Coordinate dest1, out Coordinate dest2)
+        public bool IsTurnRespected(Pawn pawn)
+        {
+            return pawn!=null &&
+                   (this.Turn == false && pawn.Color == Pawn.ColorPawn.BLACK) || 
+                   (this.Turn == true  && pawn.Color == Pawn.ColorPawn.WHITE);
+        }
+        public bool IsMovementValid(Coordinate from, Coordinate to)
+        {
+            Coordinate difference = to - from;
+            difference.Row = Math.Abs(difference.Row);
+            difference.Column = Math.Abs(difference.Column);
+
+            return difference.Row == difference.Column && 
+                   difference.Row > 0 && difference.Column > 0 && 
+                   difference.Row <= MAX_MOVE_DISTANCE && difference.Column <= MAX_MOVE_DISTANCE;
+        }
+        public void FindPossibleDestination(Move move, out Coordinate dest1, out Coordinate dest2)
         {
             Coordinate from = move.From, to = move.To;
             Coordinate difference = to - from;
             Pawn pawn = move.Target;
 
             dest1 = dest2 = null;
-            if((difference.Row==difference.Column || difference.Row==-difference.Column) && 
-               difference.Row>=-MAX_MOVE_DISTANCE && difference.Row<=MAX_MOVE_DISTANCE && difference.Row!=0 &&
-               difference.Column>=-MAX_MOVE_DISTANCE && difference.Column<=MAX_MOVE_DISTANCE && difference.Column!=0)
+
+            if(this.IsMovementValid(from, to))
             {
                 if(difference.Row > 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
@@ -69,20 +87,23 @@
                 }
             }
         }
+        public bool IsPawnPositionedAsDeclared(Pawn pawn, Coordinate clientCoord)
+        {
+            Coordinate serverCoord = this.GetCoordinateFromPawn(pawn);
+            return serverCoord != null && serverCoord.Equals(clientCoord);
+        }
+        public bool AreCoordinatesInRange(Coordinate from, Coordinate to)
+        {
+            return from.IsValid(DEFAULT_LENGTH) && to.IsValid(DEFAULT_LENGTH);
+        }
         private bool EvaluateMove(Move move)
         {
-            Coordinate start = this.GetCoordinateFromPawn(move.Target);
-            Coordinate difference = move.To - move.From;
             Coordinate dest1, dest2;
             bool ret = false;
 
-            if(start!=null && //Checking if the pawn is on the grid
-               move.From.IsValid(DEFAULT_LENGTH) &&
-               move.To.IsValid(DEFAULT_LENGTH) &&
-               move.Target.IsColorValid() &&
-               start.Equals(move.From) && //Checking if the position of the pawn on the grid is the same as the one defined in the object 'move'
-               ((this.Turn==false && move.Target.Color==Pawn.ColorPawn.BLACK) || 
-                (this.Turn==true && move.Target.Color==Pawn.ColorPawn.WHITE))) //Checking if the turn is respected
+            if(this.IsTurnRespected(move.Target) &&
+               this.AreCoordinatesInRange(move.From, move.To) &&
+               this.IsPawnPositionedAsDeclared(move.Target, move.From))
             {
                 this.FindPossibleDestination(move, out dest1, out dest2);
 
@@ -94,7 +115,7 @@
 
             return ret;
         }
-        private Coordinate GetCoordinateFromPawn(Pawn pawn)
+        public Coordinate GetCoordinateFromPawn(Pawn pawn)
         {
             Coordinate ret = null;
 
@@ -104,7 +125,7 @@
                 {
                     for (var j=0; j<DEFAULT_LENGTH && ret==null; j++)
                     {
-                        if (this.Grid[i, j].Equals(pawn))
+                        if(this.Grid[i, j]!=null && this.Grid[i, j].Equals(pawn))
                         {
                             ret = new Coordinate(i, j);
                         }
@@ -134,7 +155,7 @@
             }
             return ret;
         }
-        private bool CheckMove(Pawn pawn, Coordinate dest1, Coordinate dest2, Coordinate finalDest)
+        public bool CheckMove(Pawn pawn, Coordinate dest1, Coordinate dest2, Coordinate finalDest)
         {
             bool ret;
 
@@ -210,6 +231,14 @@
             }
 
             return numPawns;
+        }
+        public void SetTurnForWhite()
+        {
+            this.Turn = true;
+        }
+        public void SetTurnForBlack()
+        {
+            this.Turn = false;
         }
     }
 }
