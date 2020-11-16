@@ -3,6 +3,7 @@
     public class Chessboard
     {
         private const int DEFAULT_LENGTH = 8;
+        private const int MAX_MOVE_DISTANCE = 2;
         public Pawn[,] Grid { get; }
         public bool Turn { get; set; }//'false' when is the turn of the black pawns, 'true' otherwise
         public Chessboard()
@@ -41,37 +42,31 @@
             Coordinate difference = to - from;
             Pawn pawn = move.Target;
 
-            if (difference.Row > 0 && difference.Row < 3 &&
-                difference.Column > 0 && difference.Column < 3 &&
-                (pawn.Color==Pawn.ColorPawn.WHITE || pawn.Upgraded==true))
+            dest1 = dest2 = null;
+            if((difference.Row==difference.Column || difference.Row==-difference.Column) && 
+               difference.Row>=-MAX_MOVE_DISTANCE && difference.Row<=MAX_MOVE_DISTANCE && difference.Row!=0 &&
+               difference.Column>=-MAX_MOVE_DISTANCE && difference.Column<=MAX_MOVE_DISTANCE && difference.Column!=0)
             {
-                dest1 = from.GetUpRight();
-                dest2 = dest1.GetUpRight();
-            }
-            else if (difference.Row < 0 && difference.Row > -3 &&
-                     difference.Column > 0 && difference.Column < 3 &&
-                     (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
-            {
-                dest1 = from.GetUpLeft();
-                dest2 = dest1.GetUpLeft();
-            }
-            else if (difference.Row < 0 && difference.Row > -3 &&
-                     difference.Column < 0 && difference.Column > -3 &&
-                     (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
-            {
-                dest1 = from.GetDownLeft();
-                dest2 = dest1.GetDownLeft();
-            }
-            else if (difference.Row > 0 && difference.Row < 3 &&
-                     difference.Column < 0 && difference.Column > -3 &&
-                     (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
-            {
-                dest1 = from.GetDownRight();
-                dest2 = dest1.GetDownRight();
-            }
-            else //This move is not valid
-            {
-                dest1 = dest2 = null;
+                if(difference.Row > 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
+                {
+                    dest1 = from.GetUpRight();
+                    dest2 = dest1.GetUpRight();
+                }
+                else if(difference.Row < 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
+                {
+                    dest1 = from.GetUpLeft();
+                    dest2 = dest1.GetUpLeft();
+                }
+                else if(difference.Row < 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
+                {
+                    dest1 = from.GetDownLeft();
+                    dest2 = dest1.GetDownLeft();
+                }
+                else if(difference.Row > 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
+                {
+                    dest1 = from.GetDownRight();
+                    dest2 = dest1.GetDownRight();
+                }
             }
         }
         private bool EvaluateMove(Move move)
@@ -89,7 +84,7 @@
                ((this.Turn==false && move.Target.Color==Pawn.ColorPawn.BLACK) || 
                 (this.Turn==true && move.Target.Color==Pawn.ColorPawn.WHITE))) //Checking if the turn is respected
             {
-                this.FindPossibleDestination(move.From, move.To, out dest1, out dest2);
+                this.FindPossibleDestination(move, out dest1, out dest2);
 
                 if(dest1!=null && dest2!=null)
                 {
@@ -173,7 +168,7 @@
         {
             Coordinate dest1, dest2;
 
-            this.FindPossibleDestination(move.From, move.To, out dest1, out dest2);
+            this.FindPossibleDestination(move, out dest1, out dest2);
 
             if(dest1.Equals(move.To))
             {

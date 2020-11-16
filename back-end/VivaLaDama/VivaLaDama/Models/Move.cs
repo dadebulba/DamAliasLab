@@ -3,9 +3,9 @@
     public class Move
     {
         public Pawn Target { get; set; }//The target is the pawn that has been moved
-        public Coordinates From { get; set; }
-        public Coordinates To { get; set; }
-        public Move(Pawn target, Coordinates from, Coordinates to)
+        public Coordinate From { get; set; }
+        public Coordinate To { get; set; }
+        public Move(Pawn target, Coordinate from, Coordinate to)
         {
             this.Target = target;
             this.From = from;
