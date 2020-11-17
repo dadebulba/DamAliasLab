@@ -51,15 +51,35 @@ namespace VivaLaDama.UnitTests.Models
 
             Assert.AreEqual(resultExpected, result);
         }
-
         public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementWhite()
         {
             yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 1)), true};
             yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 3)), true};
             yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(6, 1)), false};
             yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(6, 3)), false};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 2)), false };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 2)), false };
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 2)), false};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 2)), false};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 0)), false};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 4)), false};
+        }
+        [DataTestMethod]
+        [DynamicData(nameof(GetData_ChessboardExecuteMove_CheckingMovementWhiteOutOfGrid), DynamicDataSourceType.Method)]
+        public void ChessboardExecuteMove_CheckingMovementWhiteOutOfGrid_ReturnFalse(Move move)
+        {
+            Chessboard chessboard = new Chessboard();
+            bool result;
+
+            chessboard.SetTurnForWhite();
+            result = chessboard.ExecuteMove(move);
+
+            Assert.IsFalse(result, "A white pawn should not be able to go out of the grid!");
+        }
+        public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementWhiteOutOfGrid()
+        {
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 0), new Coordinate(4, -1))};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 0), new Coordinate(5, -2))};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 3), new Coordinate(4, 8))};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 3), new Coordinate(5, 9))};
         }
     }
 }
