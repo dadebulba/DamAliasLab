@@ -211,5 +211,39 @@ namespace VivaLaDama.UnitTests.Models
             result = chessboard.ExecuteMove(secondAndLastMove);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this last move");
         }
+        [TestMethod]
+        public void ChessboardExecute_CheckingThatBlackUpgradedPawnCanMoveAllAround()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn pawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
+            Move firstMove = new Move(pawn, new Coordinate(3, 0));
+            Move secondAndLastMove = new Move(pawn, new Coordinate(2, 1));
+            Move thirdMove = new Move(pawn, new Coordinate(3, 2));
+            bool result;
+
+            chessboard.Grid[2, 1].Upgraded = true;
+
+            chessboard.SetTurnForBlack();
+            result = chessboard.ExecuteMove(firstMove);
+            Assert.IsTrue(result, "A black upgraded pawn should be able to do this first move");
+
+            chessboard.SetTurnForBlack();
+            result = chessboard.ExecuteMove(secondAndLastMove);
+            Assert.IsTrue(result, "A black upgraded pawn should be able to do this second move");
+
+            chessboard.SetTurnForBlack();
+            result = chessboard.ExecuteMove(thirdMove);
+            Assert.IsTrue(result, "A black upgraded pawn should be able to do this third move");
+
+            chessboard.SetTurnForBlack();
+            result = chessboard.ExecuteMove(secondAndLastMove);
+            Assert.IsTrue(result, "A black upgraded pawn should be able to do this last move");
+        }
+        /*
+         * Aggiungi test per: - verificare che lo stato dichiarato in una mossa non sovrascrivi quello memorizzato nel server;
+         *                    - verificare che una pedina non possa spostarsi sopra ad un altra senza mangiarla
+         *                    - testare altri casi in cui una mossa con un damone non sia valida (esce dalla griglia, ...)
+         *                    - ...
+         */
     }
 }
