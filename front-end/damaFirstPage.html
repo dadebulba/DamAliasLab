@@ -4,16 +4,13 @@
     <meta charset='UTF-8'/>
     <title>VivaLaDama</title>
     <link rel='stylesheet' href='stylesFirstPage.css'/>
+    <script src="dama.js"> </script>  
   </head>
   <body>
     <div id='title'><h1>VIVA LA DAMA !</h1></div>
     <div id='menu'>
-      <form action="../DamAliasLab/front-end/damaMainPage.html">
-        <button type="submit">New Game</button>  
-      </form>
-      <form>
-        <div id='resumeButton' onclick="viewGamesTable()">Resume Game..</div>  
-      </form>
+      <a class='button' href="damaMainPage.html"> New Game </a>
+      <div class='button' onclick="viewGamesTable()">Resume Game..</div>  
     </div>
     <div id='container-tab'>
       <table id='table-games' cellspacing='0'>
@@ -41,10 +38,4 @@
     </div>
     
   </body>
-  <script>
-    function viewGamesTable(){
-      elem=document.getElementById('container-tab');
-      elem.style.display='flex';
-    }
-  </script>
 </html>
