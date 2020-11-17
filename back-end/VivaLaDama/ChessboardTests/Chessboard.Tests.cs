@@ -122,7 +122,7 @@ namespace VivaLaDama.UnitTests.Models
             yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 8), new Coordinate(4, -1))};
         }
         [TestMethod]
-        public void ChessboardExecute_CheckingIfBlackCanAttack_ReturnTrue()
+        public void ChessboardExecute_CheckingIfBlackCanAttack()
         {
             Chessboard chessboard = new Chessboard();
             Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
@@ -148,6 +148,39 @@ namespace VivaLaDama.UnitTests.Models
             Assert.IsTrue(result, "The number of white pawns should be lower then the number of black pawns!");
 
             result = chessboard.DoesThisPawnExist(whitePawn);
+            Assert.IsFalse(result, "This pawn should not exist anymore");
+        }
+        [TestMethod]
+        public void ChessboardExecute_CheckingIfWhiteCanAttack()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
+            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
+            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 2));
+            Move moveBlack2 = new Move(blackPawn, new Coordinate(4, 3));
+            Move moveWhite1 = null;
+            Move moveWhite2 = new Move(whitePawn, new Coordinate(3, 4));
+            int numWhitePawns, numBlackPawns;
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
+            numBlackPawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.BLACK);
+            result = numBlackPawns < numWhitePawns;
+            Assert.IsTrue(result, "The number of black pawns should be lower then the number of white pawns!");
+
+            result = chessboard.DoesThisPawnExist(blackPawn);
             Assert.IsFalse(result, "This pawn should not exist anymore");
         }
     }
