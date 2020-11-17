@@ -183,5 +183,33 @@ namespace VivaLaDama.UnitTests.Models
             result = chessboard.DoesThisPawnExist(blackPawn);
             Assert.IsFalse(result, "This pawn should not exist anymore");
         }
+        [TestMethod]
+        public void ChessboardExecute_CheckingThatWhiteUpgradedPawnCanMoveAllAround()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn pawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
+            Move firstMove = new Move(pawn, new Coordinate(4, 1));
+            Move secondAndLastMove = new Move(pawn, new Coordinate(5, 2));
+            Move thirdMove = new Move(pawn, new Coordinate(4, 3));
+            bool result;
+
+            chessboard.Grid[5, 2].Upgraded = true;
+
+            chessboard.SetTurnForWhite();
+            result = chessboard.ExecuteMove(firstMove);
+            Assert.IsTrue(result, "A white upgraded pawn should be able to do this first move");
+
+            chessboard.SetTurnForWhite();
+            result = chessboard.ExecuteMove(secondAndLastMove);
+            Assert.IsTrue(result, "A white upgraded pawn should be able to do this second move");
+
+            chessboard.SetTurnForWhite();
+            result = chessboard.ExecuteMove(thirdMove);
+            Assert.IsTrue(result, "A white upgraded pawn should be able to do this third move");
+
+            chessboard.SetTurnForWhite();
+            result = chessboard.ExecuteMove(secondAndLastMove);
+            Assert.IsTrue(result, "A white upgraded pawn should be able to do this last move");
+        }
     }
 }
