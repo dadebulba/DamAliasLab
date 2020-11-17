@@ -7,7 +7,7 @@ namespace VivaLaDama.Models
         private const int DEFAULT_LENGTH = 8;
         private const int ROWS_FILLED_OF_PAWNS = 3;
         private const int MAX_MOVE_DISTANCE = 2;
-        public Pawn[,] Grid { get; }
+        public Pawn[,] Grid { get; set; }
         public bool Turn { get; set; }//'false' when is the turn of the black pawns, 'true' otherwise
         public Chessboard()
         {
@@ -65,46 +65,36 @@ namespace VivaLaDama.Models
 
             if(this.IsMovementValid(from, to))
             {
-                if(difference.Row > 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
+                if(difference.Row < 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
                     dest1 = from.GetUpRight();
                     dest2 = dest1.GetUpRight();
                 }
-                else if(difference.Row < 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
+                else if(difference.Row < 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
                     dest1 = from.GetUpLeft();
                     dest2 = dest1.GetUpLeft();
                 }
-                else if(difference.Row < 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
+                else if(difference.Row > 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
                 {
                     dest1 = from.GetDownLeft();
                     dest2 = dest1.GetDownLeft();
                 }
-                else if(difference.Row > 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
+                else if(difference.Row > 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
                 {
                     dest1 = from.GetDownRight();
                     dest2 = dest1.GetDownRight();
                 }
             }
         }
-        public bool IsPawnPositionedAsDeclared(Pawn pawn, Coordinate clientCoord)
-        {
-            Coordinate serverCoord = this.GetCoordinateFromPawn(pawn);
-            return serverCoord != null && serverCoord.Equals(clientCoord);
-        }
-        public bool AreCoordinatesInRange(Coordinate from, Coordinate to)
-        {
-            return from.IsValid(DEFAULT_LENGTH) && to.IsValid(DEFAULT_LENGTH);
-        }
         private bool EvaluateMove(Move move)
         {
             Coordinate dest1, dest2;
             bool ret = false;
 
-            if(this.IsTurnRespected(move.Target) &&
-               this.AreCoordinatesInRange(move.From, move.To) &&
-               this.IsPawnPositionedAsDeclared(move.Target, move.From))
+            if(move!=null && this.DoesThisPawnExist(move.Target) && this.IsTurnRespected(move.Target) && move.To.IsValid(DEFAULT_LENGTH))
             {
+                move.From = this.GetCoordinateFromPawn(move.Target);
                 this.FindPossibleDestination(move, out dest1, out dest2);
 
                 if(dest1!=null && dest2!=null)
@@ -128,6 +118,26 @@ namespace VivaLaDama.Models
                         if(this.Grid[i, j]!=null && this.Grid[i, j].Equals(pawn))
                         {
                             ret = new Coordinate(i, j);
+                        }
+                    }
+                }
+            }
+
+            return ret;
+        }
+        public bool DoesThisPawnExist(Pawn pawn)
+        {
+            bool ret = false;
+
+            if (pawn != null)
+            {
+                for (var i=0; i<DEFAULT_LENGTH && ret==false; i++)
+                {
+                    for (var j=0; j<DEFAULT_LENGTH && ret==false; j++)
+                    {
+                        if (this.Grid[i, j]!=null && this.Grid[i, j].Equals(pawn))
+                        {
+                            ret = true;
                         }
                     }
                 }
@@ -172,16 +182,15 @@ namespace VivaLaDama.Models
         }
         public bool ExecuteMove(Move move)
         {
-            bool ret = this.EvaluateMove(move);
+            bool ret = true; 
 
-            if(ret==true)
-            {
-                this.UpdateGrid(move);
-            }
-            else if(move.Target==null && move.From.Equals(move.To)) //Skip
+            if(move==null)
             {
                 this.Turn = !this.Turn;
-                ret = true;
+            }
+            else if((ret=this.EvaluateMove(move)))
+            {
+                this.UpdateGrid(move);
             }
 
             return ret;

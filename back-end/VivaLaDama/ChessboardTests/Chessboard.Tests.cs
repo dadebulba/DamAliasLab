@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using VivaLaDama.Models;
 
 namespace VivaLaDama.UnitTests.Models
@@ -27,9 +28,7 @@ namespace VivaLaDama.UnitTests.Models
         public void ChessboardExecuteMove_CheckingIfPlayerCanSkip_ReturnTrue()
         {
             Chessboard chessboard = new Chessboard();
-            Coordinate from = new Coordinate(0, 0);
-            Coordinate to = new Coordinate(0, 0);
-            Move move = new Move(null, from, to);
+            Move move = null;
             bool turnBeforeMove = chessboard.Turn, turnAfterMove;
             bool result;
 
@@ -40,30 +39,27 @@ namespace VivaLaDama.UnitTests.Models
 
             Assert.IsTrue(result, "If a player skipped, the turn should go to the other player!");
         }
-        [TestMethod]
-        public void ChessboardExecuteMove_CheckingMovementWhiteLeft_ReturnTrue()
+        [DataTestMethod]
+        [DynamicData(nameof(GetData_ChessboardExecuteMove_CheckingMovementWhite), DynamicDataSourceType.Method)]
+        public void ChessboardExecuteMove_CheckingMovementWhite(Move move, bool resultExpected)
         {
             Chessboard chessboard = new Chessboard();
-            Pawn pawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
-            Coordinate from = chessboard.GetCoordinateFromPawn(pawn);
-            Coordinate to, dest1, dest2;
-            Move move;
             bool result;
 
             chessboard.SetTurnForWhite();
-            to = from.GetUpLeft();
-            move = new Move(pawn, from, to);
-
-            Assert.IsTrue(chessboard.IsTurnRespected(pawn), "Should be the turn of white!");
-            Assert.IsTrue(chessboard.IsPawnPositionedAsDeclared(pawn, move.From), "Should be positioned as declared!");
-            Assert.IsTrue(chessboard.AreCoordinatesInRange(move.From, move.To), "Coordinates should be in range!");
-            Assert.IsTrue(chessboard.IsMovementValid(move.From, move.To), "Should be a valid movement!");
-            chessboard.FindPossibleDestination(move, out dest1, out dest2);
-
-            Assert.IsTrue(chessboard.CheckMove(pawn, dest1, dest2, move.To), "Should be valid!");
-
             result = chessboard.ExecuteMove(move);
-            Assert.IsTrue(result, "A white pawn should have the possibility to move up-left");
+
+            Assert.AreEqual(resultExpected, result);
+        }
+
+        public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementWhite()
+        {
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 1)), true};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 3)), true};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(6, 1)), false};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(6, 3)), false};
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 2)), false };
+            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 2)), false };
         }
     }
 }
