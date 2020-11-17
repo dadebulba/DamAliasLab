@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <title>Dama</title>
+    <link rel='stylesheet' href='stylesMainPage.css'/>
+  </head>
+  <body>
+    <form action='' method='get' id="form">
+        <div class='container-player'> 
+            <div class='label black-piece'> </div>
+            <label for='player1'> PLAYER 1:</label>
+            <input id='player1' name='player1' type='text' placeholder='Inserisci nome' style='margin-left: 10px; height: 30px;'/>
+        </div>
+        <div class='container-player'>
+            <div class='label white-piece'> </div>
+            <label for='player2'> PLAYER 2:</label>
+            <input id='player2' name='player2' type='text' placeholder='Inserisci nome' style='margin-left: 10px; height: 30px;'/>
+        </div>
+        <button id="submit">Play!</button>
+    </form>
+    <div id='main'>
+        <table id='chessboard' cellspacing='0'>
+            <tr>
+              <td class='block white'> </td>
+              <td class='block black' id='b8'> <div class='piece black-piece'> </div></td>
+              <td class='block white'> </td>
+              <td class='block black' id='d8'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='f8'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='h8'> </td>
+            </tr>
+            <tr>
+              <td class='block black' id='a7'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='c7'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='e7'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='g7'> </td>
+              <td class='block white'> </td>
+            </tr>
+            <tr>
+              <td class='block white'> </td>
+              <td class='block black' id='b6'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='d6'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='f6'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='h6'> </td>
+            </tr>
+            <tr>
+              <td class='block black' id='a5'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='c5'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='e5'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='g5'> </td>
+              <td class='block white'> </td>
+            </tr>
+            <tr>
+              <td class='block white'> </td>
+              <td class='block black' id='b4'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='d4'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='f4'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='h4'> </td>
+            </tr>
+            <tr>
+              <td class='block black' id='a3'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='c3'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='e3'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='g3'> </td>
+              <td class='block white'> </td>
+            </tr>
+            <tr>
+              <td class='block white'> </td>
+              <td class='block black' id='b2'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='d2'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='f2'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='h2'> </td>
+            </tr>
+            <tr>
+              <td class='block black' id='a1'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='c1'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='e1'> </td>
+              <td class='block white'> </td>
+              <td class='block black' id='g1'> </td>
+              <td class='block white'> </td>
+            </tr>
+        </table>
+        <div id='moves-box'>
+            <h1 class='title'>MOSSE</h1>
+            <div id="container-list">
+                <ul>
+                    <li>MOSSA1</li>
+                    <li>MOSSA2</li>
+                    <li>MOSSA3</li>
+                </ul>
+            </div>
+        </div>
+        <div id='points-box'>
+            <h1 class='title'>PUNTEGGIO</h1>
+            <div class='player-points'>
+                <div class='label black-piece'> </div> PLAYER 1: 200
+            </div>
+            <div class='player-points'>
+                <div class='label white-piece'> </div> PLAYER 2: 500
+            </div>
+        </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="dama.js"> </script>
+</html>

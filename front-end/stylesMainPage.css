@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    height: 100%;
+    background-color: #EAEDF0;
+}
+body{
+    height: 100%;
+    color: #5D6063;
+    background-color: #EAEDF0;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    font-family: "Helvetica", "Arial", sans-serif;
+}
+#form{
+    background-color: #e1e5ea;
+    border: 1px solid #D6D9DC;
+    border-radius: 10px;
+    width: 95%;
+    min-width: 310px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 160px;
+}
+.container-player{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 320px;
+    padding: 7px;
+    font-size: 18px;
+    align-items: center;
+}
+#submit{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #5995DA;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 90px;
+    height: 40px;;
+}
+#submit:hover{
+    background-color: #76AEED;
+}
+#submit:active {
+    background-color: #407FC7;
+}
+.label{
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.piece{
+    width:70%;
+    height: 75%;
+    margin: 12%;
+    border-radius: 50%;
+    box-sizing: content-box;
+}
+.black-piece{
+    border: 1px solid #374049;  /*25*/
+    border-bottom: 5px solid #374049; /*25*/
+    background-color: #586674; /*40*/
+}
+.black-piece:hover{
+    background-color: #7c8c9c; /*55*/
+    border: 1px solid #586674;  /*40*/
+    border-bottom: 5px solid #586674;  /*40*/  
+}
+.black-piece:active{
+    border: 1px solid #374049;  /*25*/
+    border-bottom: 5px solid #374049; /*25*/
+    background-color: #586674;
+}
+.white-piece{
+    border: 1px solid #5f666d;
+    border-bottom: 5px solid #5f666d ;
+    background-color: #d7d9db;
+}
+.white-piece:hover{
+    background-color: #e1e2e4;
+    border: 1px solid #afb3b6;
+    border-bottom: 5px solid #afb3b6;
+}
+.white-piece:active{
+    border: 1px solid #5f666d;
+    border-bottom: 5px solid #5f666d ;
+    background-color: #d7d9db;
+}
+#main{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 95%;
+    height: 100%; 
+    margin-top: 10px;
+}
+#chessboard{
+    border: 1px solid #D6D9DC;
+    width: 85vw;
+    max-width: 400px;
+    height: 85vw;
+    max-height: 400px;
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+.block{
+    width: 12.5%;
+    height: 12.5%;
+}
+.white{
+    background-color: #e1e5ea;
+}
+.black{
+    background-color: #8997a9;
+}
+.white:hover{
+    background-color: #f0f2f4;
+}
+.black:hover{
+    background-color: #97a4b4;
+}
+.piece{
+    width:70%;
+    height: 75%;
+    margin: 12%;
+    border-radius: 50%;
+    box-sizing: content-box;
+}
+.black-piece{
+    border: 1px solid #374049;  /*25*/
+    border-bottom: 5px solid #374049; /*25*/
+    background-color: #586674; /*40*/
+}
+.black-piece:hover{
+    background-color: #7c8c9c; /*55*/
+    border: 1px solid #586674;  /*40*/
+    border-bottom: 5px solid #586674;  /*40*/
+}
+.black-piece:active{
+    border: 1px solid #374049;  /*25*/
+    border-bottom: 5px solid #374049; /*25*/
+    background-color: #586674;
+}
+.white-piece{
+    border: 1px solid #5f666d;
+    border-bottom: 5px solid #5f666d ;
+    background-color: #d7d9db;
+}
+.white-piece:hover{
+    background-color: #e1e2e4;
+    border: 1px solid #afb3b6;
+    border-bottom: 5px solid #afb3b6;
+}
+.white-piece:active{
+    border: 1px solid #5f666d;
+    border-bottom: 5px solid #5f666d ;
+    background-color: #d7d9db;
+}
+#moves-box{
+    background-color: #e1e5ea;
+    border: 1px solid #D6D9DC;
+    border-radius: 10px;
+    margin: 20px 5px 0 0;
+    font-size: 14px;
+    width:40%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+#points-box{
+    background-color: #e1e5ea;
+    border: 1px solid #D6D9DC;
+    border-radius: 10px;
+    margin: 20px 0 0 5px;
+    font-size: 14px;
+    width:40%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.title{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.player-points{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+@media only screen and (min-width: 961px) {
+    #main{
+        justify-content: space-around;
+    }
+    .container-player{
+      width: 40%;
+    }
+    #submit{
+        align-self: center;
+    }
+    #moves-box{
+        margin-top: 10px;
+        width: 25%
+    }
+    #points-box{
+        margin-top: 10px;
+        order:2 ;
+        width: 25%;
+    }
+    #chessboard{
+        width: 42%;
+        margin: 30px;
+        order: 1;
+        margin-top: 50px;
+    }
+  }
