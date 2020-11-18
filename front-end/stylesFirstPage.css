@@ -33,7 +33,7 @@ h1{
     margin-bottom:40px;
 }
 #menu{
-    margin-top:100px;
+    margin-top:70px;
     background-color: #e1e5ea;
     border: 1px solid #D6D9DC;
     border-radius: 10px;
@@ -42,14 +42,10 @@ h1{
     justify-content: space-around;
     flex-wrap: wrap;
 }
-form{
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-button{
+.button{
+    font-size: 15px;
     font-weight: bold;
+    text-decoration: none;
     color: #FFFFFF;
     background-color: #5995DA;
     border: none;
@@ -57,33 +53,20 @@ button{
     cursor: pointer;
     height: 50px;
     width: 140px;
-    margin: 10px;
-}
-#resumeButton{
-    line-height: 50px;
+    margin: 20px 10px 20px 10px;
     text-align: center;
-    font-weight: bold;
-    font-size: 14px;
-    color: #FFFFFF;
-    background-color: #5995DA;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 50px;
-    width: 140px;
-    margin: 10px;
-    
+    line-height: 50px
 }
-button:hover{
+.button:hover{
     background-color: #76AEED;
 }
-button:active {
+.button:active {
     background-color: #407FC7;
 }
-#resumeButton:hover{
+.resumeButton:hover{
     background-color: #76AEED;
 }
-#resumeButton:active {
+.resumeButton:active {
     background-color: #407FC7;
 }
 #container-tab{
@@ -137,7 +120,8 @@ td{
     #menu{
         flex-wrap: nowrap;
     }
-    #form{
-        width:100%;   
+    .button{
+        margin-top:20px;
+        margin-bottom:20px;
     }
 }

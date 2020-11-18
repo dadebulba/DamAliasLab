@@ -30,6 +30,14 @@ body{
     flex-wrap: wrap;
     height: 160px;
 }
+#player1{
+    margin-left: 10px; 
+    height: 30px;
+}
+#player2{
+    margin-left: 10px; 
+    height: 30px;
+}
 .container-player{
     display: flex;
     justify-content: center;
