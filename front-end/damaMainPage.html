@@ -6,7 +6,7 @@
     <link rel='stylesheet' href='stylesMainPage.css'/>
   </head>
   <body>
-    <form action='' method='GET' id="form">
+    <form action='' method='POST' id="form">
         <div class='container-player'> 
             <div class='label black-piece'> </div>
             <label for='player1'> PLAYER 1:</label>
@@ -17,13 +17,13 @@
             <label for='player2'> PLAYER 2:</label>
             <input id='player2' name='player2' type='text' placeholder='Inserisci nome' />
         </div>
-        <button id="submit" onclick="hideForm()">Play!</button>
+        <button id="submit">Play!</button>
     </form>
     <div id='main'>
         <table id='chessboard' cellspacing='0'>
             <tr>
               <td class='block white'> </td>
-              <td class='block black' id='b8'> <div class='piece black-piece'> </div></td>
+              <td class='block black' id='b8'> </td>
               <td class='block white'> </td>
               <td class='block black' id='d8'> </td>
               <td class='block white'> </td>
@@ -123,5 +123,4 @@
         </div>
     </div>
   </body>
-  <script type="text/javascript" src="dama.js"> </script>
 </html>

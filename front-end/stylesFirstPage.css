@@ -11,7 +11,7 @@ body{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    border: solid 1px black;
+    border: solid 1px #EAEDF0;
     height: 100%;
     font-family: "Helvetica", "Arial", sans-serif;
     align-content: flex-start;
@@ -43,7 +43,7 @@ h1{
     flex-wrap: wrap;
 }
 .button{
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     text-decoration: none;
     color: #FFFFFF;
