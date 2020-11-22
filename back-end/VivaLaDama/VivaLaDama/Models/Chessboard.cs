@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VivaLaDama.Models
 {
@@ -254,6 +255,34 @@ namespace VivaLaDama.Models
         public void SetTurnForBlack()
         {
             this.Turn = false;
+        }
+        private List<PawnPositioned> GetPawnByColor(Pawn.ColorPawn color)
+        {
+            List<PawnPositioned> ret = new List<PawnPositioned>();
+            Coordinate position = new Coordinate(-1,-1);
+
+            for(int i=0; i<DEFAULT_LENGTH; i++)
+            {
+                position.Row = i;
+                for(int j=0; j<DEFAULT_LENGTH; j++)
+                {
+                    position.Column = j;
+                    if(this.IsBoxNotEmpty(position) && this.Grid[i, j].Color==color)
+                    {
+                        ret.Add(new PawnPositioned(this.Grid[i, j], position));
+                    }
+                }
+            }
+
+            return ret;
+        }
+        public List<PawnPositioned> GetBlack()
+        {
+            return GetPawnByColor(Pawn.ColorPawn.BLACK);
+        }
+        public List<PawnPositioned> GetWhite()
+        {
+            return GetPawnByColor(Pawn.ColorPawn.WHITE);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace VivaLaDama.Models
         }
         public bool ExecuteMove(Move move)
         {
-            bool ret = this.Game.ExecuteMove();
+            bool ret = this.Game.ExecuteMove(move);
 
             if(ret==true)
             {
