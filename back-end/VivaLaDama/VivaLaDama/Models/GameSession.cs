@@ -20,7 +20,7 @@ namespace VivaLaDama.Models
 
             if(ret==true)
             {
-                Moves.Add(move);
+                this.Moves.Add(move);
             }
 
             return ret;

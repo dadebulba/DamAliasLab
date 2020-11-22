@@ -1,1 +1,11 @@
-ignorare.txt
+*.suo
+*.v2
+*.exe
+*.json
+*.dll
+*.pdb
+*.cache
+*.txt
+*.testlog
+*.manifest
+*.config
