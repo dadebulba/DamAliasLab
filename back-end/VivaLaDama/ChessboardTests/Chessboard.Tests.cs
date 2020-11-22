@@ -239,11 +239,60 @@ namespace VivaLaDama.UnitTests.Models
             result = chessboard.ExecuteMove(secondAndLastMove);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this last move");
         }
-        /*
-         * Aggiungi test per: - verificare che lo stato dichiarato in una mossa non sovrascrivi quello memorizzato nel server;
-         *                    - verificare che una pedina non possa spostarsi sopra ad un altra senza mangiarla
-         *                    - testare altri casi in cui una mossa con un damone non sia valida (esce dalla griglia, ...)
-         *                    - ...
-         */
+        [TestMethod]
+        public void ChessboardExecute_CheckingIfNormalPawnsCanEatUpgradedPawns_ReturnFalse()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
+            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
+            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 2));
+            Move moveBlack2 = new Move(blackPawn, new Coordinate(4, 3));
+            Move moveWhite1 = null;
+            Move moveWhite2 = new Move(whitePawn, new Coordinate(3, 4));
+            int numWhitePawns, numBlackPawns;
+            bool result;
+
+            chessboard.Grid[2, 1].Upgraded = true;
+
+            result = chessboard.ExecuteMove(moveBlack1);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2);
+            Assert.IsFalse(result, "The second white move should not be valid!");//Mossa non valida
+
+            numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
+            numBlackPawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.BLACK);
+            result = numBlackPawns == numWhitePawns;
+            Assert.IsTrue(result, "The number of black pawns should be equal to the number of white pawns!");
+
+            result = chessboard.DoesThisPawnExist(blackPawn);
+            Assert.IsTrue(result, "This pawn should exist");
+        }
+        [TestMethod]
+        public void ChessboardExecute_CheckingIfPawnCanMoveOnAnotherPawnWithoutEatingIt_ReturnFalse()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
+            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
+            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 2));
+            Move moveBlack2 = new Move(blackPawn, new Coordinate(4, 3));
+            Move moveWhite = new Move(whitePawn, new Coordinate(4, 3));
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2);
+            Assert.IsFalse(result, "The second black move should not be valid!");
+        }
     }
 }
