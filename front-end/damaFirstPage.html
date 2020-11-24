@@ -4,27 +4,42 @@
     <meta charset='UTF-8'/>
     <title>VivaLaDama</title>
     <link rel='stylesheet' href='stylesFirstPage.css'/>
+    <script type="module" src="./events.js" defer> </script>
+    <script type="module" src="./apiService.js"> </script>
   </head>
-  <body>
+  <body>  
     <div id='title'><h1>VIVA LA DAMA !</h1></div>
     <div id='menu'>
-      <a class='button' href="damaMainPage.html"> New Game </a>
+      <div class='button' id='new'> New Game </div>
       <div class='button' id='resume'>Resume Game..</div>  
     </div>
     <div id='container-tab'>
-      <table id='table-games' cellspacing='0'>
-        <tr id='heading'>
-          <th class='first-column'>ID</td>
-          <th class='second-column' >Players</td>
-          <th class='third-column'>Points</td>
-        </tr>
-        <tr class='rows'>
-          <td>ID1</td>
-          <td>Player1 - Player2</td>
-          <td>500-200</td>
-        </tr>
-      </table>
+        <table id='table-games' cellspacing='0'>
+          <tr id='heading'>
+            <th class='first-column'>ID</td>
+            <th class='second-column'>Players</td>
+            <th class='third-column'></td>
+          </tr>
+          <tr class='rows'>
+            <td>ID</td>
+            <td>Player1 - Player2</td>
+            <td><button class="lastColumn" id="partita">play!</button></td>
+          </tr>
+        </table>
     </div>
-    <script src="dama.js"> </script>
+    <form action='' method='POST' id="form">
+      <div class='container-player'> 
+          <div class='label black-piece'> </div>
+          <label for='player1'> PLAYER 1:</label>
+          <input id='player1' name='player1' type='text' placeholder='Inserisci nome'/>
+      </div>
+      <div class='container-player'>
+          <div class='label white-piece'> </div>
+          <label for='player2'> PLAYER 2:</label>
+          <input id='player2' name='player2' type='text' placeholder='Inserisci nome' />
+      </div>
+      <button id="submit">Play!</button>
+    </form>
+    <div id="pageContent"></div>
   </body>
 </html>

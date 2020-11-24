@@ -4,102 +4,91 @@
     <meta charset='UTF-8'/>
     <title>Dama</title>
     <link rel='stylesheet' href='stylesMainPage.css'/>
+    <script type="text/javascript" src="./eventsMainPage.js" defer> </script>
   </head>
-  <body>
-    <form action='' method='POST' id="form">
-        <div class='container-player'> 
-            <div class='label black-piece'> </div>
-            <label for='player1'> PLAYER 1:</label>
-            <input id='player1' name='player1' type='text' placeholder='Inserisci nome'/>
-        </div>
-        <div class='container-player'>
-            <div class='label white-piece'> </div>
-            <label for='player2'> PLAYER 2:</label>
-            <input id='player2' name='player2' type='text' placeholder='Inserisci nome' />
-        </div>
-        <button id="submit">Play!</button>
-    </form>
+  <body onload="insertName()">
+    <div id='title'><h1>VIVA LA DAMA !</h1></div>
     <div id='main'>
         <table id='chessboard' cellspacing='0'>
             <tr>
-              <td class='block white'> </td>
-              <td class='block black' id='b8'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='d8'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='f8'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='h8'> </td>
+              <td class='block white' id="a11"> </td>
+              <td class='block black' id="a12"> </td>
+              <td class='block white' id="a13"> </td>
+              <td class='block black' id="a14"> </td>
+              <td class='block white' id="a15"> </td>
+              <td class='block black' id="a16"> </td>
+              <td class='block white' id="a17"> </td>
+              <td class='block black' id="a18"> </td>
             </tr>
             <tr>
-              <td class='block black' id='a7'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='c7'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='e7'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='g7'> </td>
-              <td class='block white'> </td>
+              <td class='block black' id="a21"> </td>
+              <td class='block white' id="a22"> </td>
+              <td class='block black' id="a23"> </td>
+              <td class='block white' id="a24"> </td>
+              <td class='block black' id="a25"> </td>
+              <td class='block white' id="a26"> </td>
+              <td class='block black' id="a27"> </td>
+              <td class='block white' id="a28"> </td>
             </tr>
             <tr>
-              <td class='block white'> </td>
-              <td class='block black' id='b6'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='d6'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='f6'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='h6'> </td>
+              <td class='block white' id="a31"> </td>
+              <td class='block black' id="a32"> </td>
+              <td class='block white' id="a33"> </td>
+              <td class='block black' id="a34"> </td>
+              <td class='block white' id="a35"> </td>
+              <td class='block black' id="a36"> </td>
+              <td class='block white' id="a37"> </td>
+              <td class='block black' id="a38"> </td>
             </tr>
             <tr>
-              <td class='block black' id='a5'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='c5'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='e5'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='g5'> </td>
-              <td class='block white'> </td>
+              <td class='block black' id="a41"> </td>
+              <td class='block white' id="a42"> </td>
+              <td class='block black' id="a43"> </td>
+              <td class='block white' id="a44"> </td>
+              <td class='block black' id="a45"> </td>
+              <td class='block white' id="a46"> </td>
+              <td class='block black' id="a47"> </td>
+              <td class='block white' id="a48"> </td>
             </tr>
             <tr>
-              <td class='block white'> </td>
-              <td class='block black' id='b4'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='d4'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='f4'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='h4'> </td>
+              <td class='block white' id="a51"> </td>
+              <td class='block black' id="a52"> </td>
+              <td class='block white' id="a53"> </td>
+              <td class='block black' id="a54"> </td>
+              <td class='block white' id="a55"> </td>
+              <td class='block black' id="a56"> </td>
+              <td class='block white' id="a57"> </td>
+              <td class='block black' id="a58"> </td>
             </tr>
             <tr>
-              <td class='block black' id='a3'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='c3'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='e3'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='g3'> </td>
-              <td class='block white'> </td>
+              <td class='block black' id="a61"> </td>
+              <td class='block white' id="a62"> </td>
+              <td class='block black' id="a63"> </td>
+              <td class='block white' id="a64"> </td>
+              <td class='block black' id="a65"> </td>
+              <td class='block white' id="a66"> </td>
+              <td class='block black' id="a67"> </td>
+              <td class='block white' id="a68"> </td>
             </tr>
             <tr>
-              <td class='block white'> </td>
-              <td class='block black' id='b2'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='d2'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='f2'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='h2'> </td>
+              <td class='block white' id="a71"> </td>
+              <td class='block black' id="a72"> </td>
+              <td class='block white' id="a73"> </td>
+              <td class='block black' id="a74"> </td>
+              <td class='block white' id="a75"> </td>
+              <td class='block black' id="a76"> </td>
+              <td class='block white' id="a77"> </td>
+              <td class='block black' id="a78"> </td>
             </tr>
             <tr>
-              <td class='block black' id='a1'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='c1'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='e1'> </td>
-              <td class='block white'> </td>
-              <td class='block black' id='g1'> </td>
-              <td class='block white'> </td>
+              <td class='block black' id="a81"> </td>
+              <td class='block white' id="a82"> </td>
+              <td class='block black' id="a83"> </td>
+              <td class='block white' id="a84"> </td>
+              <td class='block black' id="a85"> </td>
+              <td class='block white' id="a86"> </td>
+              <td class='block black' id="a87"> </td>
+              <td class='block white' id="a88"> </td>
             </tr>
         </table>
         <div id='moves-box'>
@@ -114,10 +103,10 @@
         </div>
         <div id='points-box'>
             <h1 class='title'>PUNTEGGIO</h1>
-            <div class='player-points'>
+            <div class='player-points' id="name-player1">
                 <div class='label black-piece'> </div> PLAYER 1: 200
             </div>
-            <div class='player-points'>
+            <div class='player-points' id="name-player2">
                 <div class='label white-piece'> </div> PLAYER 2: 500
             </div>
         </div>
