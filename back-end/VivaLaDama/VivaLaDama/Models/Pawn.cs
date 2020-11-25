@@ -8,6 +8,12 @@ namespace VivaLaDama.Models
         public long Id { get; }
         public ColorPawn Color { get; }
         public bool Upgraded { get; set; }
+        public Pawn()
+        {
+            this.Id = -131;
+            this.Color = ColorPawn.WHITE;
+            this.Upgraded = false;
+        }
         public Pawn(ColorPawn color, long id)
         {
             this.Color = color;
@@ -37,6 +43,10 @@ namespace VivaLaDama.Models
             }
 
             return ret;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

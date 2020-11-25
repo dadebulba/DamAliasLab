@@ -5,6 +5,12 @@
         public Pawn Target { get; set; }//The target is the pawn that has been moved
         public Coordinate From { get; set; }
         public Coordinate To { get; set; }
+        public Move()
+        {
+            this.Target = null;
+            this.From = null;
+            this.To = null;
+        }
         public Move(Pawn target, Coordinate to)
         {
             this.Target = target;

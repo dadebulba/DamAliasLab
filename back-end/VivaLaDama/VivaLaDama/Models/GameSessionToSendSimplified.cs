@@ -7,14 +7,14 @@ namespace VivaLaDama.Models
 {
     public class GameSessionToSendSimplified
     {
-        public int Id { get; }
+        public long Id { get; }
         public string NamePlayer1 { get; }
         public string NamePlayer2 { get; }
-        public GameSessionToSendSimplified(int id, string namePlayer1, string namePlayer2)
+        public GameSessionToSendSimplified(GameSession gameSession)
         {
-            this.Id = id;
-            this.NamePlayer1 = namePlayer1;
-            this.NamePlayer2 = namePlayer2;
+            this.Id = gameSession.IdGame;
+            this.NamePlayer1 = gameSession.NamePlayer1;
+            this.NamePlayer2 = gameSession.NamePlayer2;
         }
     }
 }

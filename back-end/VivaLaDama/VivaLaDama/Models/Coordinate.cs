@@ -4,6 +4,11 @@
     {
         public int Row { get; set; }
         public int Column { get; set; }
+        public Coordinate()
+        {
+            this.Row = -1;
+            this.Column = -1;
+        }
         public Coordinate(int row, int column)
         {
             this.Row = row;
@@ -28,6 +33,10 @@
             }
 
             return ret;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
         public Coordinate GetDownLeft()
         {

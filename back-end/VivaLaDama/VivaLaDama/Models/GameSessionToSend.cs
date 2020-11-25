@@ -7,7 +7,7 @@ namespace VivaLaDama.Models
 {
     public class GameSessionToSend
     {
-        public long IdGame { get; set; }
+        public long Id { get; set; }
         public string NamePlayer1 { get; set; }
         public string NamePlayer2 { get; set; }
         public List<Move> Moves { get; }
@@ -15,7 +15,7 @@ namespace VivaLaDama.Models
         public List<PawnPositioned> White { get; }
         public GameSessionToSend(GameSession gameSession)
         {
-            this.IdGame = gameSession.IdGame;
+            this.Id = gameSession.IdGame;
             this.NamePlayer1 = gameSession.NamePlayer1;
             this.NamePlayer2 = gameSession.NamePlayer2;
             this.Moves = gameSession.Moves;
