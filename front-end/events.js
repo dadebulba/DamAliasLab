@@ -24,15 +24,13 @@ function viewForm(){
 async function viewTableGames(){
     if(j==0){
 
-        let response = await getGame();
+       let response = await getGame();
+       //let obj = await response.json(); // read response body and parse as JSON
 
-        let obj = await response.json(); // read response body and parse as JSON
-
-        //E' UNA PROVA
-        for(let key in obj){
+       for(let key in response){
             let tr = document.createElement('tr');
             tr.className = `rows`; //poi aggiungere class${key} se serve una classe diversa per ogni riga
-            tr.innerHTML=`<td> ${key} </td> <td>${obj[key].temperatureC}-${obj[key].temperatureF}</td> <td><button class="lastColumn" id="${key}" >play!</button></td>`;
+            tr.innerHTML=`<td> ${response[key].id} </td> <td>${response[key].player1}-${response[key].player2}</td> <td><button class="lastColumn" id="${key}" >play!</button></td>`;
             let heading=document.getElementById("heading");
             heading.after(tr);
         }

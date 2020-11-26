@@ -7,7 +7,7 @@ let ciao=document.getElementById("ciao");
 //ciao.addEventListener("onload", insertName);    
 
 
-function insertName(){
+/*function insertName(){
     nameP1.innerHTML=`<div class='label white-piece'> </div> : 500`;
     nameP2.innerHTML=`<div class='label white-piece'> </div> : 500`;
-}
+}*/
