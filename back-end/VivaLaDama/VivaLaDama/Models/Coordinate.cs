@@ -1,9 +1,11 @@
-﻿namespace VivaLaDama.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace VivaLaDama.Models
 {
     public class Coordinate
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
+        public int Row { get; }
+        public int Column { get; }
         public Coordinate()
         {
             this.Row = -1;
@@ -33,10 +35,6 @@
             }
 
             return ret;
-        }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
         public Coordinate GetDownLeft()
         {

@@ -44,9 +44,5 @@ namespace VivaLaDama.Models
 
             return ret;
         }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
     }
 }

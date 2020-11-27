@@ -9,10 +9,12 @@ namespace VivaLaDama.Models
         public string NamePlayer2 { get; set; }
         public Chessboard Game { get; }
         public List<Move> Moves { get; }
+        private int numMosse;
         public GameSession()
         {
             this.Game = new Chessboard();
             this.Moves = new List<Move>();
+            this.numMosse = 0;
         }
         public bool ExecuteMove(Move move)
         {
@@ -20,6 +22,7 @@ namespace VivaLaDama.Models
 
             if(ret==true)
             {
+                move.IdMossa = this.numMosse++;
                 this.Moves.Add(move);
             }
 
