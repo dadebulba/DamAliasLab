@@ -27,5 +27,30 @@ namespace VivaLaDama.Controllers
         {
             return await _context.GameSessions.Select(x => new GameSessionToSendSimplified(x)).ToListAsync();
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GameSessionToSendSimplified>> GetGameSession(long id)
+        {
+            GameSession game = await this._context.GameSessions.FindAsync(id);
+
+            if(game==null)
+            {
+                return NotFound();
+            }
+
+            return new GameSessionToSendSimplified(game);
+        }
+        //POST api/game
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<NameOfPlayers>>> PostGameSessions(NameOfPlayers names)
+        {
+            GameSession game = new GameSession();
+            game.NamePlayer1 = names.NamePlayer1;
+            game.NamePlayer2 = names.NamePlayer2;
+
+            this._context.Add(game);
+            await this._context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetGameSessions), new { id = game.IdGame }, new GameSessionToSend(game));
+        }
     }
 }
