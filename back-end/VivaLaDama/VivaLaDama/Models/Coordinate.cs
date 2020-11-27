@@ -8,8 +8,8 @@ namespace VivaLaDama.Models
         public int Column { get; }
         public Coordinate()
         {
-            this.Row = -1;
-            this.Column = -1;
+            this.Row = -131;
+            this.Column = -131;
         }
         public Coordinate(int row, int column)
         {

@@ -6,7 +6,7 @@ namespace VivaLaDama.Models
     public class Chessboard
     {
         private const int DEFAULT_LENGTH = 8;
-        private const int ROWS_FILLED_OF_PAWNS = 3;
+        private const int ROWS_FILLED_OF_PAWNS = 1;
         private const int MAX_MOVE_DISTANCE = 2;
         public Pawn[,] Grid { get; set; }
         public bool Turn { get; set; }//'false' when is the turn of the black pawns, 'true' otherwise

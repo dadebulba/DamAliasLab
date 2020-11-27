@@ -8,14 +8,14 @@
         public Coordinate To { get; set; }
         public Move()
         {
-            this.IdMossa = -1;
+            this.IdMossa = -131;
             this.Target = null;
             this.From = null;
             this.To = null;
         }
         public Move(Pawn target, Coordinate to)
         {
-            this.IdMossa = -1;
+            this.IdMossa = -131;
             this.Target = target;
             this.From = null;
             this.To = to;
