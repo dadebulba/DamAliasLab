@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    height: 100%;
+}  
+body{    
+    background-color:#EAEDF0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: solid 1px black;
+    height: 100%;
+    font-family: "Helvetica", "Arial", sans-serif;
+    align-content: flex-start;
+}
+#title{
+    margin-top:50px;
+    width: 70%;
+    min-width: 235px;
+    background-color: #e1e5ea;
+    border: 1px solid #D6D9DC;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+h1{
+    font-size: 25px;
+    color: #5D6063;
+    margin-top:40px;
+    margin-bottom:40px;
+}
+#menu{
+    margin-top:70px;
+    background-color: #e1e5ea;
+    border: 1px solid #D6D9DC;
+    border-radius: 10px;
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.button{
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #5995DA;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 50px;
+    width: 140px;
+    margin: 20px 10px 20px 10px;
+    text-align: center;
+    line-height: 50px
+}
+.button:hover{
+    background-color: #76AEED;
+}
+.button:active {
+    background-color: #407FC7;
+}
+.resumeButton:hover{
+    background-color: #76AEED;
+}
+.resumeButton:active {
+    background-color: #407FC7;
+}
+#container-tab{
+    margin-top:20px;
+    background-color: #e1e5ea;
+    border: 1px solid #D6D9DC;
+    border-radius: 10px;
+    width: 70%;
+    min-width: 240px;
+    display: flex;
+    justify-content: center;
+    display: none;
+}
+#table-games{
+    width: 90%;
+    margin-top:10px;
+    margin-bottom: 10px;
+    border: 2px solid #8997a9 ;
+    border-radius: 5px;
+    text-align: center;
+}
+#heading{
+    font-size: 17px;
+    background-color: #8997a9;
+    color: white;
+    height: 30px;
+}
+.first-column{   /*ME>TTO DIMENSIONI SOLO PER LA PRIMA RIGA; IL RESTO SI ADATTA*/
+    width:10%;
+}
+.second-column{
+    width: 60%;
+}
+.third-column{
+    width:30%;
+}
+td{
+    border: solid 1px #8997a9;
+}
+.rows{
+    background-color: #EAEDF0;
+    color: #5D6063 ;
+    font-size: 15px;
+}
+
+/* Tablet and Desktop Styles */
+@media only screen and (min-width: 700px) {
+    h1{
+        font-size: 3.6vw;
+    }
+    #menu{
+        flex-wrap: nowrap;
+    }
+    .button{
+        margin-top:20px;
+        margin-bottom:20px;
+    }
+}
