@@ -13,7 +13,7 @@ namespace VivaLaDama.Models
             this.Id = pawn.Id;
             this.Color = pawn.Color;
             this.Upgraded = pawn.Upgraded;
-            this.Position = position;
+            this.Position = new Coordinate { Row = position.Row, Column = position.Column };
         }
     }
 }
