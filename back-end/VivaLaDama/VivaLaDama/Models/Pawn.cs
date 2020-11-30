@@ -5,21 +5,9 @@ namespace VivaLaDama.Models
     public class Pawn
     {
         public enum ColorPawn { WHITE, BLACK }
-        public long Id { get; }
-        public ColorPawn Color { get; }
+        public long Id { get; set; }
+        public ColorPawn Color { get; set; }
         public bool Upgraded { get; set; }
-        public Pawn()
-        {
-            this.Id = -131;
-            this.Color = ColorPawn.WHITE;
-            this.Upgraded = false;
-        }
-        public Pawn(ColorPawn color, long id)
-        {
-            this.Color = color;
-            this.Id = id;
-            this.Upgraded = false;
-        }
         public ColorPawn GetOpponentColor()
         {
             return (this.Color == ColorPawn.WHITE ? ColorPawn.BLACK : ColorPawn.WHITE);

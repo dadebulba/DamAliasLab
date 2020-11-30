@@ -30,11 +30,11 @@ namespace VivaLaDama.Models
                     {
                         if(i<ROWS_FILLED_OF_PAWNS)//Putting in the first 3 rows black pawns
                         {
-                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.BLACK, numBlackPawns++);
+                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = numBlackPawns++, Upgraded = false };
                         }
                         else if(i>=DEFAULT_LENGTH-ROWS_FILLED_OF_PAWNS)//Putting in the last three rows white pawns
                         {
-                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.WHITE, numWhitePawns++);
+                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = numWhitePawns++, Upgraded = false };
                         }
                     }
                 }
@@ -124,7 +124,7 @@ namespace VivaLaDama.Models
                     {
                         if(this.Grid[i, j]!=null && this.Grid[i, j].Equals(pawn))
                         {
-                            ret = new Coordinate(i, j);
+                            ret = new Coordinate { Row = i, Column = j };
                         }
                     }
                 }
@@ -229,14 +229,15 @@ namespace VivaLaDama.Models
         }
         public int GetNumberOfPawnsOfColor(Pawn.ColorPawn color)
         {
-            Coordinate coordinate; ;
+            Coordinate coordinate=new Coordinate();
             int numPawns = 0;
 
             for(int i=0; i<DEFAULT_LENGTH; i++)
             {
+                coordinate.Row = i;
                 for(int j=0; j<DEFAULT_LENGTH; j++)
                 {
-                    coordinate = new Coordinate(i, j);
+                    coordinate.Column = j;
 
                     if(this.IsBoxNotEmpty(coordinate) && this.Grid[i, j].Color==color)
                     {
@@ -258,13 +259,14 @@ namespace VivaLaDama.Models
         private List<PawnPositioned> GetPawnByColor(Pawn.ColorPawn color)
         {
             List<PawnPositioned> ret = new List<PawnPositioned>();
-            Coordinate position;
+            Coordinate position = new Coordinate();
 
             for(int i=0; i<DEFAULT_LENGTH; i++)
             {
-                for(int j=0; j<DEFAULT_LENGTH; j++)
+                position.Row = i;
+                for (int j=0; j<DEFAULT_LENGTH; j++)
                 {
-                    position = new Coordinate(i, j);
+                    position.Column = j;
                     if(this.IsBoxNotEmpty(position) && this.Grid[i, j].Color==color)
                     {
                         ret.Add(new PawnPositioned(this.Grid[i, j], position));

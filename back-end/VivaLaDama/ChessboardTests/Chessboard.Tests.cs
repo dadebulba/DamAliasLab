@@ -53,14 +53,14 @@ namespace VivaLaDama.UnitTests.Models
         }
         public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementWhite()
         {
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 1)), true };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 3)), true };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(6, 1)), false };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(6, 3)), false };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(4, 2)), false };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 2)), false };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 0)), false };
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 1), new Coordinate(3, 4)), false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 4, Column = 1 } }, true };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 4, Column = 3 } }, true };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 6, Column = 1 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 6, Column = 3 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 4, Column = 2 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 3, Column = 2 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 3, Column = 0 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 }, To = new Coordinate { Row = 3, Column = 4 } }, false };
         }
         [DataTestMethod]
         [DynamicData(nameof(GetData_ChessboardExecuteMove_CheckingMovementWhiteOutOfGrid), DynamicDataSourceType.Method)]
@@ -76,9 +76,9 @@ namespace VivaLaDama.UnitTests.Models
         }
         public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementWhiteOutOfGrid()
         {
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 0), new Coordinate(4, -1))};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 0), new Coordinate(5, -2))};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 3), new Coordinate(5, 8))};
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 0 }, To = new Coordinate { Row = 4, Column = -1 } } };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 0 }, To = new Coordinate { Row = 5, Column = -2 } } };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 3 }, To = new Coordinate { Row = 5, Column = 8 } } };
         }
         [DataTestMethod]
         [DynamicData(nameof(GetData_ChessboardExecuteMove_CheckingMovementBlack), DynamicDataSourceType.Method)]
@@ -94,14 +94,14 @@ namespace VivaLaDama.UnitTests.Models
         }
         public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementBlack()
         {
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(3, 2)), true};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(3, 4)), true};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(1, 2)), false};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(1, 4)), false};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(4, 1)), false};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(4, 5)), false};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(4, 3)), false};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.BLACK, 9), new Coordinate(3, 3)), false};
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 3, Column = 2 } }, true };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 3, Column = 4 } }, true };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 1, Column = 2 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 1, Column = 4 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 4, Column = 1 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 4, Column = 5 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 4, Column = 3 } }, false };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 9 }, To = new Coordinate { Row = 3, Column = 3 } }, false };
         }
         [DataTestMethod]
         [DynamicData(nameof(GetData_ChessboardExecuteMove_CheckingMovementBlackOutOfGrid), DynamicDataSourceType.Method)]
@@ -117,19 +117,19 @@ namespace VivaLaDama.UnitTests.Models
         }
         public static IEnumerable<object[]> GetData_ChessboardExecuteMove_CheckingMovementBlackOutOfGrid()
         {
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 11), new Coordinate(4, -1))};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 11), new Coordinate(5, -2))};
-            yield return new object[] { new Move(new Pawn(Pawn.ColorPawn.WHITE, 8), new Coordinate(4, -1))};
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 11 }, To = new Coordinate { Row = 4, Column = -1 } } };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 11 }, To = new Coordinate { Row = 5, Column = -2 } } };
+            yield return new object[] { new Move { Target = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 8 }, To = new Coordinate { Row = 4, Column = -1 } } };
         }
         [TestMethod]
         public void ChessboardExecute_CheckingIfBlackCanAttack()
         {
             Chessboard chessboard = new Chessboard();
-            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
-            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
-            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 0));
-            Move moveBlack2 = new Move(blackPawn, new Coordinate(5, 2));
-            Move moveWhite = new Move(whitePawn, new Coordinate(4, 1));
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 0 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 5, Column = 2 } };
+            Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 1 } };
             int numWhitePawns, numBlackPawns;
             bool result;
 
@@ -154,12 +154,12 @@ namespace VivaLaDama.UnitTests.Models
         public void ChessboardExecute_CheckingIfWhiteCanAttack()
         {
             Chessboard chessboard = new Chessboard();
-            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
-            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
-            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 2));
-            Move moveBlack2 = new Move(blackPawn, new Coordinate(4, 3));
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 4, Column = 3 } };
             Move moveWhite1 = null;
-            Move moveWhite2 = new Move(whitePawn, new Coordinate(3, 4));
+            Move moveWhite2 = new Move { Target = whitePawn, To = new Coordinate { Row = 3, Column = 4 } };
             int numWhitePawns, numBlackPawns;
             bool result;
 
@@ -187,10 +187,10 @@ namespace VivaLaDama.UnitTests.Models
         public void ChessboardExecute_CheckingThatWhiteUpgradedPawnCanMoveAllAround()
         {
             Chessboard chessboard = new Chessboard();
-            Pawn pawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
-            Move firstMove = new Move(pawn, new Coordinate(4, 1));
-            Move secondAndLastMove = new Move(pawn, new Coordinate(5, 2));
-            Move thirdMove = new Move(pawn, new Coordinate(4, 3));
+            Pawn pawn = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 };
+            Move firstMove = new Move { Target = pawn, To = new Coordinate { Row = 4, Column = 1 } };
+            Move secondAndLastMove = new Move { Target = pawn, To = new Coordinate { Row = 5, Column = 2 } };
+            Move thirdMove = new Move { Target = pawn, To = new Coordinate { Row = 4, Column = 3 } };
             bool result;
 
             chessboard.Grid[5, 2].Upgraded = true;
@@ -215,10 +215,10 @@ namespace VivaLaDama.UnitTests.Models
         public void ChessboardExecute_CheckingThatBlackUpgradedPawnCanMoveAllAround()
         {
             Chessboard chessboard = new Chessboard();
-            Pawn pawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
-            Move firstMove = new Move(pawn, new Coordinate(3, 0));
-            Move secondAndLastMove = new Move(pawn, new Coordinate(2, 1));
-            Move thirdMove = new Move(pawn, new Coordinate(3, 2));
+            Pawn pawn = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 8 };
+            Move firstMove = new Move { Target = pawn, To = new Coordinate { Row = 3, Column = 0 } };
+            Move secondAndLastMove = new Move { Target = pawn, To = new Coordinate { Row = 2, Column = 1 } };
+            Move thirdMove = new Move { Target = pawn, To = new Coordinate { Row = 3, Column = 2 } };
             bool result;
 
             chessboard.Grid[2, 1].Upgraded = true;
@@ -243,12 +243,12 @@ namespace VivaLaDama.UnitTests.Models
         public void ChessboardExecute_CheckingIfNormalPawnsCanEatUpgradedPawns_ReturnFalse()
         {
             Chessboard chessboard = new Chessboard();
-            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
-            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
-            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 2));
-            Move moveBlack2 = new Move(blackPawn, new Coordinate(4, 3));
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 4, Column = 3 } };
             Move moveWhite1 = null;
-            Move moveWhite2 = new Move(whitePawn, new Coordinate(3, 4));
+            Move moveWhite2 = new Move { Target = whitePawn, To = new Coordinate { Row = 3, Column = 4 } };
             int numWhitePawns, numBlackPawns;
             bool result;
 
@@ -278,11 +278,11 @@ namespace VivaLaDama.UnitTests.Models
         public void ChessboardExecute_CheckingIfPawnCanMoveOnAnotherPawnWithoutEatingIt_ReturnFalse()
         {
             Chessboard chessboard = new Chessboard();
-            Pawn blackPawn = new Pawn(Pawn.ColorPawn.BLACK, 8);
-            Pawn whitePawn = new Pawn(Pawn.ColorPawn.WHITE, 1);
-            Move moveBlack1 = new Move(blackPawn, new Coordinate(3, 2));
-            Move moveBlack2 = new Move(blackPawn, new Coordinate(4, 3));
-            Move moveWhite = new Move(whitePawn, new Coordinate(4, 3));
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = 1 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 3 } };
             bool result;
 
             result = chessboard.ExecuteMove(moveBlack1);

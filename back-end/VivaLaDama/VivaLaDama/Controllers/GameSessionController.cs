@@ -55,10 +55,10 @@ namespace VivaLaDama.Controllers
         }
         //PUT api/game/131
         [HttpPut("{id}")]
-        public async Task<ActionResult<GameSessionToSend>> PutGameSession(long id, MoveToRecv move)
+        public async Task<ActionResult<GameSessionToSend>> PutGameSession(long id, Move move)
         {
-            GameSession game = (await this.RetrieveGameSession(id)).Value;
-
+            /*GameSession game = (await this.RetrieveGameSession(id)).Value;
+]
             if(game==null)
             {
                 return NotFound();
@@ -66,10 +66,10 @@ namespace VivaLaDama.Controllers
 
             Console.WriteLine("--------------------PUT--------------------");
             Console.WriteLine("move.Target = idTarget:{0}, colorTarget:{1}", move.Target.Id, move.Target.Color);
-            Console.WriteLine("move.To = ({0},{1})", move.To.Row, move.To.Column);
+            Console.WriteLine("move.To = ({0},{1})", move.To.Row, move.To.Column);*/
 
-            if (/*game.ExecuteMove(move)*/false)
-            {
+            //if (/*game.ExecuteMove(move)*/false)
+            /*{
                 try
                 {
                     await this._context.SaveChangesAsync();
@@ -91,7 +91,9 @@ namespace VivaLaDama.Controllers
                 return StatusCode(403);
             }
 
-            return new GameSessionToSend(game);
+            return new GameSessionToSend(game);*/
+            int a;
+            return StatusCode(404);
         }
         private bool GameSessionExists(long id)
         {
