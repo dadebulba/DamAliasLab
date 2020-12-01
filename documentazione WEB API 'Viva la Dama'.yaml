@@ -118,6 +118,30 @@ paths:
           description: "The operation is executed successfully"
           schema:
             $ref: "#/definitions/Game"
+        "404":
+          description: "Specified game does not exist"
+        "400":
+          description: "Game has no moves"
+  /game/{id}/lastMove:
+    delete:
+      tags:
+      - "game"
+      summary: "Revert last move of specified game"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id of the gaming session that needs to be reverted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "The operation is executed successfully"
+          schema:
+            $ref: "#/definitions/Game"
+  
 definitions:
   NameOfPlayers:
     type: "object"
