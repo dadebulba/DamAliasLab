@@ -16,5 +16,6 @@ namespace VivaLaDama.Models
             modelBuilder.Entity<Move>().OwnsOne(move => move.To);
         }
         public DbSet<GameSession> GameSessions { get; set; }
+        public DbSet<GameSession> Moves { get; set; }
     }
 }

@@ -126,9 +126,9 @@ namespace VivaLaDama.UnitTests.Models
         {
             Chessboard chessboard = new Chessboard();
             Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
-            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
-            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 0 } };
-            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 5, Column = 2 } };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 0 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 5, Column = 0 } };
             Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 1 } };
             int numWhitePawns, numBlackPawns;
             bool result;

@@ -9,11 +9,11 @@ namespace VivaLaDama.Models
         public string NamePlayer2 { get; set; }
         public Chessboard Game { get; set; }
         public List<Move> Moves { get; set; }
-        public bool ExecuteMove(Move move)
+        public bool ExecuteMove(Move move, bool insertMove)
         {
             bool ret = this.Game.ExecuteMove(move);
 
-            if(ret==true)
+            if(ret==true && insertMove==true)
             {
                 move.GameSessionId = this.GameSessionId;
                 this.Moves.Add(move);

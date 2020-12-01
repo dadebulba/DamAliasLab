@@ -66,28 +66,23 @@ namespace VivaLaDama.Models
 
             if(this.IsMovementValid(from, to))
             {
-                Console.WriteLine("I joined the if of FindPossibleDestinations! Upgraded: {0}", pawn.Upgraded);
                 if(difference.Row < 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("up-right!");
                     dest1 = from.GetUpRight();
                     dest2 = dest1.GetUpRight();
                 }
                 else if(difference.Row < 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("up-left!");
                     dest1 = from.GetUpLeft();
                     dest2 = dest1.GetUpLeft();
                 }
                 else if(difference.Row > 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("down-left!");
                     dest1 = from.GetDownLeft();
                     dest2 = dest1.GetDownLeft();
                 }
                 else if(difference.Row > 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("down-right!");
                     dest1 = from.GetDownRight();
                     dest2 = dest1.GetDownRight();
                 }
