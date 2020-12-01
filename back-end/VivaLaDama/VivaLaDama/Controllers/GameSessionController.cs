@@ -89,6 +89,22 @@ namespace VivaLaDama.Controllers
 
             return new GameSessionToSend(game);
         }
+        //DELETE api/game/131
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<GameSessionToSend>> DeleteGameSession(long id)
+        {
+            GameSession game = (await this.RetrieveGameSession(id)).Value;
+
+            if(game==null)
+            {
+                return NotFound();
+            }
+
+            this._context.Remove(game);
+            await this._context.SaveChangesAsync();
+
+            return new GameSessionToSend(game);
+        }
         private bool GameSessionExists(long id)
         {
             return this._context.GameSessions.Any(game => game.GameSessionId == id);
