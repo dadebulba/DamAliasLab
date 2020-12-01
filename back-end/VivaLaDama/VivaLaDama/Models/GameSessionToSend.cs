@@ -15,7 +15,7 @@ namespace VivaLaDama.Models
         public List<PawnPositioned> White { get; }
         public GameSessionToSend(GameSession gameSession)
         {
-            this.Id = gameSession.IdGame;
+            this.Id = gameSession.GameSessionId;
             this.NamePlayer1 = gameSession.NamePlayer1;
             this.NamePlayer2 = gameSession.NamePlayer2;
             this.Moves = gameSession.Moves;

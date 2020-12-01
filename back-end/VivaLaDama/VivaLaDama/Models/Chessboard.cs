@@ -30,11 +30,11 @@ namespace VivaLaDama.Models
                     {
                         if(i<ROWS_FILLED_OF_PAWNS)//Putting in the first 3 rows black pawns
                         {
-                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = numBlackPawns++, Upgraded = false };
+                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = numBlackPawns++, Upgraded = false };
                         }
                         else if(i>=DEFAULT_LENGTH-ROWS_FILLED_OF_PAWNS)//Putting in the last three rows white pawns
                         {
-                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.WHITE, Id = numWhitePawns++, Upgraded = false };
+                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = numWhitePawns++, Upgraded = false };
                         }
                     }
                 }

@@ -10,7 +10,7 @@ namespace VivaLaDama.Models
         public Coordinate Position { get; }
         public PawnPositioned(Pawn pawn, Coordinate position) : base()
         {
-            this.Id = pawn.Id;
+            this.PawnId = pawn.PawnId;
             this.Color = pawn.Color;
             this.Upgraded = pawn.Upgraded;
             this.Position = new Coordinate { Row = position.Row, Column = position.Column };
