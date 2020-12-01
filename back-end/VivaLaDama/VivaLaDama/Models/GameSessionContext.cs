@@ -10,11 +10,10 @@ namespace VivaLaDama.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<Chessboard>();
-            modelBuilder.Ignore<Coordinate>();
-            modelBuilder.Ignore<Pawn>();
 
-            modelBuilder.Entity<GameSession>().HasKey(game => game.IdGame);
-            modelBuilder.Entity<Move>().HasKey(move => move.IdMossa);
+            modelBuilder.Entity<Move>().OwnsOne(move => move.Target);
+            modelBuilder.Entity<Move>().OwnsOne(move => move.From);
+            modelBuilder.Entity<Move>().OwnsOne(move => move.To);
         }
         public DbSet<GameSession> GameSessions { get; set; }
     }
