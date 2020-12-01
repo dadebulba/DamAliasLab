@@ -9,7 +9,7 @@ async function getGame() {
 }
 
 async function postGame(data) {
-    let response = fetch(`bho`, {
+    let response = fetch(`${URL}/api/game`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;'
