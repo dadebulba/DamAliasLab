@@ -1,4 +1,4 @@
-import {getGame, postGame} from "./apiService.js";
+import {getGame, postGame, getID} from "./apiService.js";
 
 let newgame=0;
 let j=0;
@@ -23,14 +23,13 @@ function viewForm(){
 
 async function viewTableGames(){
     if(j==0){
-
-       let response = await getGame();
-       //let obj = await response.json(); // read response body and parse as JSON
-
-       for(let key in response){
+        let response = await getGame();
+        let obj = await response.json(); // read response body and parse as JSON
+        
+        for(let key in obj){
             let tr = document.createElement('tr');
             tr.className = `rows`; //poi aggiungere class${key} se serve una classe diversa per ogni riga
-            tr.innerHTML=`<td> ${response[key].id} </td> <td>${response[key].player1}-${response[key].player2}</td> <td><button class="lastColumn" id="${key}" >play!</button></td>`;
+            tr.innerHTML=`<td> ${obj[key].id} </td> <td>${obj[key].player1}-${obj[key].player2}</td> <td><button class="lastColumn" id="${key}" >play!</button></td>`;
             let heading=document.getElementById("heading");
             heading.after(tr);
         }
@@ -40,12 +39,14 @@ async function viewTableGames(){
     form.style.display='none'; //hideForm
 }
 
-function gameChosen(){
+async function gameChosen(){
     let target = event.target;  // where was the click
-    if(target.className=="lastColumn"){  //only se click on play button
-        ID=target.id;
-        location.href="./damaMainPage.html";
+    if(target.className=="lastColumn"){  //only if click on play button
+        let id=target.id;
+        
         //devo chiamare GET ID e andare nell'altra pagina
+        let response = await getID(id);
+        location.href="./damaMainPage.html";
     }
 }
 
@@ -53,20 +54,17 @@ async function sendForm (evt){
 
     evt.preventDefault();
 
-    /*let player1 = document.getElementById("player1");
-    let player2 = document.getElementById("player2");
-    console.log(player1.value);
-    console.log(player2.value);
-    title.innerHTML = `${player1.value} and ${player2.value}`;*/
-    
-    let response = await postGame();
-    let result = await response.json(); 
+    let p1 = document.getElementById("player1");
+    let p2 = document.getElementById("player2");
+    let data = {
+        nameOfPlayer1: p1.value,
+        nameOfPlayer2: p2.value
+    }
+    let response = await postGame(data);
+    let result = await response.json();
 
-    alert(result.message);
+
     //NEW GAME
-    location.href="./damaMainPage.html";
-    let newgame=1;
+    //location.href="./damaMainPage.html";
+    //let newgame=1;
 }
-
-
-export {newgame};
