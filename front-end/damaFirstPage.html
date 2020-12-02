@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <title>VivaLaDama</title>
+    <link rel='stylesheet' href='stylesFirstPage.css'/>
+    <script src="dama.js"> </script>  
+  </head>
+  <body>
+    <div id='title'><h1>VIVA LA DAMA !</h1></div>
+    <div id='menu'>
+      <a class='button' href="damaMainPage.html"> New Game </a>
+      <div class='button' onclick="viewGamesTable()">Resume Game..</div>  
+    </div>
+    <div id='container-tab'>
+      <table id='table-games' cellspacing='0'>
+        <tr id='heading'>
+          <th class='first-column'>ID</td>
+          <th class='second-column'>Players</td>
+          <th class='third-column'>Points</td>
+        </tr>
+        <tr class='rows'>
+          <td>ID1</td>
+          <td>Player1 - Player2</td>
+          <td>500-200</td>
+        </tr>
+        <tr class='rows'>
+          <td>ID2</td>
+          <td>Player3 - Player4</td>
+          <td>100-90</td>
+        </tr>
+        <tr class='rows'>
+          <td>ID3</td>
+          <td>Player5 - Player6</td>
+          <td>10-50</td>
+        </tr>
+      </table>
+    </div>
+    
+  </body>
+</html>
