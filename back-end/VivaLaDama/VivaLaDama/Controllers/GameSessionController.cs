@@ -51,7 +51,7 @@ namespace VivaLaDama.Controllers
             this._context.Add(game);
             await this._context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetGameSessions), new { id = game.GameSessionId }, new GameSessionToSend(game));
+            return CreatedAtAction(nameof(GetGameSession), new { id = game.GameSessionId }, new GameSessionToSend(game));
         }
         //PUT api/game/131
         [HttpPut("{id}")]
@@ -59,7 +59,7 @@ namespace VivaLaDama.Controllers
         {
             GameSession game = (await this.RetrieveGameSession(id)).Value;
 
-            if(game==null)
+            if (game == null)
             {
                 return NotFound();
             }
@@ -95,7 +95,7 @@ namespace VivaLaDama.Controllers
         {
             GameSession game = (await this.RetrieveGameSession(id)).Value;
 
-            if(game==null)
+            if (game == null)
             {
                 return NotFound();
             }
@@ -105,6 +105,49 @@ namespace VivaLaDama.Controllers
 
             return new GameSessionToSend(game);
         }
+
+
+        //DELETE api/game/123/lastMove
+        [HttpDelete("{id}/lastMove")]
+        public async Task<ActionResult<GameSessionToSend>> DeleteLastMove(long id)
+        {
+            GameSession game = this._context.GameSessions.Find(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            if (DeleteLastMoveFromDb(game))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        public bool DeleteLastMoveFromDb(GameSession game)
+        {
+            if (game.Moves.Count > 0)
+            {
+                bool isRemoved = false;
+                Move lastMove = game.Moves.Last();
+                isRemoved = game.Moves.Remove(lastMove);
+                _context.GameSessions.Update(game);
+                if (_context.SaveChanges() == 1 && isRemoved)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         private bool GameSessionExists(long id)
         {
             return this._context.GameSessions.Any(game => game.GameSessionId == id);
@@ -113,7 +156,7 @@ namespace VivaLaDama.Controllers
         {
             GameSession game = this._context.GameSessions.Where(game => game.GameSessionId == id).Include(game => game.Moves).FirstOrDefault();
 
-            if(game!=null)
+            if (game != null)
             {
                 game.Game = new Chessboard();
 

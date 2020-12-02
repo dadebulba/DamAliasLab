@@ -26,15 +26,17 @@ namespace VivaLaDamaTests
         [TestMethod]
         public void RemoveLastMoveTest()
         {
-            GameSession game = new GameSession("gino", "pino");
-            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, Id = 8 };
+            GameSession game = new GameSession { Game = new Chessboard(), Moves = new List<Move>() };
+            game.NamePlayer1 = "gino";
+            game.NamePlayer2 = "pino";
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
             Move moveBlack = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 0 } };
-            game.ExecuteMove(moveBlack);
+            game.ExecuteMove(moveBlack, true);
             _context.Add(game);
             _context.SaveChanges();
             int performedMoves = game.Moves.Count;
             _controller.DeleteLastMoveFromDb(game);
-            GameSession gameToCheck = _context.GameSessions.Find(game.IdGame);
+            GameSession gameToCheck = _context.GameSessions.Find(game.GameSessionId);
             Assert.IsTrue(gameToCheck.Moves.Count == performedMoves - 1, "Should remove last move");
         }
     }
