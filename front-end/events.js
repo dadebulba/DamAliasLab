@@ -1,13 +1,13 @@
 import {getGame, postGame, getID} from "./apiService.js";
 
 let newgame=0;
-let j=0;
+let firstTimeGet=true;
 let resumegameButton=document.getElementById('resume');
 let newgameButton=document.getElementById('new');
 let form=document.getElementById('form');
 let conteinerTab=document.getElementById('container-tab');
 let tableGames=document.getElementById('table-games');
-//let submitButton=document.getElementById("submit");
+let chessBoard=document.getElementById('chessboard');
 
 
 resumegameButton.addEventListener('click', viewTableGames);
@@ -16,25 +16,28 @@ tableGames.addEventListener('click', gameChosen);
 form.addEventListener('submit', sendForm);
 
 
+//chessBoard.addEventListener('click', ciao);
+
+
+
 function viewForm(){
     form.style.display='flex'; //view form 
     conteinerTab.style.display='none';  //hide table
 }
 
 async function viewTableGames(){
-    if(j==0){
-        let response = await getGame();
-        let obj = await response.json(); // read response body and parse as JSON
-        
+    let response = await getGame();
+    let obj = await response.json(); // read response body and parse as JSON
+    if(firstTimeGet){    
         for(let key in obj){
             let tr = document.createElement('tr');
-            tr.className = `rows`; //poi aggiungere class${key} se serve una classe diversa per ogni riga
-            tr.innerHTML=`<td> ${obj[key].id} </td> <td>${obj[key].player1}-${obj[key].player2}</td> <td><button class="lastColumn" id="${key}" >play!</button></td>`;
+            tr.className = `rows`;
+            tr.innerHTML=`<td> ${obj[key].id} </td> <td>${obj[key].namePlayer1}-${obj[key].namePlayer2}</td> <td><button class="lastColumn" id="${obj[key].id}" >play!</button></td>`;
             let heading=document.getElementById("heading");
             heading.after(tr);
         }
-        j++;
-    } 
+        firstTimeGet=false;
+    }
     conteinerTab.style.display='flex'; //view table 
     form.style.display='none'; //hideForm
 }
@@ -43,10 +46,12 @@ async function gameChosen(){
     let target = event.target;  // where was the click
     if(target.className=="lastColumn"){  //only if click on play button
         let id=target.id;
-        
-        //devo chiamare GET ID e andare nell'altra pagina
         let response = await getID(id);
-        location.href="./damaMainPage.html";
+        let result = await response.json();  //oggetto partita  
+        console.log(result);
+        
+        //location.href="./damaMainPage.html";
+        
     }
 }
 
@@ -61,10 +66,12 @@ async function sendForm (evt){
         nameOfPlayer2: p2.value
     }
     let response = await postGame(data);
-    let result = await response.json();
-
+    let result = await response.json(); //result è oggetto nuova partita    
 
     //NEW GAME
     //location.href="./damaMainPage.html";
-    //let newgame=1;
+}
+
+function ciao(){
+    alert("ciao");
 }

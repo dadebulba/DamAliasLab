@@ -1,5 +1,4 @@
 const URL = "http://localhost:6015";
-let form=document.getElementById('form');
 
 async function getGame() {
     let response= await fetch(`${URL}/api/game`, {
@@ -12,7 +11,7 @@ async function postGame(data) {
     let response = fetch(`${URL}/api/game`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;'
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(data)
       });
@@ -20,7 +19,7 @@ async function postGame(data) {
 }
 
 async function getID(id){
-    let response= await fetch(URL, {
+    let response= await fetch(`${URL}/api/game/${id}`, {
         method: 'GET'
     })
     return response;

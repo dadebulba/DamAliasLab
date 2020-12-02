@@ -1,14 +1,12 @@
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
-let newgame=0;
+
 
 let body=document.getElementById("body");
-if(newgame==1){
-    body.onload=newGame;
-}
+body.onload=newGame;
 
 let chessboard=document.getElementById("chessboard");
-//chessboard.addEventListener("click", f);
+chessboard.addEventListener("click", f);
 
 
 
@@ -19,22 +17,30 @@ let chessboard=document.getElementById("chessboard");
 }*/
 
 function newGame(){
-    let w=12;
-    let b=1;
-    for(let r=1; r<=8; r++){ //ciclo per righe
-      for(let c=1; c<=8; c++){  //ciclo per colonne
-        if((r+c)%2==1 ){
-          if(r<=3){
+    let w=0;
+    let b=0;
+    for(let r=0; r<=7; r++){ //ciclo per righe
+      for(let c=0; c<=7; c++){  //ciclo per colonne
+        if((r+c)%2==1){
+          if(r<=2){
             let elem=document.getElementById(`a${r}${c}`);
-            elem.innerHTML=`<div class='piece black-piece' id="p${b}"> </div>`;
+            elem.innerHTML=`<div class='piece black-piece' id="b${b}"> </div>`;
             b++;
           }
-          if(r>=6){
+          if(r>=5){
             let elem=document.getElementById(`a${r}${c}`);
-            elem.innerHTML=`<div class='piece white-piece' id="p${w}"> </div>`;
-            w--;
+            elem.innerHTML=`<div class='piece white-piece' id="w${w}"> </div>`;
+            w++;
           }
         }
       }
     }
+}
+
+function f(){
+  let target = event.target;
+    
+    let id=target.id;
+    console.log(id);
+  
 }
