@@ -2,6 +2,7 @@
 *.v2
 *.DS_Store
 front-end/.vscode/
+*.json
 back-end/VivaLaDama/.vs/VivaLaDama/v16/TestStore/0/testlog.manifest
 back-end/VivaLaDama/ChessboardTests/bin/
 back-end/VivaLaDama/ChessboardTests/obj/
