@@ -17,52 +17,18 @@ body{
     flex-wrap: wrap;
     font-family: "Helvetica", "Arial", sans-serif;
 }
-#form{
+#title{
+    margin-top:5px;
+    width: 95%;
+    min-width: 270px;
     background-color: #e1e5ea;
     border: 1px solid #D6D9DC;
     border-radius: 10px;
-    width: 95%;
-    min-width: 310px;
-    margin-bottom: 10px;
-    margin-top: 10px;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    height: 160px;
-}
-#player1{
-    margin-left: 10px; 
-    height: 30px;
-}
-#player2{
-    margin-left: 10px; 
-    height: 30px;
-}
-.container-player{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    min-width: 320px;
-    padding: 7px;
-    font-size: 18px;
     align-items: center;
-}
-#submit{
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: #5995DA;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 10px;
-    cursor: pointer;
-    width: 90px;
-    height: 40px;;
-}
-#submit:hover{
-    background-color: #76AEED;
-}
-#submit:active {
-    background-color: #407FC7;
+    height: 150px;
+    font-size: 3.6vw;
 }
 .label{
     width: 35px;
@@ -208,6 +174,7 @@ body{
 .title{
     margin-top: 5px;
     margin-bottom: 10px;
+    font-size: 4vw;
 }
 .player-points{
     display: flex;
@@ -215,16 +182,9 @@ body{
     align-items: center;
     margin: 10px;
 }
-
 @media only screen and (min-width: 961px) {
     #main{
         justify-content: space-around;
-    }
-    .container-player{
-      width: 40%;
-    }
-    #submit{
-        align-self: center;
     }
     #moves-box{
         margin-top: 10px;
@@ -240,5 +200,11 @@ body{
         margin: 30px;
         order: 1;
         margin-top: 50px;
+    }
+    .title{
+        font-size: 30px ;
+    }
+    #title{
+        font-size: 35px;
     }
   }
