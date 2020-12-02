@@ -1,6 +1,7 @@
 *.suo
 *.v2
 *.DS_Store
+.vscode
 back-end/VivaLaDama/.vs/VivaLaDama/v16/TestStore/0/testlog.manifest
 back-end/VivaLaDama/ChessboardTests/bin/
 back-end/VivaLaDama/ChessboardTests/obj/
