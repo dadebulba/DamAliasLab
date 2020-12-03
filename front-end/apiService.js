@@ -1,4 +1,4 @@
-const URL = "http://localhost:6015";
+const URL = "http://localhost:52953";
 
 async function getGame() {
     let response= await fetch(`${URL}/api/game`, {

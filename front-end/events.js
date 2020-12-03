@@ -1,4 +1,4 @@
-import {getGame, postGame, getID} from "./apiService.js";
+import {getGame, postGame} from "./apiService.js";
 
 let newgame=0;
 let firstTimeGet=true;
@@ -7,17 +7,12 @@ let newgameButton=document.getElementById('new');
 let form=document.getElementById('form');
 let conteinerTab=document.getElementById('container-tab');
 let tableGames=document.getElementById('table-games');
-let chessBoard=document.getElementById('chessboard');
 
 
 resumegameButton.addEventListener('click', viewTableGames);
 newgameButton.addEventListener('click', viewForm );
 tableGames.addEventListener('click', gameChosen);
 form.addEventListener('submit', sendForm);
-
-
-//chessBoard.addEventListener('click', ciao);
-
 
 
 function viewForm(){
@@ -46,12 +41,7 @@ async function gameChosen(){
     let target = event.target;  // where was the click
     if(target.className=="lastColumn"){  //only if click on play button
         let id=target.id;
-        let response = await getID(id);
-        let result = await response.json();  //oggetto partita  
-        console.log(result);
-        
-        //location.href="./damaMainPage.html";
-        
+        invia_id(id);
     }
 }
 
@@ -62,16 +52,26 @@ async function sendForm (evt){
     let p1 = document.getElementById("player1");
     let p2 = document.getElementById("player2");
     let data = {
-        nameOfPlayer1: p1.value,
-        nameOfPlayer2: p2.value
+        NamePlayer1: p1.value,
+        NamePlayer2: p2.value
     }
     let response = await postGame(data);
     let result = await response.json(); //result è oggetto nuova partita    
 
+    //console.log(result);
     //NEW GAME
     //location.href="./damaMainPage.html";
 }
 
-function ciao(){
-    alert("ciao");
+function invia_id(id) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "get");
+    form.setAttribute("action", "./damaMainPage.html");
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "id");
+    hiddenField.setAttribute("value", id);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
 }
