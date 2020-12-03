@@ -1,6 +1,5 @@
 import {getGame, postGame} from "./apiService.js";
 
-let newgame=0;
 let firstTimeGet=true;
 let resumegameButton=document.getElementById('resume');
 let newgameButton=document.getElementById('new');
@@ -48,7 +47,7 @@ async function gameChosen(){
 async function sendForm (evt){
 
     evt.preventDefault();
-
+    
     let p1 = document.getElementById("player1");
     let p2 = document.getElementById("player2");
     let data = {
@@ -57,10 +56,7 @@ async function sendForm (evt){
     }
     let response = await postGame(data);
     let result = await response.json(); //result è oggetto nuova partita    
-
-    //console.log(result);
-    //NEW GAME
-    //location.href="./damaMainPage.html";
+    invia_id(result.id);
 }
 
 function invia_id(id) {

@@ -1,20 +1,61 @@
-import {getID} from "./apiService.js";
+import {getID, put} from "./apiService.js";
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
 let movesList=document.getElementById("container-list");
+let selected=false;
+let id=0;
 
 let urlParam = new URLSearchParams(window.location.search); 
 let IDpartita = urlParam.get('id');
 
-//Gestire anche il caso nuova partita
-
 if(IDpartita!="NULL"){
   let body=document.getElementById("body");
-  body.onload=resumeGame;
+  body.onload=initializeGame;
 }
 
-async function resumeGame(){
+chessboard.addEventListener("click", selectPawn);
+
+function selectDest(){
+  let target = event.target;
+  if(target.classList.contains("piece")){
+    alert("Devi selezionare una casella vuota");
+  }
+  if(target.tagName=="TD"){
+    let dest=target.id;
+    document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
+    //fare la PUT(id,dest)
+    /*
+      SE LA MOSSA NON è VALIDA GESTISCO L'ERRORE
+      SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, TOLGO DALLA CHESSBOARD LA PEDINA CON ID SELEZIONATA,
+      GUARDO DOVE SI TROVA LA PEDINA CON ID SELEZIONATA(POSITION) E LA VADO AD INSERIRE IN QUELLA POSTAZIONE
+      DELLA CHESSBOARD CON ID GIUSTO E GUARDO SE è UPRGRADED
+    */
+    //per cancellare pedina con id
+    //document.getElementById(id).hidden=true;
+    //document.getElementById(id).parentElement.innerHTML="";
+    //document.getElementById(dest).innerHTML= `<div class='piece black-piece' id="b${id}"> </div>`;
+    
+    console.log(id, dest);
+    chessboard.addEventListener("click", selectPawn);
+    chessboard.removeEventListener("click", selectDest);
+  }  
+}
+
+function selectPawn(){
+  let target = event.target;
+  if(target.classList.contains("piece")){
+    id=target.id;
+    target.parentElement.style.backgroundColor="red";
+    chessboard.removeEventListener("click", selectPawn);
+    chessboard.addEventListener("click", selectDest);
+  }
+  if(target.tagName=="TD"){
+    alert("Devi selezionare una pedina")
+  }
+}
+
+async function initializeGame(){
   let response = await getID(IDpartita);
   let result = await response.json();  //oggetto partita  
   insertPlayerNames(result.namePlayer1, result.namePlayer2); 
@@ -23,10 +64,6 @@ async function resumeGame(){
   insertWhitePawns(result.white);
 }
   
-
-
-
-
 
 function insertPlayerNames(namePlayer1, namePlayer2){
     nameP1.innerHTML=`<div class='label black-piece'> </div> ${namePlayer1} : 0`;
@@ -64,65 +101,17 @@ function insertWhitePawns(white){
     let column=white[key].position.column;
     let elem=document.getElementById(`a${row}${column}`);
     if(white[key].upgraded==false){
-      elem.innerHTML=`<div class='piece white-piece' id="b${white[key].pawnId}"> </div>`;
+      elem.innerHTML=`<div class='piece white-piece' id="w${white[key].pawnId}"> </div>`;
     }
     else{ 
-      elem.innerHTML=`<div class='piece white-piece' id="b${white[key].pawnId}"> O </div>`;
+      elem.innerHTML=`<div class='piece white-piece' id="w${white[key].pawnId}"> O </div>`;
     }
   }
 }
-
-/*function insertBlackPawns(black){
-  for(let r=0; r<=7; r++){ //ciclo per righe
-    for(let c=0; c<=7; c++){  //ciclo per colonne
-      if((r+c)%2==1){
-        for(let key in black){
-          if(black[key].position.row==r && black[key].position.column==c){
-            let elem=document.getElementById(`a${r}${c}`);
-            if(black[key].upgraded==false){
-              elem.innerHTML=`<div class='piece black-piece' id="b${black[key].pawnId}"> </div>`;
-            }
-            else{ 
-              elem.innerHTML=`<div class='piece black-piece' id="b${black[key].pawnId}"> O </div>`;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
-
-function newGame(){
-    let w=0;
-    let b=0;
-    for(let r=0; r<=7; r++){ //ciclo per righe
-      for(let c=0; c<=7; c++){  //ciclo per colonne
-        if((r+c)%2==1){
-          if(r<=2){
-            let elem=document.getElementById(`a${r}${c}`);
-            elem.innerHTML=`<div class='piece black-piece' id="b${b}"> </div>`;
-            b++;
-          }
-          if(r>=5){
-            let elem=document.getElementById(`a${r}${c}`);
-            elem.innerHTML=`<div class='piece white-piece' id="w${w}"> </div>`;
-            w++;
-          }
-        }
-      }
-    }
-}
-
-
-
-
-
 
 function f(){
   let target = event.target;
     
     let id=target.id;
     console.log(id); 
-}*/
+}

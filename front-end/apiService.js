@@ -25,5 +25,9 @@ async function getID(id){
     return response;
 }
 
+async function put(){
 
-export { getGame, postGame, getID};
+}
+
+
+export { getGame, postGame, getID, put};
