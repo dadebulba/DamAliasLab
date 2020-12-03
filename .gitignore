@@ -15,3 +15,5 @@ back-end/VivaLaDama/VivaLaDama/obj/
 *.user
 *.config
 *.testlog
+**/.vs
+*.targets
