@@ -16,33 +16,7 @@ if(IDpartita!="NULL"){
 
 chessboard.addEventListener("click", selectPawn);
 
-function selectDest(){
-  let target = event.target;
-  if(target.classList.contains("piece")){
-    alert("Devi selezionare una casella vuota");
-  }
-  if(target.tagName=="TD"){
-    let dest=target.id;
-    document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
-    //fare la PUT(id,dest)
-    /*
-      SE LA MOSSA NON è VALIDA GESTISCO L'ERRORE
-      SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, TOLGO DALLA CHESSBOARD LA PEDINA CON ID SELEZIONATA,
-      GUARDO DOVE SI TROVA LA PEDINA CON ID SELEZIONATA(POSITION) E LA VADO AD INSERIRE IN QUELLA POSTAZIONE
-      DELLA CHESSBOARD CON ID GIUSTO E GUARDO SE è UPRGRADED
-    */
-    //per cancellare pedina con id
-    //document.getElementById(id).hidden=true;
-    //document.getElementById(id).parentElement.innerHTML="";
-    //document.getElementById(dest).innerHTML= `<div class='piece black-piece' id="b${id}"> </div>`;
-    
-    console.log(id, dest);
-    chessboard.addEventListener("click", selectPawn);
-    chessboard.removeEventListener("click", selectDest);
-  }  
-}
-
-function selectPawn(){
+function selectPawn(){  //gestire il turno
   let target = event.target;
   if(target.classList.contains("piece")){
     id=target.id;
@@ -53,6 +27,51 @@ function selectPawn(){
   if(target.tagName=="TD"){
     alert("Devi selezionare una pedina")
   }
+}
+
+async function selectDest(){
+  let target = event.target;
+  if(target.classList.contains("piece")){
+    alert("Devi selezionare una casella vuota");
+    //annulla selezione
+    document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
+    chessboard.addEventListener("click", selectPawn);
+    chessboard.removeEventListener("click", selectDest);
+  }
+  if(target.tagName=="TD"){
+    let dest=target.id;
+    document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
+    
+    let obj = {
+      pawn: {
+        id: id.substring(1,),
+        color: id[0]=="w" ? "WHITE" : "BLACK",
+      },
+      to: {
+        row: dest[1], 
+        column: dest[2]
+      }
+    }
+    console.log(obj);
+    let response = await put(IDpartita, obj);
+    let result = await response.json();
+    /*
+      creo oggetto da mandare con la put 
+      SE LA MOSSA NON è VALIDA GESTISCO L'ERRORE
+      SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, TOLGO DALLA CHESSBOARD LA PEDINA CON ID SELEZIONATA,
+      GUARDO DOVE SI TROVA LA PEDINA CON ID SELEZIONATA(POSITION) E LA VADO AD INSERIRE IN QUELLA POSTAZIONE
+      DELLA CHESSBOARD CON ID GIUSTO E GUARDO SE è UPRGRADED
+      AGGIORNA MOSSE
+      AGGIORNA PUNTEGGIO
+    */
+    //per cancellare pedina con id
+    //document.getElementById(id).hidden=true;
+    //oppure  document.getElementById(id).parentElement.innerHTML="";
+    //document.getElementById(dest).innerHTML= `<div class='piece black-piece' id="b${id}"> </div>`;
+    
+    chessboard.addEventListener("click", selectPawn);
+    chessboard.removeEventListener("click", selectDest);
+  }  
 }
 
 async function initializeGame(){

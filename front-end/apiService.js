@@ -25,8 +25,15 @@ async function getID(id){
     return response;
 }
 
-async function put(){
-
+async function put(id,data){
+    let response = fetch(`${URL}/api/game/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+    return response;
 }
 
 
