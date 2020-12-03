@@ -1,17 +1,14 @@
-﻿namespace VivaLaDama.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace VivaLaDama.Models
 {
     public class Coordinate
     {
         public int Row { get; set; }
         public int Column { get; set; }
-        public Coordinate(int row, int column)
-        {
-            this.Row = row;
-            this.Column = column;
-        }
         public static Coordinate operator -(Coordinate coord1, Coordinate coord2)
         {
-            return new Coordinate(coord1.Row - coord2.Row, coord1.Column - coord2.Column);
+            return new Coordinate { Row = coord1.Row - coord2.Row, Column = coord1.Column - coord2.Column };
         }
         public override bool Equals(object obj)
         {
@@ -31,19 +28,19 @@
         }
         public Coordinate GetDownLeft()
         {
-            return new Coordinate(this.Row + 1, this.Column - 1);
+            return new Coordinate { Row = this.Row + 1, Column = this.Column - 1 };
         }
         public Coordinate GetDownRight()
         {
-            return new Coordinate(this.Row + 1, this.Column + 1);
+            return new Coordinate { Row = this.Row + 1, Column = this.Column + 1 };
         }
         public Coordinate GetUpLeft()
         {
-            return new Coordinate(this.Row - 1, this.Column - 1);
+            return new Coordinate { Row = this.Row - 1, Column = this.Column - 1 };
         }
         public Coordinate GetUpRight()
         {
-            return new Coordinate(this.Row - 1, this.Column + 1);
+            return new Coordinate { Row = this.Row - 1, Column = this.Column + 1 };
         }
         public bool IsValid(long maxValue)
         {

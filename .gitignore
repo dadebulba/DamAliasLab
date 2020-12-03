@@ -1,7 +1,7 @@
 *.suo
 *.v2
-
 *.DS_Store
+back-end/VivaLaDama/.vs/
 back-end/VivaLaDama/ChessboardTests/bin/
 back-end/VivaLaDama/ChessboardTests/obj/
 back-end/VivaLaDama/VivaLaDama/bin/
@@ -11,8 +11,9 @@ back-end/VivaLaDama/VivaLaDama/obj/
 *.dll
 *.pdb
 *.cache
-*.txt
-*.testlog
-*.manifest
+*.props
+*.user
 *.config
+*.testlog
 **/.vs
+*.targets

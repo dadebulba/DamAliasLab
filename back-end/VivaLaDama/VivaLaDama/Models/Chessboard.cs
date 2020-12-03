@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VivaLaDama.Models
 {
@@ -29,11 +30,11 @@ namespace VivaLaDama.Models
                     {
                         if(i<ROWS_FILLED_OF_PAWNS)//Putting in the first 3 rows black pawns
                         {
-                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.BLACK, numBlackPawns++);
+                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = numBlackPawns++, Upgraded = false };
                         }
                         else if(i>=DEFAULT_LENGTH-ROWS_FILLED_OF_PAWNS)//Putting in the last three rows white pawns
                         {
-                            this.Grid[i, j] = new Pawn(Pawn.ColorPawn.WHITE, numWhitePawns++);
+                            this.Grid[i, j] = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = numWhitePawns++, Upgraded = false };
                         }
                     }
                 }
@@ -48,12 +49,12 @@ namespace VivaLaDama.Models
         public bool IsMovementValid(Coordinate from, Coordinate to)
         {
             Coordinate difference = to - from;
-            difference.Row = Math.Abs(difference.Row);
-            difference.Column = Math.Abs(difference.Column);
+            int row = Math.Abs(difference.Row);
+            int column = Math.Abs(difference.Column);
 
-            return difference.Row == difference.Column && 
-                   difference.Row > 0 && difference.Column > 0 && 
-                   difference.Row <= MAX_MOVE_DISTANCE && difference.Column <= MAX_MOVE_DISTANCE;
+            return row == column && 
+                   row > 0 && column > 0 && 
+                   row <= MAX_MOVE_DISTANCE && column <= MAX_MOVE_DISTANCE;
         }
         public void FindPossibleDestination(Move move, out Coordinate dest1, out Coordinate dest2)
         {
@@ -65,28 +66,23 @@ namespace VivaLaDama.Models
 
             if(this.IsMovementValid(from, to))
             {
-                Console.WriteLine("I joined the if of FindPossibleDestinations! Upgraded: {0}", pawn.Upgraded);
                 if(difference.Row < 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("up-right!");
                     dest1 = from.GetUpRight();
                     dest2 = dest1.GetUpRight();
                 }
                 else if(difference.Row < 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.WHITE || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("up-left!");
                     dest1 = from.GetUpLeft();
                     dest2 = dest1.GetUpLeft();
                 }
                 else if(difference.Row > 0 && difference.Column < 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("down-left!");
                     dest1 = from.GetDownLeft();
                     dest2 = dest1.GetDownLeft();
                 }
                 else if(difference.Row > 0 && difference.Column > 0 && (pawn.Color == Pawn.ColorPawn.BLACK || pawn.Upgraded == true))
                 {
-                    Console.WriteLine("down-right!");
                     dest1 = from.GetDownRight();
                     dest2 = dest1.GetDownRight();
                 }
@@ -123,7 +119,7 @@ namespace VivaLaDama.Models
                     {
                         if(this.Grid[i, j]!=null && this.Grid[i, j].Equals(pawn))
                         {
-                            ret = new Coordinate(i, j);
+                            ret = new Coordinate { Row = i, Column = j };
                         }
                     }
                 }
@@ -228,14 +224,14 @@ namespace VivaLaDama.Models
         }
         public int GetNumberOfPawnsOfColor(Pawn.ColorPawn color)
         {
-            Coordinate coordinate = new Coordinate(-1,-1);
+            Coordinate coordinate=new Coordinate();
             int numPawns = 0;
 
             for(int i=0; i<DEFAULT_LENGTH; i++)
             {
+                coordinate.Row = i;
                 for(int j=0; j<DEFAULT_LENGTH; j++)
                 {
-                    coordinate.Row = i;
                     coordinate.Column = j;
 
                     if(this.IsBoxNotEmpty(coordinate) && this.Grid[i, j].Color==color)
@@ -254,6 +250,34 @@ namespace VivaLaDama.Models
         public void SetTurnForBlack()
         {
             this.Turn = false;
+        }
+        private List<PawnPositioned> GetPawnByColor(Pawn.ColorPawn color)
+        {
+            List<PawnPositioned> ret = new List<PawnPositioned>();
+            Coordinate position = new Coordinate();
+
+            for(int i=0; i<DEFAULT_LENGTH; i++)
+            {
+                position.Row = i;
+                for (int j=0; j<DEFAULT_LENGTH; j++)
+                {
+                    position.Column = j;
+                    if(this.IsBoxNotEmpty(position) && this.Grid[i, j].Color==color)
+                    {
+                        ret.Add(new PawnPositioned(this.Grid[i, j], position));
+                    }
+                }
+            }
+
+            return ret;
+        }
+        public List<PawnPositioned> GetBlack()
+        {
+            return GetPawnByColor(Pawn.ColorPawn.BLACK);
+        }
+        public List<PawnPositioned> GetWhite()
+        {
+            return GetPawnByColor(Pawn.ColorPawn.WHITE);
         }
     }
 }

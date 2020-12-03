@@ -118,54 +118,88 @@ paths:
           description: "The operation is executed successfully"
           schema:
             $ref: "#/definitions/Game"
+        "404":
+          description: "Specified game does not exist"
+        "400":
+          description: "Game has no moves"
+  /game/{id}/lastMove:
+    delete:
+      tags:
+      - "game"
+      summary: "Revert last move of specified game"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id of the gaming session that needs to be reverted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "The operation is executed successfully"
+          schema:
+            $ref: "#/definitions/Game"
+  
 definitions:
   NameOfPlayers:
     type: "object"
     properties:
-      nameOfPlayer1:
+      namePlayer1:
         type: "string"
-      nameOfPlayer2:
+      namePlayer2:
         type: "string"
   PawnToRecv:
     type: "object"
     properties:
-      id:
+      pawnId:
         type: "integer"
         format: "int64"
       color:
-        type: "string"
-        enum: [WHITE, BLACK]
+        type: "integer"
+        enum: [0, 1]
       upgraded:
         type: "boolean"
   PawnToSend:
     type: "object"
     properties:
-      id:
+      pawnId:
         type: "integer"
         format: "int64"
       color:
-        type: "string"
-        enum: [WHITE, BLACK]
+        type: "integer"
+        enum: [0, 1]
   PawnPositioned:
     type: "object"
     properties:
-      pawn:
-        $ref: "#/definitions/PawnToRecv"
-      coord:
+      position:
         $ref: "#/definitions/Coordinate"
+      pawnId:
+        type: "integer"
+        format: "int64"
+      color:
+        type: "integer"
+        enum: [0, 1]
+      upgraded:
+        type: "boolean"
   MoveToSend:
     type: "object"
     properties:
-      pawn:
+      target:
         $ref: "#/definitions/PawnToSend"
       to:
         $ref: "#/definitions/Coordinate"
   MoveToRecv:
     type: "object"
     properties:
-      pawn:
-        $ref: "#/definitions/PawnToRecv"
-      pawnEaten:
+      gameSessionId:
+        type: "integer"
+        format: "int64"
+      moveId:
+        type: "integer"
+        format: "int64"
+      target:
         $ref: "#/definitions/PawnToRecv"
       from:
         $ref: "#/definitions/Coordinate"
@@ -205,12 +239,10 @@ definitions:
           $ref: "#/definitions/PawnPositioned"
         example:
           [{
-            pawn: {
-              id: 0,
-              color: "BLACK",
-              upgraded: false
-            },
-            coord: {
+            pawnId: 0,
+            color: 1,
+            upgraded: false,
+            position: {
               row: 0,
               column: 0
             }
@@ -221,12 +253,10 @@ definitions:
           $ref: "#/definitions/PawnPositioned"
         example:
           [{
-            pawn: {
-              id: 0,
-              color: "WHITE",
-              upgraded: false
-            },
-            coord: {
+            pawnId: 0,
+            color: 0,
+            upgraded: false,
+            position: {
               row: 0,
               column: 0
             }
