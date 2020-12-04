@@ -44,7 +44,19 @@ namespace VivaLaDama.Controllers
         [HttpPost]
         public async Task<ActionResult<IEnumerable<GameSessionToSend>>> PostGameSessions(NameOfPlayers names)
         {
-            GameSession game = new GameSession { Game = new Chessboard(), Moves = new List<Move>() };
+            GameSession game;
+
+            if(names.NamePlayer1==null || names.NamePlayer2==null)
+            {
+                return StatusCode(400);
+            }
+
+            if(names.NamePlayer1.All(car => char.IsWhiteSpace(car)) || names.NamePlayer2.All(car => char.IsWhiteSpace(car)))
+            {
+                return StatusCode(400);
+            }
+
+            game = new GameSession { Game = new Chessboard(), Moves = new List<Move>() };
             game.NamePlayer1 = names.NamePlayer1;
             game.NamePlayer2 = names.NamePlayer2;
 
