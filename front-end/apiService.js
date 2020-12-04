@@ -1,34 +1,40 @@
-const URL = "https://localhost:5001/weatherforecast";
-let form=document.getElementById('form');
+const URL = "http://localhost:52953";
 
 async function getGame() {
-    /*let response= await fetch(URL, {
+    let response= await fetch(`${URL}/api/game`, {
         method: 'GET'
     })
-    return response;*/
-    
-    //mockUP con promise
-    let promise = new Promise(function(resolve, reject) {
-        let obj = [{"id":"0345","player1":"fede","player2":"tommi"},
-        {"id":"0356","player1":"A","player2":"B"},
-        {"id":"0356","player1":"C","player2":"D"},
-        {"id":"0356","player1":"E","player2":"F"},
-        {"id":"0356","player1":"G","player2":"H"}]
-        resolve(obj);
-    });
-    return promise;
-    
+    return response;
 }
 
-async function postGame() {
-    return fetch(bho, {
+async function postGame(data) {
+    let response = fetch(`${URL}/api/game`, {
         method: 'POST',
-        /*headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },*/
-        body: new FormData(form)
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       });
+    return response;
+}
+
+async function getID(id){
+    let response= await fetch(`${URL}/api/game/${id}`, {
+        method: 'GET'
+    })
+    return response;
+}
+
+async function put(id,data){
+    let response = fetch(`${URL}/api/game/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+    return response;
 }
 
 
-export { getGame, postGame };
+export { getGame, postGame, getID, put};

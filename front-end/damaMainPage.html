@@ -4,13 +4,24 @@
     <meta charset='UTF-8'/>
     <title>Dama</title>
     <link rel='stylesheet' href='stylesMainPage.css'/>
-    <script type="text/javascript" src="./eventsMainPage.js" defer> </script>
+    <script type="module" src="./eventsMainPage.js" defer> </script>
   </head>
-  <body>
+  <body id="body">
     <div id='title'><h1>VIVA LA DAMA !</h1></div>
     <div id='main'>
         <table id='chessboard' cellspacing='0'>
             <tr>
+              <td class='block white' id="a00"> </td>
+              <td class='block black' id="a01"> </td>
+              <td class='block white' id="a02"> </td>
+              <td class='block black' id="a03"> </td>
+              <td class='block white' id="a04"> </td>
+              <td class='block black' id="a05"> </td>
+              <td class='block white' id="a06"> </td>
+              <td class='block black' id="a07"> </td>
+            </tr>
+            <tr>
+              <td class='block black' id="a10"> </td>
               <td class='block white' id="a11"> </td>
               <td class='block black' id="a12"> </td>
               <td class='block white' id="a13"> </td>
@@ -18,9 +29,9 @@
               <td class='block white' id="a15"> </td>
               <td class='block black' id="a16"> </td>
               <td class='block white' id="a17"> </td>
-              <td class='block black' id="a18"> </td>
             </tr>
             <tr>
+              <td class='block white' id="a20"> </td>
               <td class='block black' id="a21"> </td>
               <td class='block white' id="a22"> </td>
               <td class='block black' id="a23"> </td>
@@ -28,9 +39,9 @@
               <td class='block black' id="a25"> </td>
               <td class='block white' id="a26"> </td>
               <td class='block black' id="a27"> </td>
-              <td class='block white' id="a28"> </td>
             </tr>
             <tr>
+              <td class='block black' id="a30"> </td>
               <td class='block white' id="a31"> </td>
               <td class='block black' id="a32"> </td>
               <td class='block white' id="a33"> </td>
@@ -38,9 +49,9 @@
               <td class='block white' id="a35"> </td>
               <td class='block black' id="a36"> </td>
               <td class='block white' id="a37"> </td>
-              <td class='block black' id="a38"> </td>
             </tr>
             <tr>
+              <td class='block white' id="a40"> </td>
               <td class='block black' id="a41"> </td>
               <td class='block white' id="a42"> </td>
               <td class='block black' id="a43"> </td>
@@ -48,9 +59,9 @@
               <td class='block black' id="a45"> </td>
               <td class='block white' id="a46"> </td>
               <td class='block black' id="a47"> </td>
-              <td class='block white' id="a48"> </td>
             </tr>
             <tr>
+              <td class='block black' id="a50"> </td>
               <td class='block white' id="a51"> </td>
               <td class='block black' id="a52"> </td>
               <td class='block white' id="a53"> </td>
@@ -58,9 +69,9 @@
               <td class='block white' id="a55"> </td>
               <td class='block black' id="a56"> </td>
               <td class='block white' id="a57"> </td>
-              <td class='block black' id="a58"> </td>
             </tr>
             <tr>
+              <td class='block white' id="a60"> </td>
               <td class='block black' id="a61"> </td>
               <td class='block white' id="a62"> </td>
               <td class='block black' id="a63"> </td>
@@ -68,9 +79,9 @@
               <td class='block black' id="a65"> </td>
               <td class='block white' id="a66"> </td>
               <td class='block black' id="a67"> </td>
-              <td class='block white' id="a68"> </td>
             </tr>
             <tr>
+              <td class='block black' id="a70"> </td>
               <td class='block white' id="a71"> </td>
               <td class='block black' id="a72"> </td>
               <td class='block white' id="a73"> </td>
@@ -78,27 +89,11 @@
               <td class='block white' id="a75"> </td>
               <td class='block black' id="a76"> </td>
               <td class='block white' id="a77"> </td>
-              <td class='block black' id="a78"> </td>
-            </tr>
-            <tr>
-              <td class='block black' id="a81"> </td>
-              <td class='block white' id="a82"> </td>
-              <td class='block black' id="a83"> </td>
-              <td class='block white' id="a84"> </td>
-              <td class='block black' id="a85"> </td>
-              <td class='block white' id="a86"> </td>
-              <td class='block black' id="a87"> </td>
-              <td class='block white' id="a88"> </td>
             </tr>
         </table>
         <div id='moves-box'>
             <h1 class='title'>MOSSE</h1>
             <div id="container-list">
-                <ul>
-                    <li>MOSSA1</li>
-                    <li>MOSSA2</li>
-                    <li>MOSSA3</li>
-                </ul>
             </div>
         </div>
         <div id='points-box'>

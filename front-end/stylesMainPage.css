@@ -114,6 +114,8 @@ body{
     margin: 12%;
     border-radius: 50%;
     box-sizing: content-box;
+    color: #e1e5ea;
+    text-align: center;
 }
 .black-piece{
     border: 1px solid #374049;  /*25*/

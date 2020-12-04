@@ -1,13 +1,11 @@
 import {getGame, postGame} from "./apiService.js";
 
-let j=0;
-let ID;
+let firstTimeGet=true;
 let resumegameButton=document.getElementById('resume');
 let newgameButton=document.getElementById('new');
 let form=document.getElementById('form');
 let conteinerTab=document.getElementById('container-tab');
 let tableGames=document.getElementById('table-games');
-//let submitButton=document.getElementById("submit");
 
 
 resumegameButton.addEventListener('click', viewTableGames);
@@ -22,45 +20,54 @@ function viewForm(){
 }
 
 async function viewTableGames(){
-    if(j==0){
-
-       let response = await getGame();
-       //let obj = await response.json(); // read response body and parse as JSON
-
-       for(let key in response){
+    let response = await getGame();
+    let obj = await response.json(); // read response body and parse as JSON
+    if(firstTimeGet){    
+        for(let key in obj){
             let tr = document.createElement('tr');
-            tr.className = `rows`; //poi aggiungere class${key} se serve una classe diversa per ogni riga
-            tr.innerHTML=`<td> ${response[key].id} </td> <td>${response[key].player1}-${response[key].player2}</td> <td><button class="lastColumn" id="${key}" >play!</button></td>`;
+            tr.className = `rows`;
+            tr.innerHTML=`<td> ${obj[key].id} </td> <td>${obj[key].namePlayer1}-${obj[key].namePlayer2}</td> <td><button class="lastColumn" id="${obj[key].id}" >play!</button></td>`;
             let heading=document.getElementById("heading");
             heading.after(tr);
         }
-        j++;
-    } 
+        firstTimeGet=false;
+    }
     conteinerTab.style.display='flex'; //view table 
     form.style.display='none'; //hideForm
 }
 
-function gameChosen(){
+async function gameChosen(){
     let target = event.target;  // where was the click
-    if(target.className=="lastColumn"){  //only se click on play button
-        ID=target.id;
-        location.href="./damaMainPage.html";
-        //devo chiamare GET ID e andare nell'altra pagina
+    if(target.className=="lastColumn"){  //only if click on play button
+        let id=target.id;
+        invia_id(id);
     }
 }
 
 async function sendForm (evt){
-    
+
     evt.preventDefault();
-
-    /*let player1 = document.getElementById("player1");
-    let player2 = document.getElementById("player2");
-    console.log(player1.value);
-    console.log(player2.value);
-    title.innerHTML = `${player1.value} and ${player2.value}`;*/
     
-    let response = await postGame();
-    let result = await response.json(); 
+    let p1 = document.getElementById("player1");
+    let p2 = document.getElementById("player2");
+    let data = {
+        NamePlayer1: p1.value,
+        NamePlayer2: p2.value
+    }
+    let response = await postGame(data);
+    let result = await response.json(); //result è oggetto nuova partita    
+    invia_id(result.id);
+}
 
-    alert(result.message);
+function invia_id(id) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "get");
+    form.setAttribute("action", "./damaMainPage.html");
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "id");
+    hiddenField.setAttribute("value", id);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
 }
