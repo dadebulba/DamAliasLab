@@ -16,7 +16,7 @@ if(IDpartita!="NULL"){
 
 chessboard.addEventListener("click", selectPawn);
 
-function selectPawn(){  //gestire il turno
+function selectPawn(){
   let target = event.target;
   if(target.classList.contains("piece")){
     id=target.id;
@@ -77,10 +77,12 @@ async function selectDest(){
 async function initializeGame(){
   let response = await getID(IDpartita);
   let result = await response.json();  //oggetto partita  
-  insertPlayerNames(result.namePlayer1, result.namePlayer2); 
-  insertMoves(result.moves)
+  insertPlayerNames(result.namePlayer1, result.namePlayer2); //visualizzare anche punteggio
+  insertMoves(result.moves); //da modificare quando so la struttura
   insertBlackPawns(result.black);
   insertWhitePawns(result.white);
+  //visualizzare punteggio
+  //visualizzare turno
 }
   
 
