@@ -73,6 +73,33 @@ body{
     border-bottom: 5px solid #5f666d ;
     background-color: #d7d9db;
 }
+#turn-box{
+    margin-top: 5px;
+    width:100%;
+    height: 40px;
+    line-height: 100%;
+    font-size: 20px;
+    line-height: 40px;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#turn-label{
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+.black-label{
+    border: 1px solid #374049;  /*25*/
+    border-bottom: 5px solid #374049; /*25*/
+    background-color: #586674; /*40*/
+}
+.white-label{
+    border: 1px solid #5f666d;
+    border-bottom: 5px solid #5f666d ;
+    background-color: #d7d9db;
+}
 #main{
     display: flex;
     justify-content: center;
@@ -189,11 +216,11 @@ body{
         justify-content: space-around;
     }
     #moves-box{
-        margin-top: 10px;
+        margin-top: 0px;
         width: 25%
     }
     #points-box{
-        margin-top: 10px;
+        margin-top: 0px;
         order:2 ;
         width: 25%;
     }

@@ -32,7 +32,7 @@ function selectPawn(){
 async function selectDest(){
   let target = event.target;
   if(target.classList.contains("piece")){
-    alert("Devi selezionare una casella vuota");
+    alert("Mossa non valida");
     //annulla selezione
     document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
     chessboard.addEventListener("click", selectPawn);
@@ -52,26 +52,52 @@ async function selectDest(){
         column: dest[2]
       }
     }
-    console.log(obj);
+
     let response = await put(IDpartita, obj);
-    let result = await response.json();
+    //let result = await response.json();
     /*
-      creo oggetto da mandare con la put 
       SE LA MOSSA NON è VALIDA GESTISCO L'ERRORE
-      SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, TOLGO DALLA CHESSBOARD LA PEDINA CON ID SELEZIONATA,
-      GUARDO DOVE SI TROVA LA PEDINA CON ID SELEZIONATA(POSITION) E LA VADO AD INSERIRE IN QUELLA POSTAZIONE
-      DELLA CHESSBOARD CON ID GIUSTO E GUARDO SE è UPRGRADED
-      AGGIORNA MOSSE
-      AGGIORNA PUNTEGGIO
+      ----> SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, (MOCKATA)
     */
-    //per cancellare pedina con id
-    //document.getElementById(id).hidden=true;
-    //oppure  document.getElementById(id).parentElement.innerHTML="";
-    //document.getElementById(dest).innerHTML= `<div class='piece black-piece' id="b${id}"> </div>`;
+    movePawn(obj,response);
+    updateMoves();//lo faccio meglio quando so struttura definitiva mosse
+    updatePoints();
+
     
     chessboard.addEventListener("click", selectPawn);
     chessboard.removeEventListener("click", selectDest);
   }  
+}
+
+function movePawn(move, partita){
+  if(move.pawn.color=="WHITE"){
+    for(let key in partita.white){
+      if (partita.white[key].pawnId==move.pawn.id){
+        document.getElementById(`w${move.pawn.id}`).parentElement.innerHTML="";
+        let dest=document.getElementById(`a${partita.white[key].position.row}${partita.white[key].position.column}`);
+        if(partita.white[key].upgraded==false){
+          dest.innerHTML=`<div class='piece white-piece' id="w${partita.white[key].pawnId}"> </div>`;
+        }
+        else{
+          dest.innerHTML=`<div class='piece white-piece' id="w${partita.white[key].pawnId}"> O </div>`;  //damone si puo fare un'altra class css
+        }
+      }
+    }
+  }
+  if(move.pawn.color=="BLACK"){
+    for(let key in partita.black){
+      if (partita.black[key].pawnId==move.pawn.id){
+        document.getElementById(`b${move.pawn.id}`).parentElement.innerHTML="";
+        let dest=document.getElementById(`a${partita.black[key].position.row}${partita.black[key].position.column}`);
+        if(partita.black[key].upgraded==false){
+          dest.innerHTML=`<div class='piece black-piece' id="b${partita.black[key].pawnId}"> </div>`;
+        }
+        else{
+          dest.innerHTML=`<div class='piece black-piece' id="b${partita.black[key].pawnId}"> O </div>`;  //damone si puo fare un'altra class css
+        }
+      }
+    }
+  }
 }
 
 async function initializeGame(){
@@ -85,11 +111,10 @@ async function initializeGame(){
   //visualizzare turno
 }
   
-
-function insertPlayerNames(namePlayer1, namePlayer2){
-    nameP1.innerHTML=`<div class='label black-piece'> </div> ${namePlayer1} : 0`;
+function insertPlayerNames(namePlayer1, namePlayer2){//anche punteggio come parametro
+    nameP1.innerHTML=`<div class='label black-label'> </div> ${namePlayer1} : ${1}`;
     nameP1.style.fontSize="20px";
-    nameP2.innerHTML=`<div class='label white-piece'> </div> ${namePlayer2} : 0`;
+    nameP2.innerHTML=`<div class='label white-label'> </div> ${namePlayer2} : ${2}`;
     nameP2.style.fontSize="20px";
 }
 
@@ -128,11 +153,4 @@ function insertWhitePawns(white){
       elem.innerHTML=`<div class='piece white-piece' id="w${white[key].pawnId}"> O </div>`;
     }
   }
-}
-
-function f(){
-  let target = event.target;
-    
-    let id=target.id;
-    console.log(id); 
 }
