@@ -59,11 +59,10 @@ async function selectDest(){
       SE LA MOSSA NON è VALIDA GESTISCO L'ERRORE
       ----> SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, (MOCKATA)
     */
-    movePawn(obj,response);
+    movePawn(obj, response);
     updateMoves(response.moves);//lo faccio meglio quando so struttura definitiva mosse
-    //updatePoints();  //lo faccio quando aggiorna partita mettendoci anche points
-
-    //cambia turno
+    //updatePoints();  //lo faccio quando aggiorna partita mettendoci anche points e turn
+    //UpdateTurn();
 
     
     chessboard.addEventListener("click", selectPawn);
@@ -79,34 +78,10 @@ function updateMoves(moves){
 
 }
 function movePawn(move, partita){
-  if(move.pawn.color=="WHITE"){
-    for(let key in partita.white){
-      if (partita.white[key].pawnId==move.pawn.id){
-        document.getElementById(`w${move.pawn.id}`).parentElement.innerHTML="";
-        let dest=document.getElementById(`a${partita.white[key].position.row}${partita.white[key].position.column}`);
-        if(partita.white[key].upgraded==false){
-          dest.innerHTML=`<div class='piece white-piece' id="w${partita.white[key].pawnId}"> </div>`;
-        }
-        else{
-          dest.innerHTML=`<div class='piece white-upgraded' id="w${partita.white[key].pawnId}"> </div>`; 
-        }
-      }
-    }
-  }
-  if(move.pawn.color=="BLACK"){
-    for(let key in partita.black){
-      if (partita.black[key].pawnId==move.pawn.id){
-        document.getElementById(`b${move.pawn.id}`).parentElement.innerHTML="";
-        let dest=document.getElementById(`a${partita.black[key].position.row}${partita.black[key].position.column}`);
-        if(partita.black[key].upgraded==false){
-          dest.innerHTML=`<div class='piece black-piece' id="b${partita.black[key].pawnId}"> </div>`;
-        }
-        else{
-          dest.innerHTML=`<div class='piece black-upgraded' id="b${partita.black[key].pawnId}"> O </div>`;  
-        }
-      }
-    }
-  }
+  //document.getElementById(`${move.pawn.color=="WHITE" ? "w" : "b"}${move.pawn.id}`).parentElement.innerHTML="";
+  clearChessboard();
+  insertBlackPawns(partita.black);
+  insertWhitePawns(partita.white);
 }
 
 async function initializeGame(){
@@ -161,3 +136,45 @@ function insertWhitePawns(white){
     }
   }
 }
+function clearChessboard(){
+  for(let r=0; r<=7; r++){ //ciclo per righe
+    for(let c=0; c<=7; c++){  //ciclo per colonne
+      if((r+c)%2==1){
+          let elem=document.getElementById(`a${r}${c}`);
+          elem.innerHTML="";
+      }
+    }
+  }
+}
+
+/*
+function movePawn(move, partita){
+  if(move.pawn.color=="WHITE"){
+    for(let key in partita.white){
+      if (partita.white[key].pawnId==move.pawn.id){
+        document.getElementById(`w${move.pawn.id}`).parentElement.innerHTML="";
+        let dest=document.getElementById(`a${partita.white[key].position.row}${partita.white[key].position.column}`);
+        if(partita.white[key].upgraded==false){
+          dest.innerHTML=`<div class='piece white-piece' id="w${partita.white[key].pawnId}"> </div>`;
+        }
+        else{
+          dest.innerHTML=`<div class='piece white-upgraded' id="w${partita.white[key].pawnId}"> </div>`; 
+        }
+      }
+    }
+  }
+  if(move.pawn.color=="BLACK"){
+    for(let key in partita.black){
+      if (partita.black[key].pawnId==move.pawn.id){
+        document.getElementById(`b${move.pawn.id}`).parentElement.innerHTML="";
+        let dest=document.getElementById(`a${partita.black[key].position.row}${partita.black[key].position.column}`);
+        if(partita.black[key].upgraded==false){
+          dest.innerHTML=`<div class='piece black-piece' id="b${partita.black[key].pawnId}"> </div>`;
+        }
+        else{
+          dest.innerHTML=`<div class='piece black-upgraded' id="b${partita.black[key].pawnId}"> O </div>`;  
+        }
+      }
+    }
+  }
+}*/
