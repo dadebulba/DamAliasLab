@@ -60,8 +60,10 @@ async function selectDest(){
       ----> SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, (MOCKATA)
     */
     movePawn(obj,response);
-    updateMoves();//lo faccio meglio quando so struttura definitiva mosse
-    updatePoints();
+    updateMoves(response.moves);//lo faccio meglio quando so struttura definitiva mosse
+    //updatePoints();  //lo faccio quando aggiorna partita mettendoci anche points
+
+    //cambia turno
 
     
     chessboard.addEventListener("click", selectPawn);
@@ -69,6 +71,13 @@ async function selectDest(){
   }  
 }
 
+function updateMoves(moves){
+  let li = document.createElement('li');
+  let length=moves.length;
+  li.innerHTML=`${moves[length-1]}`;
+  document.getElementById("moves-list").prepend(li);
+
+}
 function movePawn(move, partita){
   if(move.pawn.color=="WHITE"){
     for(let key in partita.white){
@@ -119,13 +128,11 @@ function insertPlayerNames(namePlayer1, namePlayer2){//anche punteggio come para
 }
 
 function insertMoves(movesArray){
-  let ul = document.createElement('ul');
   for(let key in movesArray){
     let li = document.createElement('li');
     li.innerHTML=`${movesArray[key]}`;
-    ul.prepend(li);
+    document.getElementById("moves-list").prepend(li);
   }
-  movesList.prepend(ul);
 }
 
 function insertBlackPawns(black){
