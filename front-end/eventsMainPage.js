@@ -88,7 +88,7 @@ function movePawn(move, partita){
           dest.innerHTML=`<div class='piece white-piece' id="w${partita.white[key].pawnId}"> </div>`;
         }
         else{
-          dest.innerHTML=`<div class='piece white-piece' id="w${partita.white[key].pawnId}"> O </div>`;  //damone si puo fare un'altra class css
+          dest.innerHTML=`<div class='piece white-upgraded' id="w${partita.white[key].pawnId}"> </div>`; 
         }
       }
     }
@@ -102,7 +102,7 @@ function movePawn(move, partita){
           dest.innerHTML=`<div class='piece black-piece' id="b${partita.black[key].pawnId}"> </div>`;
         }
         else{
-          dest.innerHTML=`<div class='piece black-piece' id="b${partita.black[key].pawnId}"> O </div>`;  //damone si puo fare un'altra class css
+          dest.innerHTML=`<div class='piece black-upgraded' id="b${partita.black[key].pawnId}"> O </div>`;  
         }
       }
     }
@@ -144,7 +144,7 @@ function insertBlackPawns(black){
       elem.innerHTML=`<div class='piece black-piece' id="b${black[key].pawnId}"> </div>`;
     }
     else{ 
-      elem.innerHTML=`<div class='piece black-piece' id="b${black[key].pawnId}"> O </div>`;
+      elem.innerHTML=`<div class='piece black-upgraded' id="b${black[key].pawnId}"> O </div>`;
     }
   }
 }
@@ -157,7 +157,7 @@ function insertWhitePawns(white){
       elem.innerHTML=`<div class='piece white-piece' id="w${white[key].pawnId}"> </div>`;
     }
     else{ 
-      elem.innerHTML=`<div class='piece white-piece' id="w${white[key].pawnId}"> O </div>`;
+      elem.innerHTML=`<div class='piece white-upgraded' id="w${white[key].pawnId}"> </div>`;
     }
   }
 }

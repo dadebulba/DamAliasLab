@@ -73,6 +73,36 @@ body{
     border-bottom: 5px solid #5f666d ;
     background-color: #d7d9db;
 }
+.black-upgraded{
+    border: 1px solid red;  
+    border-bottom: 5px solid red; 
+    background-color: #586674; /*40*/
+}
+.black-upgraded:hover{
+    background-color: #7c8c9c; /*55*/
+    border: 1px solid red;  
+    border-bottom: 5px solid red;  
+}
+.black-upgraded:active{
+    border: 1px solid red;  
+    border-bottom: 5px solid red; 
+    background-color: #586674;
+}
+.white-upgraded{
+    border: 1px solid red;  
+    border-bottom: 5px solid red; 
+    background-color: #d7d9db;
+}
+.white-upgraded:hover{
+    background-color: #d7d9db;
+    border: 1px solid red;  
+    border-bottom: 5px solid red;  
+}
+.white-upgraded:active{
+    border: 1px solid red;  
+    border-bottom: 5px solid red; 
+    background-color: #d7d9db;
+}
 #turn-box{
     margin-top: 5px;
     width:100%;
