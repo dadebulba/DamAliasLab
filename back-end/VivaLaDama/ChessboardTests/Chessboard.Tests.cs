@@ -1,9 +1,9 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VivaLaDama.Models;
 
-namespace VivaLaDama.UnitTests.Models
+namespace VivaLaDamaTests
 {
     [TestClass]
     public class ChessboardTests
@@ -149,6 +149,9 @@ namespace VivaLaDama.UnitTests.Models
 
             result = chessboard.DoesThisPawnExist(whitePawn);
             Assert.IsFalse(result, "This pawn should not exist anymore");
+
+            result = chessboard.DoesThisPawnExist(blackPawn);
+            Assert.IsTrue(result, "This pawn should exist");
         }
         [TestMethod]
         public void ChessboardExecute_CheckingIfWhiteCanAttack()

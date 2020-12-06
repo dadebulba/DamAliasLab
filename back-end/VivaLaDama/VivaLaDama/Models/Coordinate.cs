@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VivaLaDama.Models
+﻿namespace VivaLaDama.Models
 {
     public class Coordinate
     {

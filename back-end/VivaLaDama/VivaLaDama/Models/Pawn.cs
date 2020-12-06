@@ -4,8 +4,8 @@ namespace VivaLaDama.Models
 {
     public class Pawn
     {
-        public long PawnId { get; set; }
         public enum ColorPawn { WHITE, BLACK }
+        public long PawnId { get; set; }
         public ColorPawn Color { get; set; }
         public bool Upgraded { get; set; }
         public ColorPawn GetOpponentColor()

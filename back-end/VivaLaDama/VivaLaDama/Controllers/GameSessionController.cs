@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VivaLaDama.Models;
@@ -31,7 +29,7 @@ namespace VivaLaDama.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GameSessionToSend>> GetGameSession(long id)
         {
-            GameSession game = (await this.RetrieveGameSession(id)).Value;
+            GameSession game = this.RetrieveGameSession(id);
 
             if (game == null)
             {
@@ -56,12 +54,10 @@ namespace VivaLaDama.Controllers
                 return StatusCode(400);
             }
 
-            game = new GameSession { Game = new Chessboard(), Moves = new List<Move>() };
-            game.NamePlayer1 = names.NamePlayer1;
-            game.NamePlayer2 = names.NamePlayer2;
+            game = new GameSession { Game = new Chessboard(), Moves = new List<Move>(), NamePlayer1=names.NamePlayer1, NamePlayer2=names.NamePlayer2 };
 
-            this._context.Add(game);
-            await this._context.SaveChangesAsync();
+            this._context.Set<GameSession>().Add(game);
+            this._context.SaveChanges();
 
             return CreatedAtAction(nameof(GetGameSession), new { id = game.GameSessionId }, new GameSessionToSend(game));
         }
@@ -69,7 +65,7 @@ namespace VivaLaDama.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<GameSessionToSend>> PutGameSession(long id, Move move)
         {
-            GameSession game = (await this.RetrieveGameSession(id)).Value;
+            GameSession game = this.RetrieveGameSession(id);
 
             if (game == null)
             {
@@ -80,7 +76,7 @@ namespace VivaLaDama.Controllers
             {
                 try
                 {
-                    await this._context.SaveChangesAsync();
+                    this._context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -105,7 +101,7 @@ namespace VivaLaDama.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<GameSessionToSend>> DeleteGameSession(long id)
         {
-            GameSession game = (await this.RetrieveGameSession(id)).Value;
+            GameSession game = this.RetrieveGameSession(id);
 
             if (game == null)
             {
@@ -164,7 +160,7 @@ namespace VivaLaDama.Controllers
         {
             return this._context.GameSessions.Any(game => game.GameSessionId == id);
         }
-        private async Task<ActionResult<GameSession>> RetrieveGameSession(long id)
+        public GameSession RetrieveGameSession(long id)
         {
             GameSession game = this._context.GameSessions.Where(game => game.GameSessionId == id).Include(game => game.Moves).FirstOrDefault();
 
