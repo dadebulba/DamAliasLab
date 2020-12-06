@@ -72,7 +72,7 @@ namespace VivaLaDama.Controllers
                 return NotFound();
             }
 
-            if (game.ExecuteMove(move, true))
+            if (game.ExecuteMove(move, true, true))
             {
                 try
                 {
@@ -170,7 +170,7 @@ namespace VivaLaDama.Controllers
 
                 for (int i = 0; i < game.Moves.Count; i++)
                 {
-                    game.ExecuteMove(game.Moves[i], false);
+                    game.ExecuteMove(game.Moves[i], false, false);
                 }
             }
 

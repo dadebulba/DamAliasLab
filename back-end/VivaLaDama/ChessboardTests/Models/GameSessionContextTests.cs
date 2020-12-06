@@ -35,19 +35,25 @@ namespace VivaLaDama.Models.Tests
             context.SaveChanges();
 
             game = this.controller.RetrieveGameSession(game.GameSessionId);
-            result = game.ExecuteMove(moveBlack1, true);
+            result = game.ExecuteMove(moveBlack1, true, true);
             Assert.IsTrue(result, "The first black move should be valid!");
             context.SaveChanges();
 
             game = this.controller.RetrieveGameSession(game.GameSessionId);
-            result = game.ExecuteMove(moveWhite, true);
+            result = game.ExecuteMove(moveWhite, true, true);
             Assert.IsTrue(result, "The first white move should be valid!");
             context.SaveChanges();
 
             game = this.controller.RetrieveGameSession(game.GameSessionId);
-            result = game.ExecuteMove(moveBlack2, true);
+            var entries1 = context.ChangeTracker.Entries();
+            result = game.ExecuteMove(moveBlack2, true, true);
+            var entries2 = context.ChangeTracker.Entries();
             Assert.IsTrue(result, "The second black move should be valid!");
             Assert.IsNotNull(moveBlack2.Target, "Should not be null moveBlack2.Target");
+
+            context.ChangeTracker.DetectChanges();
+            var entries3 = context.ChangeTracker.Entries();
+
             context.SaveChanges();
 
             Assert.IsNotNull(moveBlack2.Target, "This target should not be null");

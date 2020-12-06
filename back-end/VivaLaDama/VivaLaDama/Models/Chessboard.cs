@@ -99,15 +99,18 @@ namespace VivaLaDama.Models
                 }
             }
         }
-        private bool EvaluateMove(Move move)
+        private bool EvaluateMove(Move move, bool changeTarget)
         {
             Coordinate dest1, dest2;
             bool ret = false;
 
             if (move != null && this.DoesThisPawnExist(move.Target) && this.IsTurnRespected(move.Target) && move.To.IsValid(DEFAULT_LENGTH))
             {
-                move.From = this.GetCoordinateFromPawn(move.Target);
-                move.Target = this.Grid[move.From.Row, move.From.Column];
+                if(changeTarget == true)
+                {
+                    move.From = this.GetCoordinateFromPawn(move.Target);
+                    move.Target = this.Grid[move.From.Row, move.From.Column];
+                }
                 this.FindPossibleDestination(move, out dest1, out dest2);
 
                 if (dest1 != null && dest2 != null)
@@ -199,7 +202,7 @@ namespace VivaLaDama.Models
                     this.IsBoxEmpty(dest2) &&
                     ((this.MustEat == true && this.LastPawnMoved.Equals(pawn)) || this.MustEat == false));
         }
-        public bool ExecuteMove(Move move)
+        public bool ExecuteMove(Move move, bool changeTarget)
         {
             bool ret = true;
 
@@ -207,7 +210,7 @@ namespace VivaLaDama.Models
             {
                 this.FlipTurn();
             }
-            else if ((ret = this.EvaluateMove(move)))
+            else if ((ret = this.EvaluateMove(move, changeTarget)))
             {
                 this.UpdateGrid(move);
             }

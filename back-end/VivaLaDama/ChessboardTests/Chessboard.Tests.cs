@@ -32,7 +32,7 @@ namespace VivaLaDamaTests
             bool turnBeforeMove = chessboard.Turn, turnAfterMove;
             bool result;
 
-            Assert.IsTrue(chessboard.ExecuteMove(move), "A player should be able to skip!");
+            Assert.IsTrue(chessboard.ExecuteMove(move, true), "A player should be able to skip!");
 
             turnAfterMove = chessboard.Turn;
             result = (turnBeforeMove != turnAfterMove);
@@ -47,7 +47,7 @@ namespace VivaLaDamaTests
             bool result;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.AreEqual(resultExpected, result);
         }
@@ -70,7 +70,7 @@ namespace VivaLaDamaTests
             bool result;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.IsFalse(result, "A white pawn should not be able to go out of the grid!");
         }
@@ -88,7 +88,7 @@ namespace VivaLaDamaTests
             bool result;
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.AreEqual(resultExpected, result);
         }
@@ -111,7 +111,7 @@ namespace VivaLaDamaTests
             bool result;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.IsFalse(result, "A white pawn should not be able to go out of the grid!");
         }
@@ -133,13 +133,13 @@ namespace VivaLaDamaTests
             int numWhitePawns, numBlackPawns;
             bool result;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite);
+            result = chessboard.ExecuteMove(moveWhite, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsTrue(result, "The second black move should be valid!");
 
             numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
@@ -166,16 +166,16 @@ namespace VivaLaDamaTests
             int numWhitePawns, numBlackPawns;
             bool result;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite1);
+            result = chessboard.ExecuteMove(moveWhite1, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsTrue(result, "The second black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite2);
+            result = chessboard.ExecuteMove(moveWhite2, true);
             Assert.IsTrue(result, "The second white move should be valid!");
 
             numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
@@ -199,19 +199,19 @@ namespace VivaLaDamaTests
             chessboard.Grid[5, 2].Upgraded = true;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(firstMove);
+            result = chessboard.ExecuteMove(firstMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this first move");
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this second move");
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(thirdMove);
+            result = chessboard.ExecuteMove(thirdMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this third move");
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this last move");
         }
         [TestMethod]
@@ -227,19 +227,19 @@ namespace VivaLaDamaTests
             chessboard.Grid[2, 1].Upgraded = true;
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(firstMove);
+            result = chessboard.ExecuteMove(firstMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this first move");
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this second move");
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(thirdMove);
+            result = chessboard.ExecuteMove(thirdMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this third move");
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this last move");
         }
         [TestMethod]
@@ -257,16 +257,16 @@ namespace VivaLaDamaTests
 
             chessboard.Grid[2, 1].Upgraded = true;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite1);
+            result = chessboard.ExecuteMove(moveWhite1, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsTrue(result, "The second black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite2);
+            result = chessboard.ExecuteMove(moveWhite2, true);
             Assert.IsFalse(result, "The second white move should not be valid!");//Mossa non valida
 
             numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
@@ -288,13 +288,13 @@ namespace VivaLaDamaTests
             Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 3 } };
             bool result;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite);
+            result = chessboard.ExecuteMove(moveWhite, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsFalse(result, "The second black move should not be valid!");
         }
     }

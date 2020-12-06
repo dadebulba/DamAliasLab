@@ -9,9 +9,9 @@ namespace VivaLaDama.Models
         public string NamePlayer2 { get; set; }
         public Chessboard Game { get; set; }
         public List<Move> Moves { get; set; }
-        public bool ExecuteMove(Move move, bool insertMove)
+        public bool ExecuteMove(Move move, bool insertMove, bool changeTarget)
         {
-            bool ret = this.Game.ExecuteMove(move);
+            bool ret = this.Game.ExecuteMove(move, changeTarget);
 
             if(ret==true && insertMove==true)
             {
