@@ -391,7 +391,7 @@ namespace VivaLaDamaTests
             Assert.AreEqual(Pawn.ColorPawn.BLACK, chessboard.GetTurn(), "The turn should not flip!");
         }
         [TestMethod]
-        public void ChessboardTurn_CheckingIfAPawnCanEatMoreThatCantMoveAnotherPawn_ReturnFalse()
+        public void ChessboardTurn_CheckingIfBlackPawnCanEatMoreThatCantMoveDifferentBlackPawn_ReturnFalse()
         {
             Chessboard chessboard = new Chessboard();
             Pawn blackPawn1 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
@@ -431,7 +431,7 @@ namespace VivaLaDamaTests
             Assert.IsFalse(result, "This move should not be valid!");
         }
         [TestMethod]
-        public void ChessboardTurn_CheckingIfPawnTwoTimesInARow_ReturnFalse()
+        public void ChessboardTurn_CheckingIfBlackPawnCanEatTwoTimesInARow_ReturnFalse()
         {
             Chessboard chessboard = new Chessboard();
             Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
