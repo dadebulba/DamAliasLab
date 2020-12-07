@@ -237,7 +237,7 @@ namespace VivaLaDama.Models
                 this.MustEat = false;
                 this.LastPawnMoved = null;
 
-                if (this.CanEatMorePawns(move.Target, move.From))
+                if (this.CanEatMorePawns(move.Target, move.To))
                 {
                     this.LastPawnMoved = move.Target;
                     this.MustEat = true;

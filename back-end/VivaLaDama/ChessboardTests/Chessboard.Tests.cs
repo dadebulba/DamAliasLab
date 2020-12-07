@@ -353,5 +353,42 @@ namespace VivaLaDamaTests
             result = pointsWhiteBeforeEat < pointsWhiteAfterEat;
             Assert.IsTrue(result, "The points should be increased after eat!");
         }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfTurnDoesntFlipIfThePawnMovedCanEatMore()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn whitePawn1 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn whitePawn2 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 4 };
+            Move moveBlack123 = null;
+            Move moveBlack4 = new Move { Target = blackPawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite1 = new Move { Target = whitePawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite2 = new Move { Target = whitePawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite3 = new Move { Target = whitePawn2, To = new Coordinate { Row = 5, Column = 2 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack4, true);
+            Assert.IsTrue(result, "This should be valid!");
+
+            Assert.AreEqual(Pawn.ColorPawn.BLACK, chessboard.GetTurn(), "The turn should not flip!");
+        }
     }
 }
