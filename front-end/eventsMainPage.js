@@ -2,7 +2,6 @@ import {getID, put} from "./apiService.js";
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
-let movesList=document.getElementById("container-list");
 let selected=false;
 let id=0;
 
@@ -91,14 +90,18 @@ async function initializeGame(){
   insertMoves(result.moves); //da modificare quando so la struttura
   insertBlackPawns(result.black);
   insertWhitePawns(result.white);
-  //visualizzare punteggio
+  insertPoints(120, 340);//da modificare quando ho struttura
   //visualizzare turno
 }
   
+function insertPoints(black, white){
+  document.getElementById("black-points").innerHTML= `&nbsp&nbsp${black}`;
+  document.getElementById("white-points").innerHTML= `&nbsp&nbsp${white}`;
+}
 function insertPlayerNames(namePlayer1, namePlayer2){//anche punteggio come parametro
-    nameP1.innerHTML=`<div class='label black-label'> </div> ${namePlayer1} : ${1}`;
+    nameP1.innerHTML=`<div class='label black-label'> </div> ${namePlayer1}: <div id="black-points"> </div>`;
     nameP1.style.fontSize="20px";
-    nameP2.innerHTML=`<div class='label white-label'> </div> ${namePlayer2} : ${2}`;
+    nameP2.innerHTML=`<div class='label white-label'> </div> ${namePlayer2}: <div id="white-points"> </div>`;
     nameP2.style.fontSize="20px";
 }
 
@@ -119,7 +122,7 @@ function insertBlackPawns(black){
       elem.innerHTML=`<div class='piece black-piece' id="b${black[key].pawnId}"> </div>`;
     }
     else{ 
-      elem.innerHTML=`<div class='piece black-upgraded' id="b${black[key].pawnId}"> O </div>`;
+      elem.innerHTML=`<div class='piece black-upgraded' id="b${black[key].pawnId}"> </div>`;
     }
   }
 }
