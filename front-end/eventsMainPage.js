@@ -70,9 +70,9 @@ async function selectDest() {
       //oppure  document.getElementById(id).parentElement.innerHTML="";
       //document.getElementById(dest).innerHTML= `<div class='piece black-piece' id="b${id}"> </div>`;
 
-      chessboard.addEventListener("click", selectPawn);
-      chessboard.removeEventListener("click", selectDest);
     }
+    chessboard.addEventListener("click", selectPawn);
+    chessboard.removeEventListener("click", selectDest);
   }
 }
 

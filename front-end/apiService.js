@@ -1,11 +1,22 @@
-const URL = "http://localhost:52953";
+const URL = "https://localhost:44307";
+const VALID_STATUS = /^2[0-9][0-9]$/;
+
+function checkResponseMiddleware(response) {
+    if(!VALID_STATUS.test(response.status)) {
+        alert(`Error ${response.status}: ${response.statusText}`);
+        return null;
+    }
+    else {
+        return response;
+    }
+} 
 
 async function getGame() {
     try {
         let response = await fetch(`${URL}/api/game`, {
             method: 'GET'
         })
-        return response;
+        return checkResponseMiddleware(response);
     }
     catch (error) {
         console.error(error);
@@ -22,8 +33,8 @@ async function postGame(data) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
-        });
-        return response;
+        })
+        return checkResponseMiddleware(response);
     }
     catch (error) {
         console.error(error);
@@ -37,7 +48,7 @@ async function getID(id) {
         let response = await fetch(`${URL}/api/game/${id}`, {
             method: 'GET'
         })
-        return response;
+        return checkResponseMiddleware(response);
     }
     catch (error) {
         console.error(error);
@@ -55,7 +66,7 @@ async function put(id, data) {
             },
             body: JSON.stringify(data)
         });
-        return response;
+        return checkResponseMiddleware(response);
     }
     catch (error) {
         console.error(error);
