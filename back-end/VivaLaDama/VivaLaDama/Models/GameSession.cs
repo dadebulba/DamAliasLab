@@ -15,7 +15,6 @@ namespace VivaLaDama.Models
 
             if(ret==true && insertMove==true)
             {
-                move.GameSessionId = this.GameSessionId;
                 this.Moves.Add(move);
             }
 

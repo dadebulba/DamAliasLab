@@ -156,7 +156,7 @@ namespace VivaLaDama.Controllers
 
         }
 
-        private bool GameSessionExists(long id)
+        public bool GameSessionExists(long id)
         {
             return this._context.GameSessions.Any(game => game.GameSessionId == id);
         }
