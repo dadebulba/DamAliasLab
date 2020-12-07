@@ -297,5 +297,61 @@ namespace VivaLaDamaTests
             result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsFalse(result, "The second black move should not be valid!");
         }
+        [TestMethod]
+        public void ChessboardPoints_CheckingIfPointsGetUpdate_AfterBlackEat()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 0 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 5, Column = 0 } };
+            Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 1 } };
+            int pointsBlackBeforeEat, pointsBlackAfterEat;
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            pointsBlackBeforeEat = chessboard.PointsBlack;
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            pointsBlackAfterEat = chessboard.PointsBlack;
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = pointsBlackBeforeEat < pointsBlackAfterEat;
+            Assert.IsTrue(result, "The points should be increased after eat!");
+        }
+        [TestMethod]
+        public void ChessboardPoints_CheckingIfPointsGetUpdate_AfterWhiteEat()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = null;
+            Move moveWhite1 = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite2 = new Move { Target = whitePawn, To = new Coordinate { Row = 2, Column = 1 } };
+            int pointsWhiteBeforeEat, pointsWhiteAfterEat;
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            pointsWhiteBeforeEat = chessboard.PointsWhite;
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            pointsWhiteAfterEat = chessboard.PointsWhite;
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = pointsWhiteBeforeEat < pointsWhiteAfterEat;
+            Assert.IsTrue(result, "The points should be increased after eat!");
+        }
     }
 }

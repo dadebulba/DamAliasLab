@@ -230,6 +230,8 @@ namespace VivaLaDama.Models
             }
             else if (dest2.Equals(move.To))
             {
+                this.UpdatePoints();
+
                 this.Grid[dest1.Row, dest1.Column] = null;
                 this.Grid[dest2.Row, dest2.Column] = this.Grid[move.From.Row, move.From.Column];
                 this.MustEat = false;
@@ -350,6 +352,17 @@ namespace VivaLaDama.Models
         private void FlipTurn()
         {
             this.Turn = !this.Turn;
+        }
+        private void UpdatePoints()
+        {
+            if(this.GetTurn()==Pawn.ColorPawn.BLACK)
+            {
+                this.PointsBlack++;
+            } 
+            else
+            {
+                this.PointsWhite++;
+            }
         }
     }
 }
