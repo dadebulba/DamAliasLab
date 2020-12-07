@@ -42,9 +42,9 @@ async function selectDest(){
     document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
     
     let obj = {
-      pawn: {
+      target: {
         id: id.substring(1,),
-        color: id[0]=="w" ? "WHITE" : "BLACK",
+        color: id[0]=="w" ? 0 : 1,  //da chiedere cosa significa 0 e 1 (bianco nero)
       },
       to: {
         row: dest[1], 
@@ -58,10 +58,10 @@ async function selectDest(){
       SE LA MOSSA NON è VALIDA GESTISCO L'ERRORE
       ----> SE LA MOSSA è VALIDA MI TORNA OGGETTO PARTITA, (MOCKATA)
     */
-    movePawn(obj, response);
+    movePawn(response);
     updateMoves(response.moves);//lo faccio meglio quando so struttura definitiva mosse
-    //updatePoints();  //lo faccio quando aggiorna partita mettendoci anche points e turn
-    //UpdateTurn();
+    insertPoints(response.pointsWhite, response.pointsBlack);
+    viewTurn(response.turn);
 
     
     chessboard.addEventListener("click", selectPawn);
@@ -76,7 +76,7 @@ function updateMoves(moves){
   document.getElementById("moves-list").prepend(li);
 
 }
-function movePawn(move, partita){
+function movePawn(partita){
   //document.getElementById(`${move.pawn.color=="WHITE" ? "w" : "b"}${move.pawn.id}`).parentElement.innerHTML="";
   clearChessboard();
   insertBlackPawns(partita.black);
@@ -86,19 +86,28 @@ function movePawn(move, partita){
 async function initializeGame(){
   let response = await getID(IDpartita);
   let result = await response.json();  //oggetto partita  
-  insertPlayerNames(result.namePlayer1, result.namePlayer2); //visualizzare anche punteggio
+  insertPlayerNames(result.namePlayer1, result.namePlayer2);
   insertMoves(result.moves); //da modificare quando so la struttura
   insertBlackPawns(result.black);
   insertWhitePawns(result.white);
-  insertPoints(120, 340);//da modificare quando ho struttura
-  //visualizzare turno
+  insertPoints(result.pointsWhite, result.pointsBlack);
+  viewTurn(result.turn);
 }
   
+function viewTurn(turn){
+  if(turn==1){
+    document.getElementById("turn-box").innerHTML=`TOCCA A: <div id="turn-label" class='white-label'> </div>`;
+  }
+  else{
+    document.getElementById("turn-box").innerHTML=`TOCCA A: <div id="turn-label" class='black-label'> </div>`;
+  }
+
+}
 function insertPoints(black, white){
   document.getElementById("black-points").innerHTML= `&nbsp&nbsp${black}`;
   document.getElementById("white-points").innerHTML= `&nbsp&nbsp${white}`;
 }
-function insertPlayerNames(namePlayer1, namePlayer2){//anche punteggio come parametro
+function insertPlayerNames(namePlayer1, namePlayer2){
     nameP1.innerHTML=`<div class='label black-label'> </div> ${namePlayer1}: <div id="black-points"> </div>`;
     nameP1.style.fontSize="20px";
     nameP2.innerHTML=`<div class='label white-label'> </div> ${namePlayer2}: <div id="white-points"> </div>`;

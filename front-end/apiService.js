@@ -1,4 +1,4 @@
-const URL = "http://localhost:52953";
+const URL = "http://localhost:6622";
 
 async function getGame() {
     let response= await fetch(`${URL}/api/game`, {
@@ -35,7 +35,7 @@ async function put(id,data){
       });
     return response;*/
     let promise = new Promise(function(resolve, reject) {
-        let obj = {"id":id,"namePlayer1":"fede","namePlayer2":"tommi","moves":["from X to Y"],
+        let obj = {"id":1,"namePlayer1":"Federico","namePlayer2":"Tommaso","moves":["from X to Y"],
         "black":[{"position":{"row":0,"column":1},"pawnId":0,"color":1,"upgraded":false},
         {"position":{"row":0,"column":3},"pawnId":1,"color":1,"upgraded":false},
         {"position":{"row":0,"column":5},"pawnId":2,"color":1,"upgraded":false},
@@ -59,7 +59,8 @@ async function put(id,data){
         {"position":{"row":7,"column":0},"pawnId":8,"color":0,"upgraded":false},
         {"position":{"row":7,"column":2},"pawnId":9,"color":0,"upgraded":false},
         {"position":{"row":7,"column":4},"pawnId":10,"color":0,"upgraded":false},
-        {"position":{"row":7,"column":6},"pawnId":11,"color":0,"upgraded":false}]}
+        {"position":{"row":7,"column":6},"pawnId":11,"color":0,"upgraded":false}],
+        "turn":0,"pointsWhite":20,"pointsBlack":0}
         resolve(obj);
     });
     return promise;
