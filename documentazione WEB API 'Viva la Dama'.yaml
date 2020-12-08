@@ -1,13 +1,13 @@
 swagger: "2.0"
 info:
-  description: "Documentazione della WEB API per gestire il gioco della Dama."
+  description: "This is the documentation of the WEB API for the project \"Viva la Dama\""
   version: "1.0.0"
   title: "Viva la Dama"
 host: "localhost"
 basePath: "/"
 tags:
 - name: "game"
-  description: "Tutti i metodi che servono per interagire con una sessione di gioco"
+  description: "These are all the methods in order to create, update, retrieve and delete a gaming session"
 schemes:
 - "http"
 paths:
@@ -15,7 +15,7 @@ paths:
     post:
       tags:
       - "game"
-      summary: "Crea una nuova sessione di gioco"
+      summary: "Create a new gaming session"
       description: ""
       consumes:
       - "application/json"
@@ -23,53 +23,57 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "body"
-        description: "Le informazioni che riguardano ad una sessione di gioco"
+        name: "nameOfPlayers"
+        description: "This object contains the names of the two players"
         required: true
         schema:
-          $ref: "#/definitions/Game"
+          $ref: "#/definitions/NameOfPlayers"
       responses:
+        "201":
+          description: "The game is created successfully"
+          schema:
+            $ref: "#/definitions/Game"
         "400":
-          description: "Input non valido"
+          description: "The input is not valid: missing paramaters!"
     get:
       tags:
       - "game"
-      summary: "Ottieni una lista di tutte le sessioni di gioco"
+      summary: "Get all the gaming sessions"
       description: ""
       produces:
       - "application/json"
       responses:
         "200":
-          description: "Operazione avventua con successo"
+          description: "The operation is executed successfully"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Game"
+              $ref: "#/definitions/GamePreview"
   /game/{id}:
     get:
       tags:
       - "game"
-      summary: "Ottieni la sessione di gioco con questo id"
+      summary: "Get a specific gaming session"
       produces:
       - "application/json"
       parameters:
       - name: "id"
         in: "path"
-        description: "Id del gioco che si vuole ottenere"
+        description: "Id of a gaming session"
         required: true
         type: "integer"
         format: "int64"
       responses:
         "200":
-          description: "Operazione avvenuta con successo"
+          description: "The operation is executed successfully"
           schema:
             $ref: "#/definitions/Game"
         "404":
-          description: "Id non corrisponde a nessuna sessione di gioco attiva"
+          description: "The id specified in the url doesn't match with any gaming session"
     put:
       tags:
       - "game"
-      summary: "Cerca di eseguire una mossa su una determinata sessione di gioco"
+      summary: "A player has made a move and want to execute it"
       consumes:
       - "application/json"
       produces:
@@ -77,84 +81,192 @@ paths:
       parameters:
       - name: "id"
         in: "path"
-        description: "Id della sessione di gioco"
+        description: "Id of the gaming session that needs to be modified"
         required: true
         type: "integer"
         format: "int64"
-      - name: "mossa"
+      - name: "move"
         in: "body"
-        description: "Descrizione della mossa che vuole effettuare l'utente"
+        description: "The move that a player want to execute"
         required: true
         schema:
-          $ref: "#/definitions/Mossa"
+          $ref: "#/definitions/MoveToSend"
       responses:
         "200":
-          description: "Operazione avvenuta con successo"
+          description: "The operation is executed successfully"
           schema:
             $ref: "#/definitions/Game"
         "400":
-          description: "Se l'id del gioco è diverso da quello della struttura dati"
-        "401":
-          description: "Se la mossa non è valida"
+          description: "If the id specified in the url is different from the one in the object"
+        "403":
+          description: "If the move is not valid and can't be executed"
     delete:
       tags:
       - "game"
-      summary: "Distrugge una sessione di gioco"
+      summary: "Destroy a gaming session"
       produces:
       - "application/json"
       parameters:
       - name: "id"
         in: "path"
-        description: "Id della sessione di gioco"
+        description: "Id of the gaming session that needs to be deleted"
         required: true
         type: "integer"
         format: "int64"
       responses:
         "200":
-          description: "Operazione avvenuta con successo"
+          description: "The operation is executed successfully"
           schema:
             $ref: "#/definitions/Game"
+        "404":
+          description: "Specified game does not exist"
+        "400":
+          description: "Game has no moves"
+  /game/{id}/lastMove:
+    delete:
+      tags:
+      - "game"
+      summary: "Revert last move of specified game"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id of the gaming session that needs to be reverted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "The operation is executed successfully"
+          schema:
+            $ref: "#/definitions/Game"
+  
 definitions:
-  Mossa:
+  NameOfPlayers:
     type: "object"
     properties:
-      idPedina:
+      namePlayer1:
+        type: "string"
+      namePlayer2:
+        type: "string"
+  PawnToRecv:
+    type: "object"
+    properties:
+      pawnId:
         type: "integer"
         format: "int64"
-      iFrom:
+      color:
+        type: "integer"
+        enum: [0, 1]
+      upgraded:
+        type: "boolean"
+  PawnToSend:
+    type: "object"
+    properties:
+      pawnId:
         type: "integer"
         format: "int64"
-      jFrom:
+      color:
+        type: "integer"
+        enum: [0, 1]
+  PawnPositioned:
+    type: "object"
+    properties:
+      position:
+        $ref: "#/definitions/Coordinate"
+      pawnId:
         type: "integer"
         format: "int64"
-      iTo:
+      color:
+        type: "integer"
+        enum: [0, 1]
+      upgraded:
+        type: "boolean"
+  MoveToSend:
+    type: "object"
+    properties:
+      target:
+        $ref: "#/definitions/PawnToSend"
+      to:
+        $ref: "#/definitions/Coordinate"
+  MoveToRecv:
+    type: "object"
+    properties:
+      gameSessionId:
         type: "integer"
         format: "int64"
-      jTo:
+      moveId:
         type: "integer"
         format: "int64"
-    xml:
-      name: "Tag"
+      target:
+        $ref: "#/definitions/PawnToRecv"
+      from:
+        $ref: "#/definitions/Coordinate"
+      to:
+        $ref: "#/definitions/Coordinate"
+  GamePreview:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      namePlayer1:
+        type: "string"
+        example: "nomePlayer1"
+      namePlayer2:
+        type: "string"
+        example: "nomePlayer2"
   Game:
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
-      nomePlayer1:
+      namePlayer1:
         type: "string"
         example: "nomePlayer1"
-      nomePlayer2:
+      namePlayer2:
         type: "string"
         example: "nomePlayer2"
-      cronologiaMosse:
+      historyMoves:
         type: "array"
         items:
-          $ref: "#/definitions/Mossa"
-      campoDiGioco:
+          $ref: "#/definitions/MoveToRecv"
+      black:
         type: "array"
         items:
-          type: "array"
-          items:
-            type: "integer"
-            format: "int64"
+          $ref: "#/definitions/PawnPositioned"
+        example:
+          [{
+            pawnId: 0,
+            color: 1,
+            upgraded: false,
+            position: {
+              row: 0,
+              column: 0
+            }
+          }]
+      white:
+        type: "array"
+        items:
+          $ref: "#/definitions/PawnPositioned"
+        example:
+          [{
+            pawnId: 0,
+            color: 0,
+            upgraded: false,
+            position: {
+              row: 0,
+              column: 0
+            }
+          }]
+  Coordinate:
+    type: "object"
+    properties:
+      row:
+        type: "integer"
+        format: "int64"
+      column:
+        type: "integer"
+        format: "int64"

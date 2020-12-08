@@ -1,53 +1,55 @@
+
 import {getID, put} from "./apiService.js";
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
 let selected=false;
-let id=0;
+let id=0; 
 
-let urlParam = new URLSearchParams(window.location.search); 
+let urlParam = new URLSearchParams(window.location.search);
 let IDpartita = urlParam.get('id');
 
-if(IDpartita!="NULL"){
-  let body=document.getElementById("body");
-  body.onload=initializeGame;
+if (IDpartita != "NULL") {
+  let body = document.getElementById("body");
+  body.onload = initializeGame;
 }
 
 chessboard.addEventListener("click", selectPawn);
 
-function selectPawn(){
+
+function selectPawn() { 
   let target = event.target;
-  if(target.classList.contains("piece")){
-    id=target.id;
-    target.parentElement.style.backgroundColor="red";
+  if (target.classList.contains("piece")) {
+    id = target.id;
+    target.parentElement.style.backgroundColor = "red";
     chessboard.removeEventListener("click", selectPawn);
     chessboard.addEventListener("click", selectDest);
   }
-  if(target.tagName=="TD"){
+  if (target.tagName == "TD") {
     alert("Devi selezionare una pedina")
   }
 }
 
-async function selectDest(){
+async function selectDest() {
   let target = event.target;
   if(target.classList.contains("piece")){
     alert("Mossa non valida");
     //annulla selezione
-    document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
+    document.getElementById(id).parentElement.style.backgroundColor = "#8997a9";
     chessboard.addEventListener("click", selectPawn);
     chessboard.removeEventListener("click", selectDest);
   }
-  if(target.tagName=="TD"){
-    let dest=target.id;
-    document.getElementById(id).parentElement.style.backgroundColor="#8997a9";
-    
+  if (target.tagName == "TD") {
+    let dest = target.id;
+    document.getElementById(id).parentElement.style.backgroundColor = "#8997a9";
+
     let obj = {
       target: {
         id: id.substring(1,),
         color: id[0]=="w" ? 0 : 1,  //da chiedere cosa significa 0 e 1 (bianco nero)
       },
       to: {
-        row: dest[1], 
+        row: dest[1],
         column: dest[2]
       }
     }
@@ -66,7 +68,7 @@ async function selectDest(){
     
     chessboard.addEventListener("click", selectPawn);
     chessboard.removeEventListener("click", selectDest);
-  }  
+  }
 }
 
 function updateMoves(moves){
@@ -122,26 +124,26 @@ function insertMoves(movesArray){
   }
 }
 
-function insertBlackPawns(black){
-  for(let key in black){
-    let row=black[key].position.row;
-    let column=black[key].position.column;
-    let elem=document.getElementById(`a${row}${column}`);
-    if(black[key].upgraded==false){
-      elem.innerHTML=`<div class='piece black-piece' id="b${black[key].pawnId}"> </div>`;
+function insertBlackPawns(black) {
+  for (let key in black) {
+    let row = black[key].position.row;
+    let column = black[key].position.column;
+    let elem = document.getElementById(`a${row}${column}`);
+    if (black[key].upgraded == false) {
+      elem.innerHTML = `<div class='piece black-piece' id="b${black[key].pawnId}"> </div>`;
     }
     else{ 
       elem.innerHTML=`<div class='piece black-upgraded' id="b${black[key].pawnId}"> </div>`;
     }
   }
 }
-function insertWhitePawns(white){
-  for(let key in white){
-    let row=white[key].position.row;
-    let column=white[key].position.column;
-    let elem=document.getElementById(`a${row}${column}`);
-    if(white[key].upgraded==false){
-      elem.innerHTML=`<div class='piece white-piece' id="w${white[key].pawnId}"> </div>`;
+function insertWhitePawns(white) {
+  for (let key in white) {
+    let row = white[key].position.row;
+    let column = white[key].position.column;
+    let elem = document.getElementById(`a${row}${column}`);
+    if (white[key].upgraded == false) {
+      elem.innerHTML = `<div class='piece white-piece' id="w${white[key].pawnId}"> </div>`;
     }
     else{ 
       elem.innerHTML=`<div class='piece white-upgraded' id="w${white[key].pawnId}"> </div>`;
