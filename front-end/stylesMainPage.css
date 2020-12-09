@@ -73,35 +73,9 @@ body{
     border-bottom: 5px solid #5f666d ;
     background-color: #d7d9db;
 }
-.black-upgraded{
-    border: 1px solid red;  
-    border-bottom: 5px solid red; 
-    background-color: #586674; /*40*/
-}
-.black-upgraded:hover{
-    background-color: #7c8c9c; /*55*/
-    border: 1px solid red;  
-    border-bottom: 5px solid red;  
-}
-.black-upgraded:active{
-    border: 1px solid red;  
-    border-bottom: 5px solid red; 
-    background-color: #586674;
-}
-.white-upgraded{
-    border: 1px solid red;  
-    border-bottom: 5px solid red; 
-    background-color: #d7d9db;
-}
-.white-upgraded:hover{
-    background-color: #d7d9db;
-    border: 1px solid red;  
-    border-bottom: 5px solid red;  
-}
-.white-upgraded:active{
-    border: 1px solid red;  
-    border-bottom: 5px solid red; 
-    background-color: #d7d9db;
+.upgraded{
+    color: red;
+    font-size: 26px;  
 }
 #turn-box{
     margin-top: 5px;
@@ -211,7 +185,7 @@ body{
     margin: 20px 5px 0 0;
     font-size: 14px;
     width:40%;
-    height: 80%;
+    min-height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -241,13 +215,18 @@ body{
     align-items: center;
     margin: 10px;
 }
+ul{
+    list-style: none;
+    margin-bottom: 10px;
+}
+
 @media only screen and (min-width: 961px) {
     #main{
         justify-content: space-around;
     }
     #moves-box{
         margin-top: 0px;
-        width: 25%
+        width: 25%;
     }
     #points-box{
         margin-top: 0px;

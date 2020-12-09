@@ -151,19 +151,12 @@ td{
     margin-right: 20px;
     border-radius: 50%;
 }
-.piece{
-    width:70%;
-    height: 75%;
-    margin: 12%;
-    border-radius: 50%;
-    box-sizing: content-box;
-}
-.black-piece{
+.black-label{
     border: 1px solid #374049;  /*25*/
     border-bottom: 5px solid #374049; /*25*/
     background-color: #586674; /*40*/
 }
-.white-piece{
+.white-label{
     border: 1px solid #5f666d;
     border-bottom: 5px solid #5f666d ;
     background-color: #d7d9db;
