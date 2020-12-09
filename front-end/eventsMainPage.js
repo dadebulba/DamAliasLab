@@ -42,7 +42,7 @@ async function selectDest() {
     let obj = {
       target: {
         pawnId: Number(id.substring(1,)),
-        color: id[0]=="w" ? 0 : 1,  //da chiedere cosa significa 0 e 1 (bianco nero)
+        color: id[0]=="w" ? 0 : 1, //0 white, 1 black
       },
       to: {
         row: Number(dest[1]),
@@ -55,7 +55,7 @@ async function selectDest() {
     if(response!=null){
       let result = await response.json();
       movePawn(result);
-      updateMoves(result.moves);//lo faccio meglio quando so struttura definitiva mosse
+      updateMoves(result.moves);
       insertPoints(result.pointsWhite, result.pointsBlack);
       viewTurn(result.turn);
     }
@@ -81,7 +81,7 @@ function movePawn(partita){
 
 async function initializeGame(){
   let response = await getID(IDpartita);
-  let result = await response.json();  //oggetto partita  
+  let result = await response.json(); 
   insertPlayerNames(result.namePlayer1, result.namePlayer2);
   insertMoves(result.moves);
   insertBlackPawns(result.black);
@@ -146,8 +146,8 @@ function insertWhitePawns(white) {
   }
 }
 function clearChessboard(){
-  for(let r=0; r<=7; r++){ //ciclo per righe
-    for(let c=0; c<=7; c++){  //ciclo per colonne
+  for(let r=0; r<=7; r++){ 
+    for(let c=0; c<=7; c++){  
       if((r+c)%2==1){
           let elem=document.getElementById(`a${r}${c}`);
           elem.innerHTML="";

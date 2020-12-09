@@ -39,7 +39,7 @@ async function viewTableGames() {
 }
 
 async function gameChosen() {
-    let target = event.target;  // where was the click
+    let target = event.target;  // where is the click
     if (target.className == "lastColumn") {  //only if click on play button
         let id = target.id;
         invia_id(id);
@@ -58,7 +58,7 @@ async function sendForm(evt) {
     }
     let response = await postGame(data);
     if (response != null) {
-        let result = await response.json(); //result è oggetto nuova partita    
+        let result = await response.json();    
         invia_id(result.id);
     }
 }
