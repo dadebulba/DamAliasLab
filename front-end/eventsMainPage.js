@@ -1,8 +1,9 @@
 
-import {getID, put} from "./apiService.js";
+import {getID, put, deleteLastMove} from "./apiService.js";
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
+let backBtn = document.getElementById("back-btn");
 let selected=false;
 let id=0; 
 
@@ -13,9 +14,9 @@ if (IDpartita != "NULL") {
   let body = document.getElementById("body");
   body.onload = initializeGame;
 }
-
-chessboard.addEventListener("click", selectPawn);
-
+else {
+  window.location.href = "damaFirstPage.html";
+}
 
 function selectPawn() { 
   let target = event.target;
@@ -68,6 +69,23 @@ async function selectDest() {
     
     chessboard.addEventListener("click", selectPawn);
     chessboard.removeEventListener("click", selectDest);
+    if(document.getElementById("moves-list").childElementCount > 0){
+      backBtn.style.display = "block";
+    }
+  }
+}
+
+async function revertLastMove() {
+  let response = await deleteLastMove();
+  if(response != null){
+    let game = response; //await response.json();
+    movePawn(game);
+    insertPoints(game.pointsWhite, game.pointsBlack);
+    viewTurn(game.turn);
+    document.getElementById("moves-list").children[0].remove();
+    if(game.moves.length == 0){
+      backBtn.style.display = "none";
+    }
   }
 }
 
@@ -76,8 +94,8 @@ function updateMoves(moves){
   let length=moves.length;
   li.innerHTML=`${moves[length-1]}`;
   document.getElementById("moves-list").prepend(li);
-
 }
+
 function movePawn(partita){
   //document.getElementById(`${move.pawn.color=="WHITE" ? "w" : "b"}${move.pawn.id}`).parentElement.innerHTML="";
   clearChessboard();
@@ -87,13 +105,22 @@ function movePawn(partita){
 
 async function initializeGame(){
   let response = await getID(IDpartita);
+  if(response != null){
+
   let result = await response.json();  //oggetto partita  
+  
+  chessboard.addEventListener("click", selectPawn);
+  backBtn.addEventListener('click', revertLastMove);
   insertPlayerNames(result.namePlayer1, result.namePlayer2);
   insertMoves(result.moves); //da modificare quando so la struttura
   insertBlackPawns(result.black);
   insertWhitePawns(result.white);
   insertPoints(result.pointsWhite, result.pointsBlack);
   viewTurn(result.turn);
+  }
+  else {
+    window.location.href = "damaFirstPage.html";
+  }
 }
   
 function viewTurn(turn){
