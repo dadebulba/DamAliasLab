@@ -76,4 +76,20 @@ async function put(id, data) {
 }
 
 
-export { getGame, postGame, getID, put};
+async function deleteLastMove(id) {
+    try {
+        let response = await fetch(`${URL}/api/game/${id}/lastMove`, {
+            method: 'DELETE'
+        });
+        return checkResponseMiddleware(response);
+    }
+    catch (error) {
+        console.error(error);
+        alert(`Error ${error.name}: ${error.message}`);
+        return null;
+    }
+}
+
+
+
+export { getGame, postGame, getID, put, deleteLastMove };

@@ -1,10 +1,10 @@
 
-import {getID, put} from "./apiService.js";
+import {getID, put, deleteLastMove} from "./apiService.js";
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
-let id=0; 
-
+let backBtn = document.getElementById("back-btn");
+let id; 
 let urlParam = new URLSearchParams(window.location.search);
 let IDpartita = urlParam.get('id');
 
@@ -12,9 +12,9 @@ if (IDpartita != "NULL") {
   let body = document.getElementById("body");
   body.onload = initializeGame;
 }
-
-chessboard.addEventListener("click", selectPawn);
-
+else {
+  window.location.href = "damaFirstPage.html";
+}
 
 function selectPawn() { 
   let target = event.target;
@@ -39,29 +39,47 @@ async function selectDest() {
     dest = target.id;
   }
   document.getElementById(id).parentElement.style.backgroundColor = "#8997a9";
-    let obj = {
-      target: {
-        pawnId: Number(id.substring(1,)),
-        color: id[0]=="w" ? 0 : 1, //0 white, 1 black
-      },
-      to: {
-        row: Number(dest[1]),
-        column: Number(dest[2])
-      }
+  
+  let obj = {
+    target: {
+      pawnId: Number(id.substring(1,)),
+      color: id[0]=="w" ? 0 : 1, //0 white, 1 black
+    },
+    to: {
+      row: Number(dest[1]),
+      column: Number(dest[2])
     }
+  }
     
-    let response = await put(IDpartita, obj);
+  let response = await put(IDpartita, obj);
 
-    if(response!=null){
-      let result = await response.json();
-      movePawn(result);
-      updateMoves(result.moves);
-      insertPoints(result.pointsWhite, result.pointsBlack);
-      viewTurn(result.turn);
+  if(response!=null){
+    let result = await response.json();
+    movePawn(result);
+    updateMoves(result.moves);
+    insertPoints(result.pointsWhite, result.pointsBlack);
+    viewTurn(result.turn);
+  }
+
+  chessboard.addEventListener("click", selectPawn);
+  chessboard.removeEventListener("click", selectDest);
+  if(document.getElementById("moves-list").childElementCount > 0){
+    backBtn.style.display = "block";
+  }
+}
+
+async function revertLastMove() {
+  let response = await deleteLastMove(IDpartita);
+  if(response != null){
+    let result = response.json();
+    movePawn(result);
+    insertPoints(result.pointsWhite, result.pointsBlack);
+    viewTurn(game.turn);
+    document.getElementById("moves-list").children[0].remove();
+    if(document.getElementById("moves-list").childElementCount > 0){
+      backBtn.style.display = "none";
     }
-
-    chessboard.addEventListener("click", selectPawn);
-    chessboard.removeEventListener("click", selectDest);
+  }
 }
 
 function updateMoves(moves){
@@ -71,8 +89,8 @@ function updateMoves(moves){
   from: [${moves[length-1].from.row},${moves[length-1].from.column}]
   to: [${moves[length-1].to.row},${moves[length-1].to.column}]`;
   document.getElementById("moves-list").prepend(li);
-
 }
+
 function movePawn(partita){
   clearChessboard();
   insertBlackPawns(partita.black);
@@ -81,13 +99,24 @@ function movePawn(partita){
 
 async function initializeGame(){
   let response = await getID(IDpartita);
-  let result = await response.json(); 
-  insertPlayerNames(result.namePlayer1, result.namePlayer2);
-  insertMoves(result.moves);
-  insertBlackPawns(result.black);
-  insertWhitePawns(result.white);
-  insertPoints(result.pointsBlack, result.pointsWhite);
-  viewTurn(result.turn);
+  console.log(response);
+  if(response != null){
+    let result = await response.json();  //oggetto partita  
+    chessboard.addEventListener("click", selectPawn);
+    backBtn.addEventListener('click', revertLastMove);
+    insertPlayerNames(result.namePlayer1, result.namePlayer2);
+    insertMoves(result.moves);
+    insertBlackPawns(result.black);
+    insertWhitePawns(result.white);
+    insertPoints(result.pointsBlack, result.pointsWhite);
+    viewTurn(result.turn);
+    if(document.getElementById("moves-list").childElementCount == 0){
+      backBtn.style.display = "none";
+    }
+  }
+    else {
+      window.location.href = "damaFirstPage.html";
+    }
 }
 
 function viewTurn(turn){

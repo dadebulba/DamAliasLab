@@ -78,8 +78,8 @@ body{
     font-size: 26px;  
 }
 #turn-box{
+    margin-left: 20px;
     margin-top: 5px;
-    width:100%;
     height: 40px;
     line-height: 100%;
     font-size: 20px;
@@ -87,6 +87,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
 }
 #turn-label{
     width: 30px;
@@ -218,6 +219,30 @@ body{
 ul{
     list-style: none;
     margin-bottom: 10px;
+}
+button{
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #5995DA;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 130px;
+}
+.button:hover{
+    background-color: #76AEED;
+}
+.button:active {
+    background-color: #407FC7;
+}
+.resumeButton:hover{
+    background-color: #76AEED;
+}
+.resumeButton:active {
+    background-color: #407FC7;
 }
 
 @media only screen and (min-width: 961px) {
