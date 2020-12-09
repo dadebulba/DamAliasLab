@@ -46,12 +46,12 @@ namespace VivaLaDama.Controllers
         {
             GameSession game;
 
-            if(names.NamePlayer1==null || names.NamePlayer2==null)
+            if (names.NamePlayer1 == null || names.NamePlayer2 == null)
             {
                 return StatusCode(400);
             }
 
-            if(names.NamePlayer1.All(car => char.IsWhiteSpace(car)) || names.NamePlayer2.All(car => char.IsWhiteSpace(car)))
+            if (names.NamePlayer1.All(car => char.IsWhiteSpace(car)) || names.NamePlayer2.All(car => char.IsWhiteSpace(car)))
             {
                 return StatusCode(400);
             }
@@ -132,7 +132,7 @@ namespace VivaLaDama.Controllers
 
             if (DeleteLastMoveFromDb(game))
             {
-                return Ok();
+                return new GameSessionToSend(game);
             }
             else
             {
