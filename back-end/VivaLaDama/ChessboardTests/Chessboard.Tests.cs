@@ -1,9 +1,9 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VivaLaDama.Models;
 
-namespace VivaLaDama.UnitTests.Models
+namespace VivaLaDamaTests
 {
     [TestClass]
     public class ChessboardTests
@@ -32,7 +32,7 @@ namespace VivaLaDama.UnitTests.Models
             bool turnBeforeMove = chessboard.Turn, turnAfterMove;
             bool result;
 
-            Assert.IsTrue(chessboard.ExecuteMove(move), "A player should be able to skip!");
+            Assert.IsTrue(chessboard.ExecuteMove(move, true), "A player should be able to skip!");
 
             turnAfterMove = chessboard.Turn;
             result = (turnBeforeMove != turnAfterMove);
@@ -47,7 +47,7 @@ namespace VivaLaDama.UnitTests.Models
             bool result;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.AreEqual(resultExpected, result);
         }
@@ -70,7 +70,7 @@ namespace VivaLaDama.UnitTests.Models
             bool result;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.IsFalse(result, "A white pawn should not be able to go out of the grid!");
         }
@@ -88,7 +88,7 @@ namespace VivaLaDama.UnitTests.Models
             bool result;
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.AreEqual(resultExpected, result);
         }
@@ -111,7 +111,7 @@ namespace VivaLaDama.UnitTests.Models
             bool result;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(move);
+            result = chessboard.ExecuteMove(move, true);
 
             Assert.IsFalse(result, "A white pawn should not be able to go out of the grid!");
         }
@@ -133,13 +133,13 @@ namespace VivaLaDama.UnitTests.Models
             int numWhitePawns, numBlackPawns;
             bool result;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite);
+            result = chessboard.ExecuteMove(moveWhite, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsTrue(result, "The second black move should be valid!");
 
             numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
@@ -149,6 +149,9 @@ namespace VivaLaDama.UnitTests.Models
 
             result = chessboard.DoesThisPawnExist(whitePawn);
             Assert.IsFalse(result, "This pawn should not exist anymore");
+
+            result = chessboard.DoesThisPawnExist(blackPawn);
+            Assert.IsTrue(result, "This pawn should exist");
         }
         [TestMethod]
         public void ChessboardExecute_CheckingIfWhiteCanAttack()
@@ -163,16 +166,16 @@ namespace VivaLaDama.UnitTests.Models
             int numWhitePawns, numBlackPawns;
             bool result;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite1);
+            result = chessboard.ExecuteMove(moveWhite1, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsTrue(result, "The second black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite2);
+            result = chessboard.ExecuteMove(moveWhite2, true);
             Assert.IsTrue(result, "The second white move should be valid!");
 
             numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
@@ -196,19 +199,19 @@ namespace VivaLaDama.UnitTests.Models
             chessboard.Grid[5, 2].Upgraded = true;
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(firstMove);
+            result = chessboard.ExecuteMove(firstMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this first move");
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this second move");
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(thirdMove);
+            result = chessboard.ExecuteMove(thirdMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this third move");
 
             chessboard.SetTurnForWhite();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A white upgraded pawn should be able to do this last move");
         }
         [TestMethod]
@@ -224,19 +227,19 @@ namespace VivaLaDama.UnitTests.Models
             chessboard.Grid[2, 1].Upgraded = true;
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(firstMove);
+            result = chessboard.ExecuteMove(firstMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this first move");
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this second move");
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(thirdMove);
+            result = chessboard.ExecuteMove(thirdMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this third move");
 
             chessboard.SetTurnForBlack();
-            result = chessboard.ExecuteMove(secondAndLastMove);
+            result = chessboard.ExecuteMove(secondAndLastMove, true);
             Assert.IsTrue(result, "A black upgraded pawn should be able to do this last move");
         }
         [TestMethod]
@@ -254,16 +257,16 @@ namespace VivaLaDama.UnitTests.Models
 
             chessboard.Grid[2, 1].Upgraded = true;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite1);
+            result = chessboard.ExecuteMove(moveWhite1, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsTrue(result, "The second black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite2);
+            result = chessboard.ExecuteMove(moveWhite2, true);
             Assert.IsFalse(result, "The second white move should not be valid!");//Mossa non valida
 
             numWhitePawns = chessboard.GetNumberOfPawnsOfColor(Pawn.ColorPawn.WHITE);
@@ -285,14 +288,391 @@ namespace VivaLaDama.UnitTests.Models
             Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 3 } };
             bool result;
 
-            result = chessboard.ExecuteMove(moveBlack1);
+            result = chessboard.ExecuteMove(moveBlack1, true);
             Assert.IsTrue(result, "The first black move should be valid!");
 
-            result = chessboard.ExecuteMove(moveWhite);
+            result = chessboard.ExecuteMove(moveWhite, true);
             Assert.IsTrue(result, "The first white move should be valid!");
 
-            result = chessboard.ExecuteMove(moveBlack2);
+            result = chessboard.ExecuteMove(moveBlack2, true);
             Assert.IsFalse(result, "The second black move should not be valid!");
+        }
+        [TestMethod]
+        public void ChessboardPoints_CheckingIfPointsGetUpdate_AfterBlackEat()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 0 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = new Move { Target = blackPawn, To = new Coordinate { Row = 5, Column = 0 } };
+            Move moveWhite = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 1 } };
+            int pointsBlackBeforeEat, pointsBlackAfterEat;
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            pointsBlackBeforeEat = chessboard.PointsBlack;
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            pointsBlackAfterEat = chessboard.PointsBlack;
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = pointsBlackBeforeEat < pointsBlackAfterEat;
+            Assert.IsTrue(result, "The points should be increased after eat!");
+        }
+        [TestMethod]
+        public void ChessboardPoints_CheckingIfPointsGetUpdate_AfterWhiteEat()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 2 } };
+            Move moveBlack2 = null;
+            Move moveWhite1 = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite2 = new Move { Target = whitePawn, To = new Coordinate { Row = 2, Column = 1 } };
+            int pointsWhiteBeforeEat, pointsWhiteAfterEat;
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            pointsWhiteBeforeEat = chessboard.PointsWhite;
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            pointsWhiteAfterEat = chessboard.PointsWhite;
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = pointsWhiteBeforeEat < pointsWhiteAfterEat;
+            Assert.IsTrue(result, "The points should be increased after eat!");
+        }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfTurnDoesntFlipIfThePawnMovedCanEatMore_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn whitePawn1 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn whitePawn2 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 4 };
+            Move moveBlack123 = null;
+            Move moveBlack4 = new Move { Target = blackPawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite1 = new Move { Target = whitePawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite2 = new Move { Target = whitePawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite3 = new Move { Target = whitePawn2, To = new Coordinate { Row = 5, Column = 2 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack4, true);
+            Assert.IsTrue(result, "This should be valid!");
+
+            Assert.AreEqual(Pawn.ColorPawn.BLACK, chessboard.GetTurn(), "The turn should not flip!");
+        }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfBlackPawnCanEatMoreCantMoveDifferentBlackPawn_ReturnFalse()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn1 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn blackPawn2 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
+            Pawn whitePawn1 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn whitePawn2 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 4 };
+            Move moveBlack123 = null;
+            Move moveBlack4 = new Move { Target = blackPawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveBlack5 = new Move { Target = blackPawn2, To = new Coordinate { Row = 3, Column = 1 } };
+            Move moveWhite1 = new Move { Target = whitePawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite2 = new Move { Target = whitePawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite3 = new Move { Target = whitePawn2, To = new Coordinate { Row = 5, Column = 2 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack4, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack5, true);
+            Assert.IsFalse(result, "This move should not be valid!");
+        }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfBlackPawnCanEatTwoTimesInARow_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn whitePawn1 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn whitePawn2 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 4 };
+            Move moveBlack123 = null;
+            Move moveBlack4 = new Move { Target = blackPawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveBlack5 = new Move { Target = blackPawn, To = new Coordinate { Row = 6, Column = 1 } };
+            Move moveWhite1 = new Move { Target = whitePawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite2 = new Move { Target = whitePawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite3 = new Move { Target = whitePawn2, To = new Coordinate { Row = 5, Column = 2 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack123, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack4, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack5, true);
+            Assert.IsTrue(result, "This move should be valid!");
+        }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfWhitePawnCanEatMoreCantMoveDifferentWhitePawn_ReturnFalse()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn whitePawn1 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn whitePawn2 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 5 };
+            Pawn blackPawn1 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn blackPawn2 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 7 };
+            Move moveWhite12 = null;
+            Move moveWhite3 = new Move { Target = whitePawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite4 = new Move { Target = whitePawn2, To = new Coordinate { Row = 5, Column = 2 } };
+            Move moveBlack1 = new Move { Target = blackPawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveBlack2 = new Move { Target = blackPawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveBlack3 = new Move { Target = blackPawn2, To = new Coordinate { Row = 2, Column = 5 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite12, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite12, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack3, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite4, true);
+            Assert.IsFalse(result, "This move should be valid!");
+        }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfWhitePawnCanEatTwoTimesInARow_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn blackPawn1 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn blackPawn2 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 7 };
+            Move moveWhite12 = null;
+            Move moveWhite3 = new Move { Target = whitePawn, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite4 = new Move { Target = whitePawn, To = new Coordinate { Row = 1, Column = 6 } };
+            Move moveBlack1 = new Move { Target = blackPawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveBlack2 = new Move { Target = blackPawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveBlack3 = new Move { Target = blackPawn2, To = new Coordinate { Row = 2, Column = 5 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite12, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite12, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack3, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite4, true);
+            Assert.IsTrue(result, "This move should be valid!");
+        }
+        [TestMethod]
+        public void ChessboardTurn_CheckingIfTurnFlippedAfterWhitePawnEatAllBlackPawnsItCouldEat_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn blackPawn1 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn blackPawn2 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 7 };
+            Move moveWhite12 = null;
+            Move moveWhite3 = new Move { Target = whitePawn, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveWhite4 = new Move { Target = whitePawn, To = new Coordinate { Row = 1, Column = 6 } };
+            Move moveBlack1 = new Move { Target = blackPawn1, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveBlack2 = new Move { Target = blackPawn1, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveBlack3 = new Move { Target = blackPawn2, To = new Coordinate { Row = 2, Column = 5 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite12, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite12, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack3, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite4, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            Assert.AreEqual(Pawn.ColorPawn.BLACK, chessboard.GetTurn(), "The turn should be flipped!");
+        }
+        [TestMethod]
+        public void ChessboardUpgrading_CheckingIfWhitePawnGetUpgraded_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn whitePawn = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn blackPawn1 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn blackPawn2 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 7 };
+            Pawn blackPawn3 = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 3 };
+            Move moveWhite1 = new Move { Target = whitePawn, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite23 = null;
+            Move moveWhite4 = new Move { Target = whitePawn, To = new Coordinate { Row = 2, Column = 5 } };
+            Move moveWhite5 = new Move { Target = whitePawn, To = new Coordinate { Row = 0, Column = 7 } };
+            Move moveBlack1 = new Move { Target = blackPawn1, To = new Coordinate { Row = 3, Column = 6 } };
+            Move moveBlack2 = new Move { Target = blackPawn2, To = new Coordinate { Row = 2, Column = 5 } };
+            Move moveBlack3 = new Move { Target = blackPawn2, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveBlack4 = new Move { Target = blackPawn3, To = new Coordinate { Row = 1, Column = 6 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack2, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite23, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack3, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite23, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack4, true);
+            Assert.IsTrue(result, "The move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite4, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite5, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            Assert.AreEqual(true, chessboard.Grid[moveWhite5.To.Row, moveWhite5.To.Column].Upgraded, "The pawn should be upgraded!");
+        }
+        [TestMethod]
+        public void ChessboardUpgrading_CheckingIfBlackPawnGetUpgraded_ReturnTrue()
+        {
+            Chessboard chessboard = new Chessboard();
+            Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 10 };
+            Pawn whitePawn1 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 1 };
+            Pawn whitePawn2 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 4 };
+            Pawn whitePawn3 = new Pawn { Color = Pawn.ColorPawn.WHITE, PawnId = 8 };
+            Move moveBlack1 = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 4 } };
+            Move moveBlack23 = null;
+            Move moveBlack4 = new Move { Target = blackPawn, To = new Coordinate { Row = 5, Column = 2 } };
+            Move moveBlack5 = new Move { Target = blackPawn, To = new Coordinate { Row = 7, Column = 0 } };
+            Move moveWhite1 = new Move { Target = whitePawn1, To = new Coordinate { Row = 4, Column = 1 } };
+            Move moveWhite2 = new Move { Target = whitePawn2, To = new Coordinate { Row = 5, Column = 2 } };
+            Move moveWhite3 = new Move { Target = whitePawn2, To = new Coordinate { Row = 4, Column = 3 } };
+            Move moveWhite4 = new Move { Target = whitePawn3, To = new Coordinate { Row = 6, Column = 1 } };
+            bool result;
+
+            result = chessboard.ExecuteMove(moveBlack1, true);
+            Assert.IsTrue(result, "The first black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite1, true);
+            Assert.IsTrue(result, "The first white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack23, true);
+            Assert.IsTrue(result, "The second black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite2, true);
+            Assert.IsTrue(result, "The second white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack23, true);
+            Assert.IsTrue(result, "The third black move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite3, true);
+            Assert.IsTrue(result, "The third white move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack4, true);
+            Assert.IsTrue(result, "The move should be valid!");
+
+            result = chessboard.ExecuteMove(moveWhite4, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            result = chessboard.ExecuteMove(moveBlack5, true);
+            Assert.IsTrue(result, "This move should be valid!");
+
+            Assert.AreEqual(true, chessboard.Grid[moveBlack5.To.Row, moveBlack5.To.Column].Upgraded, "The pawn should be upgraded!");
         }
     }
 }

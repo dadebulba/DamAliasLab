@@ -193,9 +193,6 @@ definitions:
   MoveToRecv:
     type: "object"
     properties:
-      gameSessionId:
-        type: "integer"
-        format: "int64"
       moveId:
         type: "integer"
         format: "int64"
@@ -229,7 +226,17 @@ definitions:
       namePlayer2:
         type: "string"
         example: "nomePlayer2"
-      historyMoves:
+      turn:
+        enum: [0, 1]
+        type: "integer"
+        format: "int64"
+      pointsWhite:
+        type: "integer"
+        format: "int64"
+      pointsBlack:
+        type: "integer"
+        format: "int64"
+      moves:
         type: "array"
         items:
           $ref: "#/definitions/MoveToRecv"

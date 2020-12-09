@@ -31,7 +31,7 @@ namespace VivaLaDamaTests
             game.NamePlayer2 = "pino";
             Pawn blackPawn = new Pawn { Color = Pawn.ColorPawn.BLACK, PawnId = 8 };
             Move moveBlack = new Move { Target = blackPawn, To = new Coordinate { Row = 3, Column = 0 } };
-            game.ExecuteMove(moveBlack, true);
+            game.ExecuteMove(moveBlack, true, true);
             _context.Add(game);
             _context.SaveChanges();
             int performedMoves = game.Moves.Count;
