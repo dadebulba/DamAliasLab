@@ -1,15 +1,19 @@
 
-import {getID, put, deleteLastMove} from "./apiService.js";
+import {getID, put, deleteLastMove, deleteGame} from "./apiService.js";
 let nameP1=document.getElementById("name-player1");
 let nameP2=document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
 let backBtn = document.getElementById("back-btn");
+let deleteBtn = document.getElementById("delete-btn");
+let body = document.getElementById("body");
+let movesList = document.getElementById("moves-list");
+let turnBox = document.getElementById("turn-box");
 let id; 
+
 let urlParam = new URLSearchParams(window.location.search);
 let IDpartita = urlParam.get('id');
 
 if (IDpartita != "NULL") {
-  let body = document.getElementById("body");
   body.onload = initializeGame;
 }
 else {
@@ -18,10 +22,16 @@ else {
 
 function selectPawn() { 
   let target = event.target;
-  if (target.tagName == "TD") {
+  if (target.tagName == "TD" && target.childNodes[0].tagName!="DIV") {
     alert("Seleziona una pedina!");
   }
-  else {
+  else if (target.tagName=="TD" && target.childNodes[0].tagName=="DIV") {
+    id = target.childNodes[0].id;
+    target.style.backgroundColor = "red";
+    chessboard.removeEventListener("click", selectPawn);
+    chessboard.addEventListener("click", selectDest);
+  }
+  else{
     id = target.id;
     target.parentElement.style.backgroundColor = "red";
     chessboard.removeEventListener("click", selectPawn);
@@ -57,13 +67,13 @@ async function selectDest() {
     let result = await response.json();
     movePawn(result);
     updateMoves(result.moves);
-    insertPoints(result.pointsWhite, result.pointsBlack);
+    insertPoints(result.pointsBlack, result.pointsWhite);
     viewTurn(result.turn);
   }
 
   chessboard.addEventListener("click", selectPawn);
   chessboard.removeEventListener("click", selectDest);
-  if(document.getElementById("moves-list").childElementCount > 0){
+  if(movesList.childElementCount > 0){
     backBtn.style.display = "block";
   }
 }
@@ -73,12 +83,19 @@ async function revertLastMove() {
   if(response != null){
     let result = response.json();
     movePawn(result);
-    insertPoints(result.pointsWhite, result.pointsBlack);
-    viewTurn(game.turn);
-    document.getElementById("moves-list").children[0].remove();
-    if(document.getElementById("moves-list").childElementCount > 0){
+    insertPoints(result.pointsBlack, result.pointsWhite);
+    viewTurn(result.turn);
+    movesList.children[0].remove();
+    if(movesList.childElementCount > 0){
       backBtn.style.display = "none";
     }
+  }
+}
+async function del(){
+  let response = await deleteGame(IDpartita);
+  if(response!=null){
+    alert("Partita cancellata con successo");
+    window.location.href = "damaFirstPage.html";
   }
 }
 
@@ -88,7 +105,7 @@ function updateMoves(moves){
   li.innerHTML=`${moves[length-1].target.color==1 ? "BLACK" : "WHITE"}
   from: [${moves[length-1].from.row},${moves[length-1].from.column}]
   to: [${moves[length-1].to.row},${moves[length-1].to.column}]`;
-  document.getElementById("moves-list").prepend(li);
+  movesList.prepend(li);
 }
 
 function movePawn(partita){
@@ -99,32 +116,32 @@ function movePawn(partita){
 
 async function initializeGame(){
   let response = await getID(IDpartita);
-  console.log(response);
   if(response != null){
     let result = await response.json();  //oggetto partita  
     chessboard.addEventListener("click", selectPawn);
     backBtn.addEventListener('click', revertLastMove);
+    deleteBtn.addEventListener('click', del);
     insertPlayerNames(result.namePlayer1, result.namePlayer2);
     insertMoves(result.moves);
     insertBlackPawns(result.black);
     insertWhitePawns(result.white);
     insertPoints(result.pointsBlack, result.pointsWhite);
     viewTurn(result.turn);
-    if(document.getElementById("moves-list").childElementCount == 0){
+    if(movesList.childElementCount == 0){
       backBtn.style.display = "none";
     }
   }
-    else {
-      window.location.href = "damaFirstPage.html";
-    }
+  else {
+    window.location.href = "damaFirstPage.html";
+  }
 }
 
 function viewTurn(turn){
   if(turn==0){
-    document.getElementById("turn-box").innerHTML=`TOCCA A: <div id="turn-label" class='white-label'> </div>`;
+    turnBox.innerHTML=`TOCCA A: <div id="turn-label" class='white-label'> </div>`;
   }
   else{
-    document.getElementById("turn-box").innerHTML=`TOCCA A: <div id="turn-label" class='black-label'> </div>`;
+    turnBox.innerHTML=`TOCCA A: <div id="turn-label" class='black-label'> </div>`;
   }
 }
 function insertPoints(black, white){
@@ -132,10 +149,10 @@ function insertPoints(black, white){
   document.getElementById("white-points").innerHTML= `&nbsp&nbsp${white*25}`;
 }
 function insertPlayerNames(namePlayer1, namePlayer2){
-    nameP1.innerHTML=`<div class='label black-label'> </div>${namePlayer1}: <div id="black-points"> </div>`;
-    nameP1.style.fontSize="20px";
-    nameP2.innerHTML=`<div class='label white-label'> </div> ${namePlayer2}: <div id="white-points"> </div>`;
-    nameP2.style.fontSize="20px";
+  nameP1.innerHTML=`<div class='label black-label'> </div>${namePlayer1}: <div id="black-points"> </div>`;
+  nameP1.style.fontSize="20px";
+  nameP2.innerHTML=`<div class='label white-label'> </div> ${namePlayer2}: <div id="white-points"> </div>`;
+  nameP2.style.fontSize="20px";
 }
 
 function insertMoves(movesArray){
@@ -144,7 +161,7 @@ function insertMoves(movesArray){
     li.innerHTML=`${movesArray[key].target.color==1 ? "BLACK" : "WHITE"}
     from: [${movesArray[key].from.row},${movesArray[key].from.column}]
     to: [${movesArray[key].to.row},${movesArray[key].to.column}]`;
-    document.getElementById("moves-list").prepend(li);
+    movesList.prepend(li);
   }
 }
 
