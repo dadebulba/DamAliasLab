@@ -1,13 +1,14 @@
 
 import {getID, put, deleteLastMove, deleteGame} from "./apiService.js";
-let nameP1=document.getElementById("name-player1");
-let nameP2=document.getElementById("name-player2");
+let nameP1 = document.getElementById("name-player1");
+let nameP2 = document.getElementById("name-player2");
 let chessboard=document.getElementById("chessboard");
 let backBtn = document.getElementById("back-btn");
 let deleteBtn = document.getElementById("delete-btn");
 let body = document.getElementById("body");
 let movesList = document.getElementById("moves-list");
 let turnBox = document.getElementById("turn-box");
+let saveAndExitBtn = document.getElementById("save-and-exit"); 
 let id; 
 
 let urlParam = new URLSearchParams(window.location.search);
@@ -17,7 +18,7 @@ if (IDpartita != "NULL") {
   body.onload = initializeGame;
 }
 else {
-  window.location.href = "damaFirstPage.html";
+  goToFirstPage();
 }
 
 function selectPawn() { 
@@ -95,7 +96,7 @@ async function del(){
   let response = await deleteGame(IDpartita);
   if(response!=null){
     alert("Partita cancellata con successo");
-    window.location.href = "damaFirstPage.html";
+    goToFirstPage();
   }
 }
 
@@ -121,6 +122,7 @@ async function initializeGame(){
     chessboard.addEventListener("click", selectPawn);
     backBtn.addEventListener('click', revertLastMove);
     deleteBtn.addEventListener('click', del);
+    saveAndExitBtn.addEventListener('click', goToFirstPage);
     insertPlayerNames(result.namePlayer1, result.namePlayer2);
     insertMoves(result.moves);
     insertBlackPawns(result.black);
@@ -132,7 +134,7 @@ async function initializeGame(){
     }
   }
   else {
-    window.location.href = "damaFirstPage.html";
+    goToFirstPage();
   }
 }
 
@@ -200,4 +202,7 @@ function clearChessboard(){
       }
     }
   }
+}
+function goToFirstPage(){
+  window.location.href = "damaFirstPage.html";
 }

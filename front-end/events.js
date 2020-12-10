@@ -7,7 +7,6 @@ let form = document.getElementById('form');
 let conteinerTab = document.getElementById('container-tab');
 let tableGames = document.getElementById('table-games');
 
-
 resumegameButton.addEventListener('click', viewTableGames);
 newgameButton.addEventListener('click', viewForm);
 tableGames.addEventListener('click', gameChosen);
@@ -33,8 +32,13 @@ async function viewTableGames() {
             }
             firstTimeGet = false;
         }
+        if(obj.length > 0){
         conteinerTab.style.display = 'flex'; //view table 
         form.style.display = 'none'; //hideForm
+        }
+        else{
+            alert("Non ci sono partite iniziate");
+        }
     }
 }
 
