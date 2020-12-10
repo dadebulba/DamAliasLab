@@ -92,6 +92,7 @@ async function revertLastMove() {
     }
   }
 }
+
 async function del(){
   let response = await deleteGame(IDpartita);
   if(response!=null){
@@ -104,8 +105,8 @@ function updateMoves(moves){
   let li = document.createElement('li');
   let length=moves.length;
   li.innerHTML=`${moves[length-1].target.color==1 ? "BLACK" : "WHITE"}
-  from: [${moves[length-1].from.row},${moves[length-1].from.column}]
-  to: [${moves[length-1].to.row},${moves[length-1].to.column}]`;
+  from: [${conversion(moves[length-1].from.column)},${moves[length-1].from.row+1}]
+  to: [${conversion(moves[length-1].to.column)},${moves[length-1].to.row+1}]`;
   movesList.prepend(li);
 }
 
@@ -146,10 +147,12 @@ function viewTurn(turn){
     turnBox.innerHTML=`TOCCA A: <div id="turn-label" class='black-label'> </div>`;
   }
 }
+
 function insertPoints(black, white){
   document.getElementById("black-points").innerHTML= `&nbsp&nbsp${black*25}`;
   document.getElementById("white-points").innerHTML= `&nbsp&nbsp${white*25}`;
 }
+
 function insertPlayerNames(namePlayer1, namePlayer2){
   nameP1.innerHTML=`<div class='label black-label'> </div>${namePlayer1}: <div id="black-points"> </div>`;
   nameP1.style.fontSize="20px";
@@ -157,12 +160,12 @@ function insertPlayerNames(namePlayer1, namePlayer2){
   nameP2.style.fontSize="20px";
 }
 
-function insertMoves(movesArray){
-  for(let key in movesArray){
+function insertMoves(moves){
+  for(let key in moves){
     let li = document.createElement('li');
-    li.innerHTML=`${movesArray[key].target.color==1 ? "BLACK" : "WHITE"}
-    from: [${movesArray[key].from.row},${movesArray[key].from.column}]
-    to: [${movesArray[key].to.row},${movesArray[key].to.column}]`;
+    li.innerHTML=`${moves[key].target.color==1 ? "BLACK" : "WHITE"}
+    from: [${conversion(moves[key].from.column)},${moves[key].from.row+1}]
+    to: [${conversion(moves[key].to.column)},${moves[key].to.row+1}]`;;
     movesList.prepend(li);
   }
 }
@@ -180,6 +183,7 @@ function insertBlackPawns(black) {
     }
   }
 }
+
 function insertWhitePawns(white) {
   for (let key in white) {
     let row = white[key].position.row;
@@ -193,6 +197,7 @@ function insertWhitePawns(white) {
     }
   }
 }
+
 function clearChessboard(){
   for(let r=0; r<=7; r++){ 
     for(let c=0; c<=7; c++){  
@@ -203,6 +208,11 @@ function clearChessboard(){
     }
   }
 }
+
 function goToFirstPage(){
   window.location.href = "damaFirstPage.html";
+}
+
+function conversion(n){
+  return String.fromCharCode(n+97);
 }
