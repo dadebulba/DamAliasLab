@@ -5,15 +5,19 @@ namespace VivaLaDama.Models
 {
     public class Chessboard
     {
+        public enum GameStatus { IN_PROGRESS, WIN_BLACK, WIN_WHITE, DRAW }
         private const int DEFAULT_LENGTH = 8;
         private const int ROWS_FILLED_OF_PAWNS = 3;
         private const int MAX_MOVE_DISTANCE = 2;
+        private const int MAX_MOVES_WITHOUT_EAT_IN_A_ROW = 80;
         public Pawn[,] Grid { get; set; }
         public bool Turn { get; set; }//'false' when is the turn of the black pawns, 'true' otherwise
         public int PointsWhite { get; set; }
         public int PointsBlack { get; set; }
         private Pawn LastPawnMoved { get; set; }
         private bool MustEat { get; set; }
+        private int MovesWhitoutEatInARow { get; set; }
+        public GameStatus Status;
         public Chessboard()
         {
             this.Grid = new Pawn[DEFAULT_LENGTH, DEFAULT_LENGTH];
@@ -50,6 +54,8 @@ namespace VivaLaDama.Models
             this.MustEat = false;
             this.LastPawnMoved = null;
             this.Turn = false;
+            this.Status = GameStatus.IN_PROGRESS;
+            this.MovesWhitoutEatInARow = 0;
         }
         public bool IsTurnRespected(Pawn pawn)
         {
@@ -215,6 +221,8 @@ namespace VivaLaDama.Models
                 this.UpdateGrid(move);
             }
 
+            this.UpdateStatus();
+
             return ret;
         }
         private void UpdateGrid(Move move)
@@ -225,11 +233,13 @@ namespace VivaLaDama.Models
 
             if (dest1.Equals(move.To))
             {
+                this.MovesWhitoutEatInARow++;
                 this.Grid[dest1.Row, dest1.Column] = this.Grid[move.From.Row, move.From.Column];
                 this.FlipTurn();
             }
             else if (dest2.Equals(move.To))
             {
+                this.MovesWhitoutEatInARow = 0;
                 this.UpdatePoints();
 
                 this.Grid[dest1.Row, dest1.Column] = null;
@@ -362,6 +372,27 @@ namespace VivaLaDama.Models
             else
             {
                 this.PointsWhite++;
+            }
+        }
+        private void UpdateStatus()
+        {
+            List<PawnPositioned> pawns;
+
+            if(this.MovesWhitoutEatInARow >= MAX_MOVES_WITHOUT_EAT_IN_A_ROW)
+            {
+                this.Status = GameStatus.DRAW;
+            }
+
+            pawns = this.GetBlack();
+            if(pawns.Count==0)
+            {
+                this.Status = GameStatus.WIN_WHITE;
+            }
+
+            pawns = this.GetWhite();
+            if (pawns.Count == 0)
+            {
+                this.Status = GameStatus.WIN_BLACK;
             }
         }
     }
