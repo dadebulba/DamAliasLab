@@ -14,6 +14,7 @@ let id;
 let urlParam = new URLSearchParams(window.location.search);
 let IDpartita = urlParam.get('id');
 
+
 if (IDpartita != "NULL") {
   body.onload = initializeGame;
 }
@@ -24,7 +25,7 @@ else {
 function selectPawn() { 
   let target = event.target;
   if (target.tagName == "TD" && target.childNodes[0].tagName!="DIV") {
-    alert("Seleziona una pedina!");
+    alert("You must select a pawn to move!");
   }
   else if (target.tagName=="TD" && target.childNodes[0].tagName=="DIV") {
     id = target.childNodes[0].id;
@@ -66,10 +67,24 @@ async function selectDest() {
 
   if(response!=null){
     let result = await response.json();
-    movePawn(result);
-    updateMoves(result.moves);
-    insertPoints(result.pointsBlack, result.pointsWhite);
-    viewTurn(result.turn);
+    if(result.gameStatus==0){
+      movePawn(result);
+      updateMoves(result.moves);
+      insertPoints(result.pointsBlack, result.pointsWhite);
+      viewTurn(result.turn);
+    }
+    else if(result.gameStatus==1){
+      alert("Congratulation! Black Wins! \nYou will return to the home page");
+      goToFirstPage();
+    }
+    else if(result.gameStatus==2){
+      alert("Congratulation! White Wins! \nYou will return to the home page");
+      goToFirstPage();
+    }
+    else if(result.gameStatus==3){
+      alert("Draw! Too many moves without eating anything \nYou will return to the home page");
+      goToFirstPage();
+    }
   }
 
   chessboard.addEventListener("click", selectPawn);
@@ -96,7 +111,7 @@ async function revertLastMove() {
 async function del(){
   let response = await deleteGame(IDpartita);
   if(response!=null){
-    alert("Partita cancellata con successo");
+    alert("Game successfully deleted \nYou will return to the home page");
     goToFirstPage();
   }
 }

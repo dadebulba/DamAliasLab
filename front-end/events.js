@@ -37,7 +37,7 @@ async function viewTableGames() {
         form.style.display = 'none'; //hideForm
         }
         else{
-            alert("Non ci sono partite iniziate");
+            alert("There are no games started yet");
         }
     }
 }
