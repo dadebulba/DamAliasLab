@@ -4,14 +4,12 @@
 back-end/VivaLaDama/.vs/
 front-end/.vscode
 back-end/VivaLaDama/.vs
-*.json
 back-end/VivaLaDama/.vs
 back-end/VivaLaDama/ChessboardTests/bin/
 back-end/VivaLaDama/ChessboardTests/obj/
 back-end/VivaLaDama/VivaLaDama/bin/
 back-end/VivaLaDama/VivaLaDama/obj/
 *.exe
-*.json
 *.dll
 *.pdb
 *.cache
