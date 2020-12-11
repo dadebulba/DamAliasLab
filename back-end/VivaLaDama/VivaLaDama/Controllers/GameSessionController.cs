@@ -95,6 +95,11 @@ namespace VivaLaDama.Controllers
                 return StatusCode(403);
             }
 
+            if(game.Game.Status != Chessboard.GameStatus.IN_PROGRESS)
+            {
+                this.DeleteGameSessionFromDb(game);
+            }
+
             return new GameSessionToSend(game);
         }
         //DELETE api/game/131
@@ -108,9 +113,7 @@ namespace VivaLaDama.Controllers
                 return NotFound();
             }
 
-            this._context.Remove(game);
-            await this._context.SaveChangesAsync();
-
+            this.DeleteGameSessionFromDb(game);
             return new GameSessionToSend(game);
         }
 
@@ -175,6 +178,11 @@ namespace VivaLaDama.Controllers
             }
 
             return game;
+        }
+        public void DeleteGameSessionFromDb(GameSession game)
+        {
+            this._context.Remove(game);
+            this._context.SaveChanges();
         }
     }
 }
