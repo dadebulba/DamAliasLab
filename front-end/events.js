@@ -7,7 +7,6 @@ let form = document.getElementById('form');
 let conteinerTab = document.getElementById('container-tab');
 let tableGames = document.getElementById('table-games');
 
-
 resumegameButton.addEventListener('click', viewTableGames);
 newgameButton.addEventListener('click', viewForm);
 tableGames.addEventListener('click', gameChosen);
@@ -33,13 +32,18 @@ async function viewTableGames() {
             }
             firstTimeGet = false;
         }
+        if(obj.length > 0){
         conteinerTab.style.display = 'flex'; //view table 
         form.style.display = 'none'; //hideForm
+        }
+        else{
+            alert("Non ci sono partite iniziate");
+        }
     }
 }
 
 async function gameChosen() {
-    let target = event.target;  // where was the click
+    let target = event.target;  // where is the click
     if (target.className == "lastColumn") {  //only if click on play button
         let id = target.id;
         invia_id(id);
@@ -58,7 +62,7 @@ async function sendForm(evt) {
     }
     let response = await postGame(data);
     if (response != null) {
-        let result = await response.json(); //result è oggetto nuova partita    
+        let result = await response.json();    
         invia_id(result.id);
     }
 }
