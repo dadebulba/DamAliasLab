@@ -82,12 +82,12 @@ async function selectDest() {
 async function revertLastMove() {
   let response = await deleteLastMove(IDpartita);
   if(response != null){
-    let result = response.json();
+    let result = await response.json();
     movePawn(result);
     insertPoints(result.pointsBlack, result.pointsWhite);
     viewTurn(result.turn);
     movesList.children[0].remove();
-    if(movesList.childElementCount > 0){
+    if(movesList.childElementCount == 0){
       backBtn.style.display = "none";
     }
   }

@@ -54,7 +54,7 @@ namespace VivaLaDama.Controllers
                 return StatusCode(400);
             }
 
-            game = new GameSession { Game = new Chessboard(), Moves = new List<Move>(), NamePlayer1=names.NamePlayer1, NamePlayer2=names.NamePlayer2 };
+            game = new GameSession { Game = new Chessboard(), Moves = new List<Move>(), NamePlayer1 = names.NamePlayer1, NamePlayer2 = names.NamePlayer2 };
 
             this._context.Set<GameSession>().Add(game);
             this._context.SaveChanges();
@@ -95,7 +95,7 @@ namespace VivaLaDama.Controllers
                 return StatusCode(403);
             }
 
-            if(game.Game.Status != Chessboard.GameStatus.IN_PROGRESS)
+            if (game.Game.Status != Chessboard.GameStatus.IN_PROGRESS)
             {
                 this.DeleteGameSessionFromDb(game);
             }
@@ -122,16 +122,16 @@ namespace VivaLaDama.Controllers
         [HttpDelete("{id}/lastMove")]
         public async Task<ActionResult<GameSessionToSend>> DeleteLastMove(long id)
         {
-            GameSession game = this._context.GameSessions.Find(id);
-
-            if (game == null)
+            if (!GameSessionExists(id))
             {
                 return NotFound();
             }
 
-            if (DeleteLastMoveFromDb(game))
+            GameSession gameToRevert = this.RetrieveGameSession(id);
+            if (DeleteLastMoveFromDb(gameToRevert))
             {
-                return new GameSessionToSend(game);
+                GameSession gameToSend = this.RetrieveGameSession(id);
+                return new GameSessionToSend(gameToSend);
             }
             else
             {
@@ -147,7 +147,7 @@ namespace VivaLaDama.Controllers
                 Move lastMove = game.Moves.Last();
                 isRemoved = game.Moves.Remove(lastMove);
                 _context.GameSessions.Update(game);
-                if (_context.SaveChanges() == 1 && isRemoved)
+                if (_context.SaveChanges() > 0 && isRemoved)
                     return true;
                 else
                     return false;
