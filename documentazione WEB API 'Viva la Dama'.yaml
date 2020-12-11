@@ -236,6 +236,10 @@ definitions:
       pointsBlack:
         type: "integer"
         format: "int64"
+      gameStatus:
+        enum: [0, 1, 2, 3]
+        type: "integer"
+        format: "int64"
       moves:
         type: "array"
         items:
@@ -246,13 +250,13 @@ definitions:
           $ref: "#/definitions/PawnPositioned"
         example:
           [{
-            pawnId: 0,
-            color: 1,
-            upgraded: false,
             position: {
               row: 0,
               column: 0
-            }
+            },
+            pawnId: 0,
+            color: 1,
+            upgraded: false
           }]
       white:
         type: "array"
@@ -260,13 +264,13 @@ definitions:
           $ref: "#/definitions/PawnPositioned"
         example:
           [{
-            pawnId: 0,
-            color: 0,
-            upgraded: false,
             position: {
               row: 0,
               column: 0
-            }
+            },
+            pawnId: 0,
+            color: 0,
+            upgraded: false
           }]
   Coordinate:
     type: "object"
