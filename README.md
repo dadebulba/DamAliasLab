@@ -1,25 +1,32 @@
 # DamAliasLab
+DamAliasLab is a Web application to play the game of checkers
+
+## Table of Content
+
+- [Key Features](#key-features)
+    - `New Game Button`
+    - `Resume Game Button`
+    
+- [Usage and Installation](#usage-and-installation)
+- [How to contributte to the project](#how-to-contributte-to-the-project)
+- [Authors](#authors)
+- [License](#license)
+- [Updating](#updating)
+- [Uninstallation](#uninstallation)
+- [Contributing](#contributing)
+- [License](#license)
 <p align="center">
   <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
+  <a href="#usage-and-installation">Usage And Installation</a> •
   <a href="#how-to-contribute-to-the-project">How to contribute to the project</a> •
   <a href="#authors">Authors</a> •
   <a href="#license">License</a>
 </p>
 
-# Key Features
+## Key Features
 Screen di come funziona
 
 
-ms
-
-
-
-
-
-sw
-# How to Use
-Come si installa per provarlo in locale
 
 
 
@@ -28,9 +35,19 @@ Come si installa per provarlo in locale
 
 
 
+## Usage and installation
+Come si installa per provarlo in locale e come si usa
 
-z
-# How to contribute to the project
+
+
+
+
+
+
+
+
+
+## How to contribute to the project
 nuovo branch + pull request (quello che abbiamo fatto noi)
 
 
@@ -39,12 +56,12 @@ nuovo branch + pull request (quello che abbiamo fatto noi)
 
 
 
-z
 
-# Authors
+
+## Authors
 Luca Giacominelli
 Federico Diprima
 Davide Bulbarelli
 
-# License
+## License
 OpenSource
