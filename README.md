@@ -4,6 +4,7 @@ DamAliasLab is a Web application to play the game of checkers
 ## Table of Content
 
 - [Key Features](#key-features)
+    - `First Page`
     - `New Game Button`
     - `Resume Game Button`
     
@@ -15,16 +16,12 @@ DamAliasLab is a Web application to play the game of checkers
 - [Uninstallation](#uninstallation)
 - [Contributing](#contributing)
 - [License](#license)
-<p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#usage-and-installation">Usage And Installation</a> •
-  <a href="#how-to-contribute-to-the-project">How to contribute to the project</a> •
-  <a href="#authors">Authors</a> •
-  <a href="#license">License</a>
-</p>
 
 ## Key Features
-Screen di come funziona
+
+- `First Page`: This is the first page, we can choose between two options (with two different buttons), start a new game or resume a game that has already started
+
+![image](https://user-images.githubusercontent.com/17109060/32149062-4f0547ca-bd25-11e7-98b6-587467379704.png)
 
 
 
