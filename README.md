@@ -10,10 +10,12 @@ DamAliasLab is a Web application to play the game of checkers
     - `Main page`
     - `Make a move`
     - `Delete button`
+    - `Reset Last Move button`
+    - `End a game`
     
     
 - [Usage and Installation](#usage-and-installation)
-- [How to contributte to the project](#how-to-contributte-to-the-project)
+- [How to contribute to the project](#how-to-contribute-to-the-project)
 - [Authors](#authors)
 - [License](#license)
 
@@ -52,6 +54,11 @@ DamAliasLab is a Web application to play the game of checkers
 
 ![image](/front-end/screen/mainPage-upgradedPawn.png) 
 
+- `Reset Last Move button`: this button gives you the possibility to reset the last move made updating both the board and the move menu on the left.
+
+- `End a game`: a game ends with 3 possible outcomes: either white or black can win or we can have a draw if too many moves without eating anything have been made. For every possible outcome we will have a different alert message and after that the finished match will be deleted from the memory.
+
+![image](/front-end/screen/mainPage-gameFinished.png) 
 
 
 
@@ -74,7 +81,8 @@ Come si installa per provarlo in locale e come si usa
 
 
 ## How to contribute to the project
-nuovo branch + pull request (quello che abbiamo fatto noi)
+if you want to contribute to the project you can simply create a new branch, write the new code on it and create a Pull Request.
+After a careful review, if the code is all right, the repository administrator will be able to merge this branch to its tree master.
 
 
 
