@@ -70,9 +70,10 @@ DamAliasLab is a Web application to play the game of checkers
 
 ## Usage and installation
 
-- 'API Server': * In order to start the server API you need to install Visual Studio 2019 (https://visualstudio.microsoft.com/it/vs/). 
-                * After you installed Visual Studio 2019 you need to import the project. The directory of the project is 'back-end/VivaLaDama'.
-                * In order to execute the server you need to run the project.
+- Server:
+>* In order to execute the server you need to install Visual Studio 2019 (https://visualstudio.microsoft.com/it/vs/). 
+>* After you installed Visual Studio 2019 you need to import the project. The directory of the project is 'back-end/VivaLaDama'.
+>* In order to execute the server you need to run the project.
 
 
 
