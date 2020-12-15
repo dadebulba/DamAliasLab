@@ -4,9 +4,10 @@ DamAliasLab is a Web application to play the game of checkers
 ## Table of Content
 
 - [Key Features](#key-features)
-    - `First Page`
-    - `New Game Button`
-    - `Resume Game Button`
+    - `First page`
+    - `New Game button`
+    - `Resume Game button`
+    - `Main page`
     
 - [Usage and Installation](#usage-and-installation)
 - [How to contributte to the project](#how-to-contributte-to-the-project)
@@ -16,21 +17,24 @@ DamAliasLab is a Web application to play the game of checkers
 - [Uninstallation](#uninstallation)
 - [Contributing](#contributing)
 - [License](#license)
-<<<<<<< HEAD
-
-=======
->>>>>>> 8cb37039d21532047a75883d29fdd4144c64ab31
 
 ## Key Features
 
-- `First Page`: This is the first page, we can choose between two options (with two different buttons), start a new game or resume a game that has already started
+- `First page`: This is the first page, we can choose between two options (with two different buttons), start a new game or resume a game that has already started
 
-![image](https://user-images.githubusercontent.com/17109060/32149062-4f0547ca-bd25-11e7-98b6-587467379704.png)
+![image](/front-end/screen/firstPage.png)
 
+- `New Game button`: if we click on New Game button a form appears and we can enter the names of the players
 
+![image](/front-end/screen/firstPage-newGame.png)
 
+- `Resume Game button`: if we click on Resume Game button there are two possibility, if there are no games started an alert message appears, otherwise if there are games saved in memory, a table appears with the list of these games. We can resume playing one of these by clicking on the 'play button' on the right of each game
 
+![image](/front-end/screen/firstPage-noStartedGames.png)
 
+![image](/front-end/screen/firstPage-resumeGame.png)
+
+- `Main page`:
 
 
 
