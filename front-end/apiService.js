@@ -1,4 +1,4 @@
-const URL = "https://localhost:44307";
+const URL = "https://localhost:5001";
 const VALID_STATUS = /^2[0-9][0-9]$/;
 
 function checkResponseMiddleware(response) {
