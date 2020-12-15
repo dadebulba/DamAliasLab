@@ -1,7 +1,13 @@
 # DamAliasLab
-Indice.....
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#how-to-contribute-to-the-project">How to contribute to the project</a> •
+  <a href="#authors">Authors</a> •
+  <a href="#license">License</a>
+</p>
 
-# KeyFeatures
+# Key Features
 Screen di come funziona
 
 # How to Use
