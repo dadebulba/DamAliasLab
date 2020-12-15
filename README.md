@@ -25,11 +25,11 @@ DamAliasLab is a Web application to play the game of checkers
 
 ![image](/front-end/screen/firstPage.png)
 
-- `New Game button`: if we click on New Game button a form appears and we can enter the names of the players.
+- `New Game button`: if we click on New Game button a form appears and we can enter the names of the players. When the players have finished to insert their names, if they press the start button the client will sent a POST request to the server in order to create a new game session.
 
 ![image](/front-end/screen/firstPage-newGame.png)
 
-- `Resume Game button`: if we click on Resume Game button there are two possibility, if there are no games started an alert message appears, otherwise if there are games saved in memory, a table appears with the list of these games. We can resume playing one of these by clicking on the 'play button' on the right of each game.
+- `Resume Game button`: if we click on Resume Game button there are two possibility, if there are no games started an alert message appears, otherwise if there are games saved in memory, a table appears with the list of these games. We can resume playing one of these by clicking on the 'play button' on the right of each game. In order to retrieve a game session the client will send a GET request to the server with the identifier of that game.
 
 ![image](/front-end/screen/firstPage-noStartedGames.png)
 
@@ -39,22 +39,22 @@ DamAliasLab is a Web application to play the game of checkers
 
 ![image](/front-end/screen/mainPage.png)
 
-- `Make a move`: making a move is simple, first you have to click on the piece to be moved (the cell will become red) and then on the destination cell. If the move is legal, the pawn will move to the desired position, otherwise we will have an error message.
+- `Make a move`: making a move is simple, first you have to click on the piece to be moved (the cell will become red) and then on the destination cell. If the move is legal, the pawn will move to the desired position, otherwise we will have an error message. In order to make a move the client will make a PUT request to the server. The server will evaluate the move declared in the body of the PUT request and if the move is valid will retrieve an updated list of the pawns on the grid.
 
 ![image](/front-end/screen/mainPage-selectedPawn.png) 
 ![image](/front-end/screen/mainPage-moveDone.png)
 
-- `Delete button`: this button is used to delete the current game from the memory, an alert message appears if the operation was successful.
+- `Delete button`: this button is used to delete the current game from the memory, an alert message appears if the operation was successful. In order to make this operation the client will send a DELETE request to the server with the identifier of the game session.
 
 ![image](/front-end/screen/mainPage-deleteGame.png) 
 
 - `Save and Exit button`: if you click this button you will return to the first page saving the current game. After that you could find this game in the resume game table.
 
-- `Upgraded Pawn`: Upgraded pawns have a red crown in the center.
+- `Upgraded Pawn`: Upgraded pawns have a red crown in the center. A pawn will be upgraded when it will reach the opposite side of the chessboard. This type of pawns have the abilities to move for all four diagonals and cannot be eaten from pawns which are not upgraded.
 
 ![image](/front-end/screen/mainPage-upgradedPawn.png) 
 
-- `Reset Last Move button`: this button gives you the possibility to reset the last move made updating both the board and the move menu on the left.
+- `Reset Last Move button`: this button gives you the possibility to reset the last move made updating both the board and the move menu on the left. In order to make this operation the client will send a DELETE request to the server. The server will evaluate the lists of pawns on the grid and it will return these lists to the client.
 
 - `End a game`: a game ends with 3 possible outcomes: either white or black can win or we can have a draw if too many moves without eating anything have been made. For every possible outcome we will have a different alert message and after that the finished match will be deleted from the memory.
 
@@ -69,7 +69,10 @@ DamAliasLab is a Web application to play the game of checkers
 
 
 ## Usage and installation
-Come si installa per provarlo in locale e come si usa
+
+- 'API Server': * In order to start the server API you need to install Visual Studio 2019 (https://visualstudio.microsoft.com/it/vs/). 
+                * After you installed Visual Studio 2019 you need to import the project. The directory of the project is 'back-end/VivaLaDama'.
+                * In order to execute the server you need to run the project.
 
 
 
