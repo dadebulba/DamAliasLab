@@ -1,12 +1,19 @@
 # DamAliasLab
-Progetto per la Dama dei nuovi candidati AliasLAb
+Indice.....
 
-Membri:
-Davide
-Federico
-Featurefede
+# KeyFeatures
+Screen di come funziona
 
-Aggiunto un branch di prova
+# How to Use
+Come si installa per provarlo in locale
 
-bla bla bla bla
+# How to contribute to the project
+nuovo branch + pull request (quello che abbiamo fatto noi)
 
+# Authors
+Luca Giacominelli
+Federico Diprima
+Davide Bulbarelli
+
+# License
+OpenSource
