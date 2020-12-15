@@ -15,13 +15,7 @@ DamAliasLab is a Web application to play the game of checkers
 - [Uninstallation](#uninstallation)
 - [Contributing](#contributing)
 - [License](#license)
-<p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#usage-and-installation">Usage And Installation</a> •
-  <a href="#how-to-contribute-to-the-project">How to contribute to the project</a> •
-  <a href="#authors">Authors</a> •
-  <a href="#license">License</a>
-</p>
+
 
 ## Key Features
 Screen di come funziona
