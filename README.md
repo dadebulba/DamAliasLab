@@ -10,11 +10,36 @@
 # Key Features
 Screen di come funziona
 
+
+ms
+
+
+
+
+
+sw
 # How to Use
 Come si installa per provarlo in locale
 
+
+
+
+
+
+
+
+
+z
 # How to contribute to the project
 nuovo branch + pull request (quello che abbiamo fatto noi)
+
+
+
+
+
+
+
+z
 
 # Authors
 Luca Giacominelli
