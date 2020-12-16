@@ -88,6 +88,8 @@ Schema logico del database:
 >* After you installed Visual Studio 2019 you need to import the project. The directory of the project is 'back-end/VivaLaDama'.
 >* In order to execute the server you need to run the project.
 
+- Frontend:
+>* After executing the server you simply need to open the file named 'damaFirstPage.html' with your favorite browser. Now you can start playing!
 
 
 
