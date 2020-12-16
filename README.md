@@ -12,8 +12,8 @@ DamAliasLab is a Web application to play the game of checkers
     - `Delete button`
     - `Reset Last Move button`
     - `End a game`
-    
-    
+
+- [Database](#database)    
 - [Usage and Installation](#usage-and-installation)
 - [How to contribute to the project](#how-to-contribute-to-the-project)
 - [Authors](#authors)
@@ -25,11 +25,11 @@ DamAliasLab is a Web application to play the game of checkers
 
 ![image](/front-end/screen/firstPage.png)
 
-- `New Game button`: if we click on New Game button a form appears and we can enter the names of the players. When the players have finished to insert their names, if they press the start button the client will sent a POST request to the server in order to create a new game session.
+- `New Game button`: if we click on 'New Game' button a form appears and we can enter the names of the players. When the players have finished to insert their names, if they press the start button the client will sent a POST request to the server in order to create a new game session. After the server has created the game session it will return the object to the client.
 
 ![image](/front-end/screen/firstPage-newGame.png)
 
-- `Resume Game button`: if we click on Resume Game button there are two possibility, if there are no games started an alert message appears, otherwise if there are games saved in memory, a table appears with the list of these games. We can resume playing one of these by clicking on the 'play button' on the right of each game. In order to retrieve a game session the client will send a GET request to the server with the identifier of that game.
+- `Resume Game button`: if we click on 'Resume Game' button there are two possibility, if there are no games started an alert message appears, otherwise if there are games saved in memory, a table appears with the list of these games. We can resume playing one of these by clicking on the 'play button' on the right of each game. In order to retrieve a game session the client will send a GET request to the server with the identifier of that game. The server will retrieve the specified game session.
 
 ![image](/front-end/screen/firstPage-noStartedGames.png)
 
@@ -39,32 +39,37 @@ DamAliasLab is a Web application to play the game of checkers
 
 ![image](/front-end/screen/mainPage.png)
 
-- `Make a move`: making a move is simple, first you have to click on the piece to be moved (the cell will become red) and then on the destination cell. If the move is legal, the pawn will move to the desired position, otherwise we will have an error message. In order to make a move the client will make a PUT request to the server. The server will evaluate the move declared in the body of the PUT request and if the move is valid will retrieve an updated list of the pawns on the grid.
+- `Make a move`: making a move is simple, first you have to click on the piece to be moved (the cell will become red) and then on the destination cell. If the move is legal, the pawn will move to the desired position, otherwise we will have an error message. In order to make a move the client will make a PUT request to the server. The server will evaluate the move declared in the body of the PUT request and if the move is valid will retrieve an updated object with the current game session.
 
 ![image](/front-end/screen/mainPage-selectedPawn.png) 
 ![image](/front-end/screen/mainPage-moveDone.png)
 
-- `Delete button`: this button is used to delete the current game from the memory, an alert message appears if the operation was successful. In order to make this operation the client will send a DELETE request to the server with the identifier of the game session.
+- `Delete button`: this button is used to delete the current game from the memory, an alert message appears if the operation was successful. In order to make this operation the client will send a DELETE request to the server with the identifier of the game session. The server will retrieve the deleted game session.
 
 ![image](/front-end/screen/mainPage-deleteGame.png) 
 
-- `Save and Exit button`: if you click this button you will return to the first page saving the current game. After that you could find this game in the resume game table.
+- `Save and Exit button`: if this button is clicked, you will return to the first page saving the current game. After that you could find this game in the resume game table.
 
-- `Upgraded Pawn`: Upgraded pawns have a red crown in the center. A pawn will be upgraded when it will reach the opposite side of the chessboard. This type of pawns have the abilities to move for all four diagonals and cannot be eaten from pawns which are not upgraded.
+- `Upgraded Pawn`: Upgraded pawns have a red crown in the center. A pawn will be upgraded when it will reach the opposite side of the chessboard. This type of pawns have the abilities to move for all four diagonals and cannot be eaten from pawns which are not upgraded. The pawns are upgraded by the server.
 
 ![image](/front-end/screen/mainPage-upgradedPawn.png) 
 
-- `Reset Last Move button`: this button gives you the possibility to reset the last move made updating both the board and the move menu on the left. In order to make this operation the client will send a DELETE request to the server. The server will evaluate the lists of pawns on the grid and it will return these lists to the client.
+- `Reset Last Move button`: this button gives you the possibility to reset the last move made updating both the board and the move menu on the left. In order to make this operation the client will send a DELETE request to the server. The server will evaluate the lists of pawns on the grid and it will return an uptaded object of the game session.
 
 - `End a game`: a game ends with 3 possible outcomes: either white or black can win or we can have a draw if too many moves without eating anything have been made. For every possible outcome we will have a different alert message and after that the finished match will be deleted from the memory.
 
 ![image](/front-end/screen/mainPage-gameFinished.png) 
 
 
+## Database
+
+In order to memorize all the game session we decided to use Entity Framework as an In-Memory Database. In this database we have two main relationships:
+- 'GameSessions': memorize all the info about a GameSession so the players names and the valid moves made.
+- 'Moves': memorize all the info about a Move so the pawn that has been moved, the coordinates from where it started the move and the coordinates where it stopped the move.
 
 
-
-
+In the 'GameSessions' relationship we do not memorized the chessboard but only the valid moves. In order to retrieve a GameSession we need to evaluate each time these moves.
+The 'Moves' relationship has a foreign-key to the GameSessions relationship. This give us the possibility to store for each GameSession its own historical about the valid moves. Each object memorized in an object Move is declared as an 'Owned Type'. So we will have other three relationship with a foreign-key to the 'Moves' relationship and these are: 'Pawns' for the pawn moved, 'From' for the coordinates of where the move started and 'To' for the coordinates of where the move ended.
 
 
 
@@ -97,8 +102,8 @@ After a careful review, if the code is all right, the repository administrator w
 
 
 ## Authors
-Luca Giacominelli
-Federico Diprima
+Luca Giacominelli,
+Federico Diprima,
 Davide Bulbarelli
 
 ## License
