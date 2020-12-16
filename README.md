@@ -86,7 +86,7 @@ DamAliasLab is a Web application to play the game of checkers
 
 ## How to contribute to the project
 if you want to contribute to the project you can simply create a new branch, write the new code on it and create a Pull Request.
-After a careful review, if the code is all right, the repository administrator will be able to merge this branch to its tree master.
+After a careful review, if the code is all right, the repository administrator will be able to merge this branch to its tree master (main).
 
 
 
