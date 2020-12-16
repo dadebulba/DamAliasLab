@@ -68,24 +68,18 @@ In order to memorize all the game session we decided to use Entity Framework as 
 - 'Moves': memorize all the info about a Move so the pawn that has been moved, the coordinates from where it started the move and the coordinates where it stopped the move.
 
 
-GameSessions(_IdGameSessionId_:long, NamePlayer1:string, NamePlayer2:string)
-Moves(_IdGameSessionId_:long, _IdMove_:long)
--Moves.IdGameSessionId FK -> GameSessions.IdGameSessionId
 
+Schema logico del database:
+- **GameSessions**(_IdGameSessionId_:long, NamePlayer1:string, NamePlayer2:string)
+- **Moves**(_IdGameSessionId_:long, _IdMove_:long)
+>- _Moves.IdGameSessionId_ **FK** to _GameSessions.IdGameSessionId_
+- **Moves_Target**(_IdMove_:long, IdPawn:long, Color:int, Upgraded:bool)
+>- _Moves_Target.IdMove_ **FK** to _Moves.IdMove_
+- **Moves_From**(_IdMove_:long, Row:int, Column:int)
+>- _Moves_From.IdMove_ **FK** to _Moves.IdMove_
+- **Moves_To**(_IdMove_:long, Row:int, Column:int)
+>- _Moves_To.IdMove_ **FK** to _Moves.IdMove_
 
-
-Moves_Target(_IdMove_:long, IdPawn:long, Color:int, Upgraded:bool)
--Moves_Target.IdMove FK -> Moves.IdMove
-
-
-
-Moves_From(_IdMove_:long, Row:int, Column:int)
--Moves_From.IdMove FK -> Moves.IdMove
-
-
-
-Moves_To(_IdMove_:long, Row:int, Column:int)
--Moves_To.IdMove FK -> Moves.IdMove
 
 ## Usage and installation
 
