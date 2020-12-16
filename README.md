@@ -67,11 +67,15 @@ In order to memorize all the game session we decided to use Entity Framework as 
 - 'GameSessions': memorize all the info about a GameSession so the players names and the valid moves made.
 - 'Moves': memorize all the info about a Move so the pawn that has been moved, the coordinates from where it started the move and the coordinates where it stopped the move.
 
-
-In the 'GameSessions' relationship we do not memorized the chessboard but only the valid moves. In order to retrieve a GameSession we need to evaluate each time these moves.
-The 'Moves' relationship has a foreign-key to the GameSessions relationship. This give us the possibility to store for each GameSession its own historical about the valid moves. Each object memorized in an object Move is declared as an 'Owned Type'. So we will have other three relationship with a foreign-key to the 'Moves' relationship and these are: 'Pawns' for the pawn moved, 'From' for the coordinates of where the move started and 'To' for the coordinates of where the move ended.
-
-
+- GameSessions(_IdGameSessionId_:long, NamePlayer1:string, NamePlayer2:string)
+- Moves(_IdGameSessionId_:long, _IdMove_:long)
+>-Moves.IdGameSessionId FK -> GameSessions.IdGameSessionId
+- Moves_Target(_IdMove_:long, IdPawn:long, Color:int, Upgraded:bool)
+>-Moves_Target.IdMove FK -> Moves.IdMove
+- Moves_From(_IdMove_:long, Row:int, Column:int)
+>-Moves_From.IdMove FK -> Moves.IdMove
+- Moves_To(_IdMove_:long, Row:int, Column:int)
+>-Moves_To.IdMove FK -> Moves.IdMove
 
 ## Usage and installation
 
